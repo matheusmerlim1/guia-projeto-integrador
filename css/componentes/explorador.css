@@ -1,0 +1,90 @@
+.explorador {
+    font-family: var(--fonte-codigo);
+    font-size: 0.8rem;
+    line-height: 1.35;
+}
+
+.explorador__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.explorador__lista .explorador__lista {
+    margin-left: 0.7rem;
+    padding-left: 0.45rem;
+    border-left: 1px solid var(--cor-borda);
+}
+
+.explorador__linha {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
+    min-width: 0;
+    padding: 0.2rem var(--espaco-2);
+    border: 0;
+    border-radius: 4px;
+    background: none;
+    color: var(--cor-texto);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.explorador__linha:hover {
+    background: var(--cor-superficie-2);
+}
+
+.explorador__linha--pasta {
+    list-style: none;
+    font-weight: 600;
+}
+
+.explorador__linha--pasta::-webkit-details-marker {
+    display: none;
+}
+
+.explorador__linha::before {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1rem;
+    height: 1rem;
+    font-size: 0.7rem;
+    color: var(--cor-texto-suave);
+}
+
+.explorador__linha--pasta::before {
+    content: "▸";
+}
+
+.explorador__pasta[open] > .explorador__linha--pasta::before {
+    content: "▾";
+}
+
+.explorador__linha--arquivo::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-inline: 0.25rem;
+    border-radius: 2px;
+    background: var(--cor-texto-suave);
+}
+
+.explorador__linha--arquivo[data-extensao="php"]::before { background: #7a86c7; }
+.explorador__linha--arquivo[data-extensao="ts"]::before { background: #3178c6; }
+.explorador__linha--arquivo[data-extensao="js"]::before { background: #d4b829; }
+.explorador__linha--arquivo[data-extensao="java"]::before { background: #d9534f; }
+.explorador__linha--arquivo[data-extensao="sql"]::before { background: #c07c3a; }
+.explorador__linha--arquivo[data-extensao="html"]::before { background: #e3653a; }
+.explorador__linha--arquivo[data-extensao="css"]::before { background: #7a5cc7; }
+.explorador__linha--arquivo[data-extensao="json"]::before,
+.explorador__linha--arquivo[data-extensao="xml"]::before,
+.explorador__linha--arquivo[data-extensao="neon"]::before { background: #8b95a1; }
+
+.explorador__nome {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,68 @@
+:root {
+    --fonte-texto: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    --fonte-titulo: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --fonte-codigo: "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+
+    --cor-fundo: #f6f4ef;
+    --cor-superficie: #ffffff;
+    --cor-superficie-2: #efece4;
+    --cor-texto: #1d232a;
+    --cor-texto-suave: #5b6470;
+    --cor-borda: #dcd7cc;
+    --cor-destaque: #0f6e6e;
+    --cor-destaque-forte: #0a5252;
+    --cor-destaque-suave: #dcefed;
+    --cor-atencao: #8a4b00;
+    --cor-atencao-fundo: #fbf0dc;
+    --cor-atencao-borda: #e7c58d;
+    --cor-dica-fundo: #e8f3f1;
+    --cor-dica-borda: #a9d3cd;
+
+    --cor-codigo-fundo: #16191d;
+    --cor-codigo-cabecalho: #1f242a;
+    --cor-codigo-texto: #e6e1d6;
+    --cor-codigo-suave: #8b95a1;
+    --cor-codigo-borda: #2c323a;
+
+    --raio-pequeno: 6px;
+    --raio: 10px;
+    --sombra: 0 1px 2px rgb(20 24 28 / 0.06), 0 4px 16px rgb(20 24 28 / 0.05);
+
+    --espaco-1: 0.25rem;
+    --espaco-2: 0.5rem;
+    --espaco-3: 0.75rem;
+    --espaco-4: 1rem;
+    --espaco-5: 1.5rem;
+    --espaco-6: 2rem;
+    --espaco-7: 3rem;
+    --espaco-8: 4.5rem;
+
+    --altura-topo: 3.75rem;
+    --largura-navegacao: 19rem;
+    --largura-conteudo: 54rem;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --cor-fundo: #111418;
+        --cor-superficie: #181c21;
+        --cor-superficie-2: #20252c;
+        --cor-texto: #e7e3da;
+        --cor-texto-suave: #9aa3ad;
+        --cor-borda: #2e343c;
+        --cor-destaque: #5cbcb2;
+        --cor-destaque-forte: #7fd0c7;
+        --cor-destaque-suave: #173331;
+        --cor-atencao: #e8b766;
+        --cor-atencao-fundo: #2a2214;
+        --cor-atencao-borda: #5c4520;
+        --cor-dica-fundo: #142624;
+        --cor-dica-borda: #28504b;
+
+        --cor-codigo-fundo: #0c0e11;
+        --cor-codigo-cabecalho: #15181c;
+        --cor-codigo-borda: #262b32;
+
+        --sombra: 0 1px 2px rgb(0 0 0 / 0.3), 0 4px 16px rgb(0 0 0 / 0.25);
+    }
+}

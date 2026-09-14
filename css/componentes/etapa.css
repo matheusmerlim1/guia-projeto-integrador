@@ -1,0 +1,79 @@
+.etapa {
+    margin-top: var(--espaco-8);
+    padding-top: var(--espaco-6);
+    border-top: 1px solid var(--cor-borda);
+}
+
+.etapa__cabecalho {
+    margin-bottom: var(--espaco-5);
+}
+
+.etapa__numero {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    margin-bottom: var(--espaco-2);
+    font-family: var(--fonte-codigo);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-destaque);
+}
+
+.etapa__titulo {
+    margin: 0 0 var(--espaco-3);
+    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.2rem);
+}
+
+.etapa__resumo {
+    font-size: 1.05rem;
+    color: var(--cor-texto-suave);
+}
+
+.etapa--planejada {
+    margin-top: var(--espaco-7);
+}
+
+.etapa--planejada .etapa__titulo {
+    color: var(--cor-texto-suave);
+}
+
+.lista-planejada {
+    margin: 0;
+    padding: var(--espaco-4) var(--espaco-5) var(--espaco-4) var(--espaco-7);
+    background: var(--cor-superficie);
+    border: 1px dashed var(--cor-borda);
+    border-radius: var(--raio);
+}
+
+.lista-planejada li {
+    margin: var(--espaco-2) 0;
+}
+
+.lista-planejada li::marker {
+    content: "○  ";
+    color: var(--cor-texto-suave);
+}
+
+.selo {
+    display: inline-block;
+    padding: 0.05rem 0.45rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    font-family: var(--fonte-texto);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--cor-texto-suave);
+    background: var(--cor-superficie);
+    white-space: nowrap;
+}
+
+.selo--pronto {
+    margin-left: auto;
+    border-color: var(--cor-destaque);
+    color: var(--cor-destaque-forte);
+    background: var(--cor-destaque-suave);
+}

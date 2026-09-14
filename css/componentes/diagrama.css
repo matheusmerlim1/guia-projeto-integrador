@@ -1,0 +1,26 @@
+.diagrama {
+    margin: var(--espaco-4) 0 var(--espaco-5);
+}
+
+.diagrama__area {
+    overflow-x: auto;
+    padding: var(--espaco-3);
+    background: #ffffff;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+}
+
+.diagrama__imagem {
+    display: block;
+    width: 100%;
+    min-width: 40rem;
+    max-width: 860px;
+    height: auto;
+    margin-inline: auto;
+}
+
+.diagrama__legenda {
+    margin-top: var(--espaco-2);
+    font-size: 0.85rem;
+    color: var(--cor-texto-suave);
+}

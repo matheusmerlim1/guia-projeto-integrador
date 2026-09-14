@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia do Projeto Integrador</title>
+
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/componentes/aviso.css">
+    <link rel="stylesheet" href="css/componentes/abas.css">
+    <link rel="stylesheet" href="css/componentes/bloco-codigo.css">
+    <link rel="stylesheet" href="css/componentes/explorador.css">
+    <link rel="stylesheet" href="css/componentes/dialogo.css">
+    <link rel="stylesheet" href="css/componentes/simulador.css">
+    <link rel="stylesheet" href="css/componentes/busca.css">
+    <link rel="stylesheet" href="css/componentes/diagrama.css">
+    <link rel="stylesheet" href="css/componentes/etapa.css">
+    <link rel="stylesheet" href="css/componentes/passos.css">
+    <link rel="stylesheet" href="css/componentes/terminal.css">
+    <link rel="stylesheet" href="css/componentes/tabela.css">
+    <link rel="stylesheet" href="css/realce-sintaxe.css">
+
+    <script src="js/nucleo/espaco-nomes.js" defer></script>
+    <script src="js/nucleo/preferencias.js" defer></script>
+    <script src="js/dados/etapas.js" defer></script>
+    <script src="js/dados/linguagens.js" defer></script>
+    <script src="js/dados/projeto/backend-php.js" defer></script>
+    <script src="js/dados/projeto/backend-typescript.js" defer></script>
+    <script src="js/dados/projeto/backend-javascript.js" defer></script>
+    <script src="js/dados/projeto/backend-java.js" defer></script>
+    <script src="js/dados/projeto/frontend-typescript.js" defer></script>
+    <script src="js/dados/projeto/frontend-javascript.js" defer></script>
+    <script src="js/dados/projeto/raiz-php.js" defer></script>
+    <script src="js/dados/projeto/raiz-typescript.js" defer></script>
+    <script src="js/dados/projeto/raiz-javascript.js" defer></script>
+    <script src="js/dados/projeto/raiz-java.js" defer></script>
+    <script src="js/dados/exemplos/emprestimo-entidade.js" defer></script>
+    <script src="js/dados/exemplos/emprestimo-apoio.js" defer></script>
+    <script src="js/dados/exemplos/emprestimo-teste.js" defer></script>
+    <script src="js/dados/arquivos/git.js" defer></script>
+    <script src="js/dados/terminais/comum.js" defer></script>
+    <script src="js/dados/terminais/git-inicio.js" defer></script>
+    <script src="js/dados/terminais/git-branch.js" defer></script>
+    <script src="js/dados/terminais/git-dupla.js" defer></script>
+    <script src="js/dados/terminais/git-desfazer.js" defer></script>
+    <script src="js/simulador/dados-simulados.js" defer></script>
+    <script src="js/simulador/api-simulada.js" defer></script>
+    <script src="js/simulador/tela-simulada.js" defer></script>
+    <script src="js/componentes/realce-sintaxe.js" defer></script>
+    <script src="js/componentes/bloco-codigo.js" defer></script>
+    <script src="js/componentes/arquivo-fixo.js" defer></script>
+    <script src="js/componentes/visualizador-linguagens.js" defer></script>
+    <script src="js/componentes/seletor-linguagem.js" defer></script>
+    <script src="js/componentes/terminal.js" defer></script>
+    <script src="js/componentes/passo-a-passo.js" defer></script>
+    <script src="js/componentes/simulador-aplicacao.js" defer></script>
+    <script src="js/componentes/visualizador-arquivo.js" defer></script>
+    <script src="js/componentes/busca-na-pagina.js" defer></script>
+    <script src="js/componentes/explorador-projeto.js" defer></script>
+    <script src="js/componentes/navegacao-lateral.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+
+    <header class="barra-topo">
+        <button class="barra-topo__menu" type="button" aria-controls="painel-lateral" aria-expanded="false">
+            <span class="visualmente-oculto">Abrir etapas e estrutura do projeto</span>
+            <span class="barra-topo__menu-icone" aria-hidden="true"></span>
+        </button>
+        <a class="barra-topo__marca" href="#inicio">
+            <span class="barra-topo__sigla">PIS</span>
+            <span class="barra-topo__nome">Guia do Projeto Integrador</span>
+        </a>
+        <div class="barra-topo__seletores">
+            <div data-seletor-linguagem data-camada="backend" data-rotulo="Back-end"></div>
+            <div data-seletor-linguagem data-camada="frontend" data-rotulo="Front-end"></div>
+        </div>
+    </header>
+
+    <div class="pagina">
+
+        <aside class="painel-lateral" id="painel-lateral">
+            <nav class="painel-lateral__secao" aria-labelledby="titulo-etapas">
+                <p class="painel-lateral__titulo" id="titulo-etapas">Etapas</p>
+                <ol class="etapas" data-lista-etapas></ol>
+            </nav>
+            <section class="painel-lateral__secao" aria-labelledby="titulo-estrutura">
+                <p class="painel-lateral__titulo" id="titulo-estrutura">Estrutura do projeto</p>
+                <p class="painel-lateral__ajuda">Clique nas pastas para abrir e nos arquivos para ver o código. A estrutura muda conforme o back-end e o front-end escolhidos no topo.</p>
+                <button type="button" class="botao botao--principal painel-lateral__simulador" data-abrir-simulador>▶ Ver a aplicação funcionando</button>
+                <div class="explorador" data-explorador></div>
+            </section>
+        </aside>
+
+        <main class="conteudo" id="inicio">
+
+            <div class="busca" role="search" data-busca>
+                <span class="busca__icone" aria-hidden="true"></span>
+                <label class="visualmente-oculto" for="campo-busca">Buscar nesta página</label>
+                <input class="busca__campo" id="campo-busca" type="search" placeholder="Buscar nesta página: git merge, multa, Kahlan..." autocomplete="off" data-busca-campo>
+                <span class="busca__contador" aria-live="polite" data-busca-contador></span>
+                <span class="busca__botoes">
+                    <button type="button" class="busca__botao" aria-label="Resultado anterior" data-busca-anterior>↑</button>
+                    <button type="button" class="busca__botao" aria-label="Próximo resultado" data-busca-proximo>↓</button>
+                    <button type="button" class="busca__botao" aria-label="Limpar busca" data-busca-limpar hidden>×</button>
+                </span>
+            </div>
+
+            <section class="abertura">
+                <p class="abertura__sobretitulo">Projeto Integrador de Sistemas</p>
+                <h1 class="abertura__titulo">Do repositório vazio à aplicação testada</h1>
+                <p class="abertura__texto">
+                    Um passo a passo de como executar um projeto web completo, usando <strong>um único exemplo</strong>
+                    do começo ao fim: a <strong>Biblioteca Comunitária Cantinho da Leitura</strong>.
+                    Cada etapa mostra o que fazer, em que pasta, com qual comando e como testar.
+                    Escolha no topo da página a linguagem do back-end e do front-end: o código e a estrutura do projeto se ajustam à escolha.
+                </p>
+                <div class="aviso aviso--atencao">
+                    <p class="aviso__titulo">Prévia para avaliação</p>
+                    <p>
+                        Estão prontas a <a href="#exemplo">Etapa 0</a>, com o exemplo, suas regras, o diagrama de classes e o código,
+                        e a <a href="#git">Etapa 1</a>, com o Git e o GitHub passo a passo. As etapas marcadas como “em breve” mostram o que será construído.
+                    </p>
+                </div>
+            </section>
+
+            <section class="etapa" id="exemplo" aria-labelledby="titulo-exemplo">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 0</p>
+                    <h2 class="etapa__titulo" id="titulo-exemplo">O exemplo: Biblioteca Comunitária</h2>
+                    <p class="etapa__resumo">Um minimundo pequeno, com regras de negócio suficientes para exercitar todas as camadas e todos os tipos de teste.</p>
+                </header>
+
+                <h3>Minimundo</h3>
+                <blockquote class="minimundo">
+                    <p>
+                        A Biblioteca Comunitária <em>Cantinho da Leitura</em> empresta livros aos moradores do bairro.
+                        Hoje os empréstimos são anotados em um caderno, o que dificulta saber quais livros estão emprestados,
+                        com quem estão e quem está atrasado.
+                    </p>
+                    <p>
+                        Cada livro possui título, autor e ano de publicação. Os leitores são cadastrados com nome e telefone.
+                        Cada empréstimo registra o livro, o leitor e a data em que foi realizado.
+                    </p>
+                    <p>
+                        O prazo de devolução é de 7 (sete) dias, contados a partir da data do empréstimo. Se o livro for devolvido
+                        após o prazo, o leitor paga uma multa de R$ 1,00 (um real) por dia de atraso. Um leitor pode ter, no máximo,
+                        3 (três) empréstimos em aberto ao mesmo tempo, e um livro emprestado não pode ser emprestado novamente
+                        até que seja devolvido.
+                    </p>
+                </blockquote>
+
+                <h3>Escopo do exemplo</h3>
+                <ol class="lista-numerada">
+                    <li>Registrar um empréstimo.</li>
+                    <li>Registrar a devolução, informando a multa, se houver.</li>
+                    <li>Listar os empréstimos em aberto, destacando os atrasados.</li>
+                </ol>
+                <p class="texto-suave">Não há cadastros nem login: livros e leitores já vêm preenchidos no banco de dados.</p>
+
+                <h3>Regras de negócio e onde cada uma é testada</h3>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Regra</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Onde fica</th>
+                                <th scope="col">Teste que comprova</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="codigo-regra">R1</span></td>
+                                <td>Prazo de devolução de 7 dias</td>
+                                <td><code>Emprestimo.dataLimite()</code></td>
+                                <td>“é sete dias após a data do empréstimo”</td>
+                            </tr>
+                            <tr>
+                                <td><span class="codigo-regra">R2</span></td>
+                                <td>Multa de R$ 1,00 por dia de atraso</td>
+                                <td><code>Emprestimo.calcularMulta()</code></td>
+                                <td>“cobra um real por dia de atraso”</td>
+                            </tr>
+                            <tr>
+                                <td><span class="codigo-regra">R3</span></td>
+                                <td>No máximo 3 empréstimos em aberto por leitor</td>
+                                <td><code>Leitor.podePegarEmprestado()</code></td>
+                                <td>“não permite o quarto empréstimo” <span class="texto-suave">(etapa 4)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="codigo-regra">R4</span></td>
+                                <td>Livro emprestado fica indisponível</td>
+                                <td><code>GestorEmprestimos.registrar()</code></td>
+                                <td>“lança exceção quando o livro já está emprestado” <span class="texto-suave">(etapa 4)</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="codigo-regra">R5</span></td>
+                                <td>Um empréstimo não pode ser devolvido duas vezes</td>
+                                <td><code>Emprestimo.devolver()</code></td>
+                                <td>“lança exceção ao devolver um empréstimo já devolvido”</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Diagrama de Classes do Modelo de Domínio (essencial)</h3>
+                <p>
+                    Construído em quatro passos: primeiro as entidades do negócio, depois os
+                    comportamentos de negócio, depois os atributos que sustentam esses comportamentos e, por fim, as associações.
+                </p>
+                <figure class="diagrama">
+                    <div class="diagrama__area">
+                        <img class="diagrama__imagem" src="img/diagramas/modelo-essencial.svg" width="860" height="510"
+                            alt="Diagrama de classes com três classes. Livro, com os atributos titulo, autor e ano. Emprestimo, com os atributos dataEmprestimo e dataDevolucao e as operações dataLimite, estaEmAberto, devolver, diasDeAtraso e calcularMulta. Leitor, com os atributos nome e telefone e a operação podePegarEmprestado. Emprestimo refere-se a um Livro e é feito por um Leitor; cada Livro e cada Leitor podem ter vários empréstimos.">
+                    </div>
+                    <figcaption class="diagrama__legenda">Modelo essencial da Biblioteca Comunitária.</figcaption>
+                </figure>
+
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Boas práticas aplicadas neste diagrama</p>
+                    <ul class="lista-marcada">
+                        <li><strong>Setas de direção</strong> saindo de <code>Emprestimo</code>, que conhece o livro e o leitor.</li>
+                        <li><strong>Rótulo de leitura</strong> com seta: “Emprestimo refere-se a Livro”, “Emprestimo é feito por Leitor”.</li>
+                        <li><strong>Multiplicidade</strong> nas duas pontas de cada associação.</li>
+                        <li>Livro e leitor são <strong>associações</strong>, não atributos do tipo <code>String</code>.</li>
+                        <li>Sem <code>id</code>, sem <code>salvar()</code> e sem agregação ou composição — são detalhes de implementação.</li>
+                        <li>Não existe atributo <code>multa</code>: ela é calculada por <code>calcularMulta()</code>.</li>
+                    </ul>
+                </div>
+
+                <h3>Como o projeto vai ficar ao final</h3>
+                <p>
+                    A estrutura completa está na coluna da esquerda, em <strong>Estrutura do projeto</strong>. Ela muda conforme as
+                    linguagens escolhidas no topo. Clique em qualquer arquivo para ver o código completo, com comentários, e em qual
+                    etapa ele é explicado.
+                </p>
+                <p>
+                    <button type="button" class="botao botao--principal" data-abrir-simulador>▶ Ver a aplicação funcionando</button>
+                </p>
+
+                <h3>Amostra: a entidade <code>Emprestimo</code> em cada linguagem</h3>
+                <p>
+                    As mesmas regras (R1, R2 e R5), escritas em quatro linguagens, com comentários explicando cada parte. Troque a aba
+                    ou use o seletor de back-end no topo: a escolha vale para todos os blocos de código da página.
+                </p>
+                <div class="exemplo-codigo" data-exemplo="emprestimo.entidade" data-camada="backend"></div>
+
+                <details class="expansivel">
+                    <summary class="expansivel__resumo">Ver também as classes de apoio: <code>Livro</code>, <code>Leitor</code> e a exceção de domínio</summary>
+                    <div class="exemplo-codigo" data-exemplo="emprestimo.apoio" data-camada="backend"></div>
+                </details>
+
+                <h3>Amostra: o teste unitário da entidade</h3>
+                <p>
+                    Cada linguagem usa o seu framework de testes — Kahlan no PHP, Vitest em TypeScript e JavaScript, JUnit 5 no Java —,
+                    mas os casos de teste são os mesmos. O comando para executá-los aparece no rodapé do bloco.
+                </p>
+                <div class="exemplo-codigo" data-exemplo="emprestimo.teste" data-camada="backend"></div>
+            </section>
+
+            <section class="etapa" id="git" aria-labelledby="titulo-git">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 1</p>
+                    <h2 class="etapa__titulo" id="titulo-git">Git e GitHub do início ao merge</h2>
+                    <p class="etapa__resumo">
+                        O fluxo completo de trabalho em dupla: Ana cria o repositório e a primeira funcionalidade;
+                        depois Bruno entra no projeto e os dois resolvem um conflito.
+                    </p>
+                </header>
+
+                <h3>Como o Git guarda as mudanças</h3>
+                <p>
+                    Toda alteração passa por quatro lugares. Entender esse caminho explica quase todos os comandos desta etapa.
+                </p>
+                <ol class="fluxo-git">
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Pasta do projeto</span>
+                        <span class="fluxo-git__descricao">Onde você edita os arquivos.</span>
+                        <span class="fluxo-git__comando">git add</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Área de preparação</span>
+                        <span class="fluxo-git__descricao">O que vai entrar no próximo commit.</span>
+                        <span class="fluxo-git__comando">git commit</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Repositório local</span>
+                        <span class="fluxo-git__descricao">O histórico de commits no seu computador.</span>
+                        <span class="fluxo-git__comando">git push</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">GitHub</span>
+                        <span class="fluxo-git__descricao">A cópia compartilhada com o grupo, chamada <code>origin</code>.</span>
+                        <span class="fluxo-git__comando">git pull · git clone</span>
+                    </li>
+                </ol>
+
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Como ler os terminais</p>
+                    <p>
+                        O texto antes do sinal <code>&gt;</code> é a pasta em que o comando foi digitado, como no Prompt de Comando do Windows.
+                        O texto em branco depois dele é o que você digita; as linhas abaixo são a resposta do Git.
+                        Use <strong>▶ Reproduzir</strong> para ver o comando sendo digitado e <strong>Copiar comandos</strong> para levar os comandos ao seu terminal.
+                        Os comandos do Git são os mesmos em qualquer linguagem.
+                    </p>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.1</span> Instalar e configurar o Git</h3>
+                    <p>
+                        Baixe o Git em <code>git-scm.com</code> e instale com as opções padrão. Depois, abra o <strong>Prompt de Comando</strong>
+                        (tecla <kbd>Windows</kbd>, digite <em>cmd</em> e aperte <kbd>Enter</kbd>). A configuração é feita uma única vez por computador.
+                    </p>
+                    <div data-passo-a-passo="git.configurar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.2</span> Criar o repositório no GitHub</h3>
+                    <p>Feito uma vez, por uma pessoa do grupo — no exemplo, a Ana.</p>
+                    <ol class="passos">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Crie o repositório</p>
+                            <p class="passo__explicacao">Entre em <code>github.com</code>, clique no botão <strong>New</strong> e preencha <strong>Repository name</strong> com <code>biblioteca-comunitaria</code>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Escolha a visibilidade e inclua um README</p>
+                            <p class="passo__explicacao">Escolha <strong>Public</strong> ou <strong>Private</strong> e ative <strong>Add README</strong>. Assim o repositório já nasce com um primeiro commit e pode ser clonado. Clique em <strong>Create repository</strong>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Dê acesso ao colega</p>
+                            <p class="passo__explicacao">Em <strong>Settings → Collaborators → Add people</strong>, informe o usuário do Bruno. Ele recebe um convite por e-mail e precisa aceitar antes de enviar alterações.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Copie o endereço</p>
+                            <p class="passo__explicacao">Na página do repositório, clique em <strong>Code</strong>, aba <strong>HTTPS</strong>, e copie o endereço:</p>
+                            <p><code>https://github.com/ana-souza/biblioteca-comunitaria.git</code></p>
+                        </div></li>
+                    </ol>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.3</span> Baixar o projeto para o computador</h3>
+                    <div data-passo-a-passo="git.clonar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.4</span> Adicionar arquivos e fazer o primeiro commit</h3>
+                    <p>
+                        Com o projeto aberto no editor, crie o arquivo <code>.gitignore</code> na raiz do projeto. Ele lista o que o Git deve ignorar:
+                        pastas de dependências e arquivos gerados, que cada pessoa recria no próprio computador.
+                    </p>
+                    <div data-arquivo="git.gitignore"></div>
+                    <p>Em seguida, substitua o conteúdo do <code>README.md</code>:</p>
+                    <div data-arquivo="git.readme-inicial"></div>
+                    <p>Salve os dois arquivos e volte ao terminal.</p>
+                    <div data-passo-a-passo="git.primeiro-commit"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.5</span> Criar uma branch para a funcionalidade</h3>
+                    <p>
+                        Uma <strong>branch</strong> é uma linha de trabalho separada. Cada funcionalidade é feita na sua própria branch e só
+                        entra na <code>main</code> quando estiver pronta. Assim, a <code>main</code> sempre funciona e cada pessoa trabalha sem
+                        atrapalhar a outra.
+                    </p>
+                    <div data-passo-a-passo="git.branch-criar"></div>
+                    <p>Na nova branch, crie a pasta <code>backend/src/emprestimo/</code> e, dentro dela, o arquivo com a primeira versão da entidade:</p>
+                    <div data-arquivo="git.emprestimo-v1"></div>
+                    <div data-passo-a-passo="git.branch-commit"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.6</span> Alterar um arquivo e ver o que mudou</h3>
+                    <p>
+                        Ainda na branch <code>emprestimo-dominio</code>, Ana adiciona a regra da multa ao <code>Emprestimo.php</code>: a constante
+                        <code>EMPRESTIMO_MULTA_POR_DIA</code> e os métodos <code>diasDeAtraso()</code> e <code>calcularMulta()</code>,
+                        chegando à versão mostrada na <a href="#exemplo">Etapa 0</a>.
+                    </p>
+                    <div data-passo-a-passo="git.alterar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.7</span> Juntar a branch na main</h3>
+                    <p>Há dois caminhos. Em equipe, o mais comum é o <strong>pull request</strong>, porque permite que outra pessoa revise antes de juntar.</p>
+
+                    <h4>Pelo GitHub, com pull request</h4>
+                    <ol class="passos">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Abra o pull request</p>
+                            <p class="passo__explicacao">Na página do repositório aparece o aviso da branch enviada. Clique em <strong>Compare &amp; pull request</strong> (ou use o link que o <code>git push</code> mostrou).</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Descreva e crie</p>
+                            <p class="passo__explicacao">Confira se está indo de <code>emprestimo-dominio</code> para <code>main</code>, escreva o que foi feito e clique em <strong>Create pull request</strong>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Revise e junte</p>
+                            <p class="passo__explicacao">Na aba <strong>Files changed</strong>, o colega revisa as linhas alteradas. Depois, clique em <strong>Merge pull request</strong>, <strong>Confirm merge</strong> e, por fim, <strong>Delete branch</strong>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Atualize o seu computador</p>
+                            <p class="passo__explicacao">O merge aconteceu só no GitHub. No terminal, rode <code>git checkout main</code> e depois <code>git pull</code>.</p>
+                        </div></li>
+                    </ol>
+
+                    <h4>Pelo terminal</h4>
+                    <div data-passo-a-passo="git.merge"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.8</span> Trabalhar em dupla e resolver um conflito</h3>
+                    <p>
+                        Um <strong>conflito</strong> acontece quando duas pessoas alteram a mesma linha do mesmo arquivo. Nesta simulação,
+                        Bruno e Ana trocam a linha <em>Em construção.</em> do <code>README.md</code> ao mesmo tempo, cada um com um texto.
+                    </p>
+                    <div data-passo-a-passo="git.bruno-branch"></div>
+                    <div data-passo-a-passo="git.ana-readme"></div>
+                    <p>Antes de juntar a branch dele, Bruno atualiza a <code>main</code> com o que está no GitHub.</p>
+                    <div data-passo-a-passo="git.bruno-atualizar"></div>
+                    <div data-passo-a-passo="git.bruno-conflito"></div>
+
+                    <h4>Resolvendo o conflito no editor</h4>
+                    <p>Ao abrir o <code>README.md</code>, Bruno encontra as duas versões separadas por marcações:</p>
+                    <div data-arquivo="git.readme-conflito"></div>
+                    <ul class="lista-marcada">
+                        <li>Entre <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> e <code>=======</code> está a versão da branch atual, a <code>main</code> — o texto da Ana.</li>
+                        <li>Entre <code>=======</code> e <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; readme-execucao</code> está a versão que está chegando — o texto do Bruno.</li>
+                        <li>Resolver é deixar o arquivo como deve ficar e <strong>apagar as três linhas de marcação</strong>. Aqui, os dois textos são úteis, então viram dois passos.</li>
+                    </ul>
+                    <div data-arquivo="git.readme-resolvido"></div>
+                    <div data-passo-a-passo="git.bruno-resolver"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.9</span> Desfazer e guardar alterações</h3>
+
+                    <h4>Descartar uma alteração que ainda não foi adicionada</h4>
+                    <div data-passo-a-passo="git.descartar"></div>
+
+                    <h4>Tirar um arquivo da área de preparação</h4>
+                    <div data-passo-a-passo="git.tirar-do-stage"></div>
+
+                    <h4>Corrigir a mensagem do último commit</h4>
+                    <div data-passo-a-passo="git.amend"></div>
+
+                    <h4>Desfazer um commit que já foi enviado</h4>
+                    <div data-passo-a-passo="git.revert"></div>
+
+                    <h4>Guardar alterações para depois</h4>
+                    <div data-passo-a-passo="git.stash"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">1.10</span> Resumo dos comandos</h3>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Comando</th>
+                                    <th scope="col">O que faz</th>
+                                    <th scope="col">Exemplo no projeto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>git clone</code></td><td>Baixa um repositório</td><td><code>git clone https://github.com/ana-souza/biblioteca-comunitaria.git</code></td></tr>
+                                <tr><td><code>git status</code></td><td>Mostra a branch atual e o que mudou</td><td><code>git status</code></td></tr>
+                                <tr><td><code>git add</code></td><td>Coloca alterações na área de preparação</td><td><code>git add backend/src/emprestimo/Emprestimo.php</code></td></tr>
+                                <tr><td><code>git commit -m</code></td><td>Grava um ponto no histórico</td><td><code>git commit -m "Adiciona cálculo de dias de atraso e multa"</code></td></tr>
+                                <tr><td><code>git push</code></td><td>Envia commits para o GitHub</td><td><code>git push --set-upstream origin emprestimo-dominio</code></td></tr>
+                                <tr><td><code>git pull</code></td><td>Baixa e junta commits do GitHub</td><td><code>git pull</code></td></tr>
+                                <tr><td><code>git fetch</code></td><td>Baixa commits sem juntar</td><td><code>git fetch</code></td></tr>
+                                <tr><td><code>git checkout -b</code></td><td>Cria uma branch e entra nela</td><td><code>git checkout -b emprestimo-dominio</code></td></tr>
+                                <tr><td><code>git merge</code></td><td>Junta outra branch na atual</td><td><code>git merge emprestimo-dominio</code></td></tr>
+                                <tr><td><code>git diff</code></td><td>Mostra as linhas alteradas</td><td><code>git diff</code></td></tr>
+                                <tr><td><code>git log --oneline --graph</code></td><td>Mostra o histórico</td><td><code>git log --oneline --graph -6</code></td></tr>
+                                <tr><td><code>git restore</code></td><td>Descarta alterações de um arquivo</td><td><code>git restore README.md</code></td></tr>
+                                <tr><td><code>git revert</code></td><td>Desfaz um commit criando outro</td><td><code>git revert --no-edit HEAD</code></td></tr>
+                                <tr><td><code>git stash</code></td><td>Guarda alterações sem commit</td><td><code>git stash push -m "Rascunho"</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="etapa etapa--planejada" id="modelagem" aria-labelledby="titulo-modelagem">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 2 <span class="selo">em breve</span></p>
+                    <h2 class="etapa__titulo" id="titulo-modelagem">Modelagem e diagramas</h2>
+                    <p class="etapa__resumo">Como sair do minimundo e chegar aos diagramas.</p>
+                </header>
+                <ul class="lista-planejada">
+                    <li>A modelagem passo a passo: entidades, comportamentos, atributos e associações, com a imagem do diagrama crescendo a cada passo.</li>
+                    <li>Erros comuns lado a lado: diagrama com cara de modelo relacional, <code>id</code> no modelo, atributo no lugar de associação.</li>
+                    <li>Imagem do diagrama parcial da arquitetura para “registrar empréstimo”: visão, controladora, serviço, gestor e repositórios.</li>
+                    <li>Uma organização de pastas simples para os arquivos de modelagem.</li>
+                </ul>
+            </section>
+
+            <section class="etapa etapa--planejada" id="pastas" aria-labelledby="titulo-pastas">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 3 <span class="selo">em breve</span></p>
+                    <h2 class="etapa__titulo" id="titulo-pastas">Pastas do projeto</h2>
+                    <p class="etapa__resumo">A estrutura completa, arquivo por arquivo, e o que cada um faz.</p>
+                </header>
+                <ul class="lista-planejada">
+                    <li>Imagem de como a organização das pastas fica no editor, para cada combinação de linguagens.</li>
+                    <li>Passo a passo de criação das pastas e dos arquivos iniciais.</li>
+                    <li>O <code>README.md</code> completo: integrantes, comandos para rodar e referências.</li>
+                    <li>O que entra e o que não entra no repositório.</li>
+                </ul>
+            </section>
+
+            <section class="etapa etapa--planejada" id="backend" aria-labelledby="titulo-backend">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 4 <span class="selo">em breve</span></p>
+                    <h2 class="etapa__titulo" id="titulo-backend">Back-end e testes</h2>
+                    <p class="etapa__resumo">Das classes de domínio às rotas, com teste em cada passo.</p>
+                </header>
+                <ul class="lista-planejada">
+                    <li>Criar o projeto, configurar dependências e scripts, com terminais mostrando cada comando e a resposta.</li>
+                    <li><code>GestorEmprestimos</code> com as regras R3 e R4 e testes usando um dublê do repositório.</li>
+                    <li>Rotas <code>GET</code>, <code>POST</code> e <code>PATCH</code> de <code>/emprestimos</code> com CORS.</li>
+                    <li>Imagens dos testes rodando, da saída com falha e com sucesso, e da análise estática.</li>
+                </ul>
+            </section>
+
+            <section class="etapa etapa--planejada" id="banco" aria-labelledby="titulo-banco">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 5 <span class="selo">em breve</span></p>
+                    <h2 class="etapa__titulo" id="titulo-banco">Banco de dados e fetch</h2>
+                    <p class="etapa__resumo">Guardar os empréstimos no banco e buscá-los pelo navegador.</p>
+                </header>
+                <ul class="lista-planejada">
+                    <li>Criação do banco em <strong>MariaDB</strong> ou <strong>MySQL</strong>, lado a lado: instalação, usuário, conexão e diferenças entre os dois.</li>
+                    <li><code>estrutura.sql</code>, <code>dados.sql</code> e <code>dados-teste.sql</code>, com scripts para recriar o banco.</li>
+                    <li>Repositório com consultas preparadas e o teste de integração.</li>
+                    <li>Formato JSON de cada rota e como testá-las antes de ter a tela.</li>
+                    <li><code>fetch</code> no front-end: GET, POST e PATCH, tratamento de erros e a mensagem para o usuário.</li>
+                </ul>
+            </section>
+
+            <section class="etapa etapa--planejada" id="frontend" aria-labelledby="titulo-frontend">
+                <header class="etapa__cabecalho">
+                    <p class="etapa__numero">Etapa 6 <span class="selo">em breve</span></p>
+                    <h2 class="etapa__titulo" id="titulo-frontend">Front-end e testes</h2>
+                    <p class="etapa__resumo">A tela de empréstimos com visão, controladora e serviço separados, testes unitários e testes de ponta a ponta.</p>
+                </header>
+                <ul class="lista-planejada">
+                    <li>Criar o projeto com PNPM e Vite; <code>index.html</code>, páginas e roteamento.</li>
+                    <li>Visão, controladora e serviço separados, e testes com Vitest usando uma visão falsa.</li>
+                    <li>Cenários em <code>.feature</code>, testes com Playwright e o Page Object <code>TelaEmprestimos</code>.</li>
+                    <li>Imagens da aplicação rodando no navegador em cada passo.</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+<!-- === Botao de volta ao portfolio - cole antes de </body> === -->
+<a id="mr-portfolio-btn" href="https://matheusmerlim1.github.io/" target="_blank" rel="noopener"
+   aria-label="Abrir o portf&oacute;lio de Matheus Raposo" title="Ver todos os meus projetos">
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>
+  </svg>
+  <span>Portf&oacute;lio</span>
+</a>
+<style>
+#mr-portfolio-btn {
+  position: fixed; top: 12px; right: 12px; z-index: 2147483000;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .42rem .8rem; border-radius: 999px;
+  font: 600 13px/1 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e8edf5; text-decoration: none; white-space: nowrap;
+  background: rgba(18,24,38,.92);
+  border: 1px solid rgba(88,166,255,.45);
+  box-shadow: 0 2px 12px rgba(0,0,0,.35);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  transition: transform .15s, border-color .15s, background .15s;
+}
+#mr-portfolio-btn:hover {
+  transform: translateY(-1px); color: #fff; text-decoration: none;
+  background: rgba(24,32,50,.96); border-color: #58a6ff;
+}
+#mr-portfolio-btn:focus-visible { outline: 2px solid #58a6ff; outline-offset: 2px; }
+@media (max-width: 520px) {
+  #mr-portfolio-btn { padding: .45rem; }
+  #mr-portfolio-btn span { display: none; }
+}
+@media print { #mr-portfolio-btn { display: none; } }
+</style>
+<script>
+/* Abre espaco para o botao em vez de cobrir o que ja existia no canto.
+   1) empurra para a esquerda o conteudo da barra que ocupa aquele espaco;
+   2) se ainda sobrar sobreposicao, desloca o proprio item. */
+(function () {
+  var btn = document.getElementById('mr-portfolio-btn');
+  if (!btn) return;
+
+  var desfazer = [];
+
+  function limpar() {
+    for (var i = 0; i < desfazer.length; i++) desfazer[i]();
+    desfazer = [];
+  }
+
+  function guardar(el, prop) {
+    var antes = el.style[prop];
+    desfazer.push(function () { el.style[prop] = antes; });
+  }
+
+  /* item discreto = nao ocupa quase toda a largura; e um controle, rotulo ou icone */
+  function ehItem(el) {
+    if (!el || el === document.body || el === document.documentElement) return false;
+    return el.getBoundingClientRect().width < innerWidth * 0.7;
+  }
+
+  /* sobe ate a barra que contem o item (algo largo o bastante para ter padding) */
+  function barra(el) {
+    for (var n = 0; el && n < 8; n++, el = el.parentElement) {
+      if (el === document.body || el === document.documentElement) return null;
+      if (el.getBoundingClientRect().width >= innerWidth * 0.6) return el;
+    }
+    return null;
+  }
+
+  function encosta(a, b) {
+    return !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
+  }
+
+  function varrer() {
+    var r = btn.getBoundingClientRect();
+    var y = Math.round(r.top + r.height / 2);
+    var achados = [];
+    btn.style.visibility = 'hidden';
+    for (var x = Math.floor(r.right); x > r.left - 10; x -= 8) {
+      if (x < 1 || x > innerWidth - 1) continue;
+      var sob = document.elementFromPoint(x, y);
+      if (ehItem(sob) && achados.indexOf(sob) < 0) achados.push(sob);
+    }
+    btn.style.visibility = '';
+    return achados;
+  }
+
+  function ajustar() {
+    limpar();
+    var r = btn.getBoundingClientRect();
+    if (!r.width) return;
+    var reserva = Math.ceil(r.width + 20);
+
+    /* 1) padding na barra: desloca o conteudo dela para a esquerda */
+    var barras = [];
+    varrer().forEach(function (item) {
+      var b = barra(item);
+      if (b && barras.indexOf(b) < 0) barras.push(b);
+    });
+    barras.forEach(function (b) {
+      if ((parseFloat(getComputedStyle(b).paddingRight) || 0) >= reserva) return;
+      guardar(b, 'paddingRight');
+      b.style.paddingRight = reserva + 'px';
+    });
+
+    /* 2) o que continuar embaixo do botao (tipicamente position:absolute,
+          que nao anda com padding) e deslocado individualmente */
+    r = btn.getBoundingClientRect();
+    varrer().forEach(function (item) {
+      if (!encosta(item.getBoundingClientRect(), r)) return;
+      var cs = getComputedStyle(item);
+      if (cs.position === 'absolute' || cs.position === 'fixed') {
+        var atual = parseFloat(cs.right);
+        guardar(item, 'right');
+        item.style.right = (isNaN(atual) ? reserva : atual + reserva) + 'px';
+      } else {
+        guardar(item, 'marginRight');
+        item.style.marginRight =
+          ((parseFloat(cs.marginRight) || 0) + reserva) + 'px';
+      }
+    });
+
+    /* 3) rede de seguranca: o que insistir em ficar embaixo do botao e
+          deslocado no proprio elemento. transform sempre move, seja qual
+          for o position, o display ou o container. */
+    for (var tent = 0; tent < 3; tent++) {
+      r = btn.getBoundingClientRect();
+      var teimosos = varrer().filter(function (item) {
+        return encosta(item.getBoundingClientRect(), r);
+      });
+      if (!teimosos.length) break;
+      teimosos.forEach(function (item) {
+        var caixa = item.getBoundingClientRect();
+        var passo = Math.ceil(caixa.right - r.left + 10);
+        if (passo <= 0) return;
+        guardar(item, 'transform');
+        item.style.transform = 'translateX(-' + passo + 'px)';
+      });
+    }
+
+    btn.setAttribute('data-mr-ok', '1');   /* marca que o ajuste ja rodou */
+  }
+
+  var pendente = 0;
+  function agendar() {
+    /* sem requestAnimationFrame de proposito: ele nao dispara quando a pagina
+       esta em aba oculta ou em iframe fora da tela, e as leituras de layout
+       abaixo ja forcam o recalculo sozinhas */
+    clearTimeout(pendente);
+    pendente = setTimeout(ajustar, 60);
+  }
+
+  agendar();
+  addEventListener('DOMContentLoaded', agendar);
+  addEventListener('load', agendar);
+  addEventListener('resize', agendar);
+
+  /* muita pagina monta o cabecalho por JS depois do load; refaz o calculo
+     quando o DOM mudar e em algumas passadas tardias, por seguranca */
+  if (window.MutationObserver) {
+    new MutationObserver(agendar).observe(document.documentElement,
+      { childList: true, subtree: true });
+  }
+  [400, 1200, 3000].forEach(function (t) { setTimeout(agendar, t); });
+})();
+</script>
+<!-- === fim do botao === -->
+</body>
+</html>

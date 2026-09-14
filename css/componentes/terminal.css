@@ -1,0 +1,118 @@
+.terminal {
+    margin: var(--espaco-3) 0;
+    overflow: hidden;
+    border: 1px solid #30363d;
+    border-radius: var(--raio-pequeno);
+    background: #0c0c0c;
+    box-shadow: var(--sombra);
+}
+
+.terminal__barra {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    padding: 0.3rem 0.4rem 0.3rem var(--espaco-3);
+    background: #1f1f1f;
+    border-bottom: 1px solid #30363d;
+    font-family: var(--fonte-texto);
+    font-size: 0.76rem;
+    color: #c8c8c8;
+}
+
+.terminal__icone {
+    font-family: var(--fonte-codigo);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #8fd18f;
+}
+
+.terminal__titulo {
+    min-width: 0;
+    margin-right: auto;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.terminal__botao {
+    flex: none;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    background: transparent;
+    color: #c8c8c8;
+    font: inherit;
+    cursor: pointer;
+}
+
+.terminal__botao:hover {
+    border-color: #6a6a6a;
+    color: #ffffff;
+}
+
+.terminal__tela {
+    max-height: 30rem;
+    margin: 0;
+    padding: var(--espaco-3) var(--espaco-4);
+    overflow: auto;
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: #cccccc;
+}
+
+.terminal__linha {
+    display: block;
+    min-height: 1.45em;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.terminal__prompt {
+    color: #cccccc;
+}
+
+.terminal__comando {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.terminal__cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 1px;
+    vertical-align: text-bottom;
+    background: #cccccc;
+    animation: terminal-piscar 1s steps(1) infinite;
+}
+
+.terminal__espaco:last-child {
+    display: none;
+}
+
+.terminal__verde { color: #5fd35f; }
+.terminal__vermelho { color: #f25f5c; }
+.terminal__ciano { color: #5ccfe6; }
+.terminal__amarelo { color: #e5c07b; }
+.terminal__negrito { color: #ffffff; font-weight: 700; }
+
+@keyframes terminal-piscar {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 560px) {
+    .terminal__titulo {
+        display: none;
+    }
+
+    .terminal__barra {
+        justify-content: flex-end;
+    }
+
+    .terminal__icone {
+        margin-right: auto;
+    }
+}

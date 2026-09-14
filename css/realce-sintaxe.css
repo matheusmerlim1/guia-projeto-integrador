@@ -1,0 +1,32 @@
+.rs-comentario {
+    color: #7d8794;
+    font-style: italic;
+}
+
+.rs-texto {
+    color: #b5d68a;
+}
+
+.rs-numero {
+    color: #f0a36b;
+}
+
+.rs-palavra-chave {
+    color: #d49bf0;
+}
+
+.rs-tipo {
+    color: #6fc9e8;
+}
+
+.rs-funcao {
+    color: #f2d27a;
+}
+
+.rs-variavel {
+    color: #f28b82;
+}
+
+.rs-anotacao {
+    color: #e6a0c4;
+}

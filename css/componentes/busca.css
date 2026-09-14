@@ -1,0 +1,117 @@
+.busca {
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-2);
+    margin: 0 0 var(--espaco-6);
+    padding: var(--espaco-2);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+}
+
+.busca[data-ativa="true"] {
+    position: sticky;
+    top: calc(var(--altura-topo) + var(--espaco-2));
+    border-color: var(--cor-destaque);
+    box-shadow: var(--sombra);
+}
+
+.busca__icone {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    margin-left: var(--espaco-2);
+    border: 2px solid var(--cor-texto-suave);
+    border-radius: 50%;
+    position: relative;
+}
+
+.busca__icone::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    bottom: -4px;
+    width: 6px;
+    height: 2px;
+    background: var(--cor-texto-suave);
+    transform: rotate(45deg);
+}
+
+.busca__campo {
+    flex: 1 1 12rem;
+    min-width: 0;
+    padding: 0.4rem var(--espaco-2);
+    border: 0;
+    background: transparent;
+    color: var(--cor-texto);
+    font: inherit;
+}
+
+.busca__campo:focus {
+    outline: none;
+}
+
+.busca:focus-within {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 1px;
+}
+
+.busca__campo::-webkit-search-cancel-button {
+    display: none;
+}
+
+.busca__contador {
+    font-size: 0.82rem;
+    color: var(--cor-texto-suave);
+    white-space: nowrap;
+}
+
+.busca__botoes {
+    display: flex;
+    gap: var(--espaco-1);
+}
+
+.busca__botao {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 var(--espaco-2);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pequeno);
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.busca__botao:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.busca__destaque {
+    padding: 0 1px;
+    color: inherit;
+    background: #ffe28a;
+    border-radius: 2px;
+}
+
+.busca__destaque--atual {
+    background: #ff9f43;
+    box-shadow: 0 0 0 2px #ff9f43;
+}
+
+.terminal .busca__destaque,
+.bloco-codigo .busca__destaque {
+    color: #1d232a;
+}
+
+@media (max-width: 560px) {
+    .busca__contador {
+        order: 3;
+        width: 100%;
+        padding-left: var(--espaco-2);
+    }
+}

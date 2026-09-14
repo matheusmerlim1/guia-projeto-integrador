@@ -1,0 +1,22 @@
+# Somente a página é publicada: index.html, css, js e img.
+ferramentas/
+
+# Credenciais e segredos
+.env
+*.env
+secrets.json
+token.txt
+
+# Documentos pessoais
+*.pdf
+
+# Dependências
+node_modules/
+vendor/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Guias locais
+githubGuia.md

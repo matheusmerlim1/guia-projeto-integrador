@@ -1,0 +1,113 @@
+.bloco-codigo {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--cor-codigo-borda);
+    border-radius: var(--raio);
+    background: var(--cor-codigo-fundo);
+    color: var(--cor-codigo-texto);
+}
+
+.bloco-codigo__cabecalho {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-3);
+    padding: var(--espaco-2) var(--espaco-3) var(--espaco-2) var(--espaco-4);
+    background: var(--cor-codigo-cabecalho);
+    border-bottom: 1px solid var(--cor-codigo-borda);
+    font-size: 0.82rem;
+}
+
+.bloco-codigo__arquivo {
+    min-width: 0;
+    font-family: var(--fonte-codigo);
+    color: var(--cor-codigo-texto);
+    overflow-wrap: anywhere;
+}
+
+.bloco-codigo__pasta {
+    color: var(--cor-codigo-suave);
+}
+
+.bloco-codigo__copiar {
+    flex: none;
+    margin-left: auto;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--cor-codigo-borda);
+    border-radius: var(--raio-pequeno);
+    background: transparent;
+    color: var(--cor-codigo-suave);
+    font: inherit;
+    font-size: 0.78rem;
+    cursor: pointer;
+}
+
+.bloco-codigo__copiar:hover {
+    color: var(--cor-codigo-texto);
+    border-color: var(--cor-codigo-suave);
+}
+
+.bloco-codigo__copiar[data-copiado="true"] {
+    color: #7fd0c7;
+    border-color: #3f7d76;
+}
+
+.bloco-codigo__pre {
+    margin: 0;
+    padding: var(--espaco-4) 0;
+    overflow-x: auto;
+    font-family: var(--fonte-codigo);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    tab-size: 4;
+}
+
+.bloco-codigo__pre code {
+    display: block;
+    min-width: max-content;
+    padding: 0;
+    background: none;
+    font-size: inherit;
+    counter-reset: linha;
+    overflow-wrap: normal;
+}
+
+.bloco-codigo__linha {
+    display: block;
+    padding-right: var(--espaco-5);
+    white-space: pre;
+}
+
+.bloco-codigo__linha::before {
+    counter-increment: linha;
+    content: counter(linha);
+    display: inline-block;
+    width: 3.2rem;
+    padding-right: var(--espaco-4);
+    text-align: right;
+    color: var(--cor-codigo-suave);
+    opacity: 0.55;
+    user-select: none;
+}
+
+.bloco-codigo__comando {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--espaco-2) var(--espaco-3);
+    padding: var(--espaco-3) var(--espaco-4);
+    border-top: 1px solid var(--cor-codigo-borda);
+    background: var(--cor-codigo-cabecalho);
+    font-size: 0.82rem;
+    color: var(--cor-codigo-suave);
+}
+
+.bloco-codigo__comando code {
+    background: transparent;
+    color: var(--cor-codigo-texto);
+    padding: 0;
+}
+
+.bloco-codigo__comando code::before {
+    content: "$ ";
+    color: var(--cor-codigo-suave);
+}
