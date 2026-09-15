@@ -77,3 +77,52 @@
     color: var(--cor-destaque-forte);
     background: var(--cor-destaque-suave);
 }
+
+.arvore-texto {
+    margin: var(--espaco-4) 0;
+    padding: var(--espaco-4) var(--espaco-5);
+    overflow-x: auto;
+    font-family: var(--fonte-codigo);
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--cor-codigo-texto);
+    background: var(--cor-codigo-fundo);
+    border-radius: var(--raio);
+}
+
+.arvore-texto__nota {
+    color: var(--cor-codigo-suave);
+    font-style: italic;
+}
+
+.grade-comparacao {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--espaco-4);
+    margin: var(--espaco-4) 0;
+}
+
+.grade-comparacao__coluna {
+    padding: var(--espaco-4) var(--espaco-5);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-top-width: 4px;
+    border-radius: var(--raio);
+}
+
+.grade-comparacao__coluna--sim {
+    border-top-color: #1f9d55;
+}
+
+.grade-comparacao__coluna--nao {
+    border-top-color: #c0262d;
+}
+
+.grade-comparacao__titulo {
+    margin-bottom: var(--espaco-2);
+    font-weight: 700;
+}
+
+.grade-comparacao__coluna .lista-marcada {
+    margin-bottom: 0;
+}

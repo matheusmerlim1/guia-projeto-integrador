@@ -24,6 +24,7 @@
 
     <script src="js/nucleo/espaco-nomes.js" defer></script>
     <script src="js/nucleo/preferencias.js" defer></script>
+    <script src="js/nucleo/projeto-atual.js" defer></script>
     <script src="js/dados/etapas.js" defer></script>
     <script src="js/dados/linguagens.js" defer></script>
     <script src="js/dados/projeto/backend-php.js" defer></script>
@@ -45,12 +46,19 @@
     <script src="js/dados/terminais/git-branch.js" defer></script>
     <script src="js/dados/terminais/git-dupla.js" defer></script>
     <script src="js/dados/terminais/git-desfazer.js" defer></script>
+    <script src="js/dados/terminais/pastas.js" defer></script>
+    <script src="js/dados/terminais/backend.js" defer></script>
+    <script src="js/dados/terminais/banco.js" defer></script>
+    <script src="js/dados/terminais/frontend.js" defer></script>
     <script src="js/simulador/dados-simulados.js" defer></script>
     <script src="js/simulador/api-simulada.js" defer></script>
     <script src="js/simulador/tela-simulada.js" defer></script>
     <script src="js/componentes/realce-sintaxe.js" defer></script>
     <script src="js/componentes/bloco-codigo.js" defer></script>
     <script src="js/componentes/arquivo-fixo.js" defer></script>
+    <script src="js/componentes/arquivo-do-projeto.js" defer></script>
+    <script src="js/componentes/imagem-estrutura.js" defer></script>
+    <script src="js/componentes/conteudo-por-variante.js" defer></script>
     <script src="js/componentes/visualizador-linguagens.js" defer></script>
     <script src="js/componentes/seletor-linguagem.js" defer></script>
     <script src="js/componentes/terminal.js" defer></script>
@@ -117,11 +125,11 @@
                     Cada etapa mostra o que fazer, em que pasta, com qual comando e como testar.
                     Escolha no topo da página a linguagem do back-end e do front-end: o código e a estrutura do projeto se ajustam à escolha.
                 </p>
-                <div class="aviso aviso--atencao">
-                    <p class="aviso__titulo">Prévia para avaliação</p>
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Como usar este guia</p>
                     <p>
-                        Estão prontas a <a href="#exemplo">Etapa 0</a>, com o exemplo, suas regras, o diagrama de classes e o código,
-                        e a <a href="#git">Etapa 1</a>, com o Git e o GitHub passo a passo. As etapas marcadas como “em breve” mostram o que será construído.
+                        Siga as etapas na ordem da coluna da esquerda. Os comandos e as respostas dos terminais foram executados de verdade, e o botão
+                        <strong>▶ Reproduzir</strong> de cada terminal mostra o comando sendo digitado. Clique em qualquer arquivo da estrutura do projeto para ver o código completo.
                     </p>
                 </div>
             </section>
@@ -210,6 +218,7 @@
                 <p>
                     Construído em quatro passos: primeiro as entidades do negócio, depois os
                     comportamentos de negócio, depois os atributos que sustentam esses comportamentos e, por fim, as associações.
+                    O passo a passo, com uma imagem para cada passo, está na <a href="#modelagem">Etapa 2</a>.
                 </p>
                 <figure class="diagrama">
                     <div class="diagrama__area">
@@ -485,75 +494,853 @@
                 </div>
             </section>
 
-            <section class="etapa etapa--planejada" id="modelagem" aria-labelledby="titulo-modelagem">
+            <section class="etapa" id="modelagem" aria-labelledby="titulo-modelagem">
                 <header class="etapa__cabecalho">
-                    <p class="etapa__numero">Etapa 2 <span class="selo">em breve</span></p>
+                    <p class="etapa__numero">Etapa 2</p>
                     <h2 class="etapa__titulo" id="titulo-modelagem">Modelagem e diagramas</h2>
-                    <p class="etapa__resumo">Como sair do minimundo e chegar aos diagramas.</p>
+                    <p class="etapa__resumo">
+                        Como sair do minimundo e chegar ao diagrama de classes do domínio e, depois, aos diagramas da arquitetura
+                        que orientam o código.
+                    </p>
                 </header>
-                <ul class="lista-planejada">
-                    <li>A modelagem passo a passo: entidades, comportamentos, atributos e associações, com a imagem do diagrama crescendo a cada passo.</li>
-                    <li>Erros comuns lado a lado: diagrama com cara de modelo relacional, <code>id</code> no modelo, atributo no lugar de associação.</li>
-                    <li>Imagem do diagrama parcial da arquitetura para “registrar empréstimo”: visão, controladora, serviço, gestor e repositórios.</li>
-                    <li>Uma organização de pastas simples para os arquivos de modelagem.</li>
-                </ul>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">2.1</span> Encontrar as entidades no minimundo</h3>
+                    <p>
+                        Leia o <a href="#exemplo">minimundo</a> procurando os substantivos: as coisas de que o negócio fala.
+                        Cada candidato vira uma classe, um atributo, um comportamento ou é descartado. Decida olhando para o
+                        <strong>escopo</strong>: o que não participa de nenhuma funcionalidade fica de fora.
+                    </p>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Candidato</th>
+                                    <th scope="col">Decisão</th>
+                                    <th scope="col">Por quê</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>empréstimo</td><td><strong>Classe</strong> <code>Emprestimo</code></td><td>Liga um livro a um leitor e concentra as regras de prazo, multa e devolução.</td></tr>
+                                <tr><td>livro</td><td><strong>Classe</strong> <code>Livro</code></td><td>Tem dados próprios e é o que se empresta.</td></tr>
+                                <tr><td>leitor</td><td><strong>Classe</strong> <code>Leitor</code></td><td>Tem dados próprios e uma regra: o limite de empréstimos em aberto.</td></tr>
+                                <tr><td>título, autor, ano</td><td>Atributos de <code>Livro</code></td><td>Descrevem o livro; não têm dados nem regras próprias.</td></tr>
+                                <tr><td>nome, telefone</td><td>Atributos de <code>Leitor</code></td><td>Descrevem o leitor.</td></tr>
+                                <tr><td>data do empréstimo</td><td>Atributo de <code>Emprestimo</code></td><td>É a base para calcular o prazo e a multa.</td></tr>
+                                <tr><td>prazo, multa, atraso</td><td>Comportamentos de <code>Emprestimo</code></td><td>São calculados a partir das datas; não precisam ser guardados.</td></tr>
+                                <tr><td>biblioteca</td><td>Descartado</td><td>É o próprio negócio que o sistema atende; não há várias bibliotecas.</td></tr>
+                                <tr><td>caderno</td><td>Descartado</td><td>É o jeito atual de trabalhar, que o sistema vai substituir.</td></tr>
+                                <tr><td>bairro, moradores</td><td>Descartado</td><td>Não aparecem em nenhuma funcionalidade do escopo.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">2.2</span> Montar o diagrama em quatro passos</h3>
+                    <p>O diagrama cresce aos poucos. Em cada passo, a imagem mostra o que foi acrescentado.</p>
+                    <ol class="passos">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Desenhe só as entidades</p>
+                            <p class="passo__explicacao">
+                                Uma caixa para cada classe encontrada, com o nome no singular e em <em>PascalCase</em>
+                                (<code>Emprestimo</code>, não <code>emprestimos</code>). Ainda não pense em atributos.
+                            </p>
+                            <figure class="diagrama">
+                                <div class="diagrama__area">
+                                    <img class="diagrama__imagem" src="img/diagramas/modelagem-1-entidades.svg" width="860" height="510" loading="lazy"
+                                        alt="Três caixas vazias com os nomes Emprestimo, Livro e Leitor.">
+                                </div>
+                            </figure>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Acrescente os comportamentos do negócio</p>
+                            <p class="passo__explicacao">
+                                Pergunte o que cada entidade faz ou sabe responder <strong>no negócio</strong>: o empréstimo sabe a data limite,
+                                pode ser devolvido e calcula a multa; o leitor sabe se pode pegar mais um livro. Operações como
+                                <code>salvar()</code> ou <code>buscarTodos()</code> são do sistema, não do negócio, e não entram aqui.
+                            </p>
+                            <figure class="diagrama">
+                                <div class="diagrama__area">
+                                    <img class="diagrama__imagem" src="img/diagramas/modelagem-2-comportamentos.svg" width="860" height="510" loading="lazy"
+                                        alt="Emprestimo com as operações dataLimite, estaEmAberto, devolver, diasDeAtraso e calcularMulta; Leitor com podePegarEmprestado; Livro ainda vazio.">
+                                </div>
+                            </figure>
+                            <p class="passo__observe"><strong class="passo__rotulo">Sintaxe: </strong><code>+ devolver(data: Date): void</code> — o <code>+</code> indica visibilidade pública, depois vêm o nome, os parâmetros com tipo e o tipo de retorno.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Acrescente os atributos que sustentam os comportamentos</p>
+                            <p class="passo__explicacao">
+                                Para calcular a multa, o empréstimo precisa da data em que foi feito; para saber se está em aberto, da data de devolução,
+                                que pode não existir — por isso <code>[0..1]</code>. Depois, acrescente os dados que o negócio registra: título, autor e ano do livro;
+                                nome e telefone do leitor. Não crie o atributo <code>multa</code>: ele repetiria o que <code>calcularMulta()</code> já responde.
+                            </p>
+                            <figure class="diagrama">
+                                <div class="diagrama__area">
+                                    <img class="diagrama__imagem" src="img/diagramas/modelagem-3-atributos.svg" width="860" height="510" loading="lazy"
+                                        alt="As três classes com atributos e operações, ainda sem ligações entre elas.">
+                                </div>
+                            </figure>
+                            <p class="passo__observe"><strong class="passo__rotulo">Sintaxe: </strong><code>- dataEmprestimo: Date</code> — o <code>-</code> indica visibilidade privada, seguida do nome e do tipo.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Ligue as entidades com associações</p>
+                            <p class="passo__explicacao">
+                                O empréstimo precisa conhecer o livro e o leitor, então as setas saem de <code>Emprestimo</code>. O livro não precisa conhecer seus empréstimos
+                                para cumprir nenhuma regra, por isso não há seta no sentido contrário. Cada ligação recebe um <strong>rótulo de leitura</strong> com a direção
+                                (“Emprestimo refere-se a Livro”) e a <strong>multiplicidade</strong>: um empréstimo refere-se a exatamente <code>1</code> livro, e um livro
+                                aparece em vários (<code>*</code>) empréstimos ao longo do tempo.
+                            </p>
+                            <figure class="diagrama">
+                                <div class="diagrama__area">
+                                    <img class="diagrama__imagem" src="img/diagramas/modelo-essencial.svg" width="860" height="510" loading="lazy"
+                                        alt="Diagrama final: Emprestimo refere-se a um Livro e é feito por um Leitor; cada livro e cada leitor podem ter vários empréstimos.">
+                                </div>
+                            </figure>
+                        </div></li>
+                    </ol>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">2.3</span> Erros comuns</h3>
+                    <p>O diagrama abaixo tem os erros que mais aparecem. Tudo o que está em vermelho deveria sair ou ser feito de outro jeito.</p>
+                    <figure class="diagrama">
+                        <div class="diagrama__area">
+                            <img class="diagrama__imagem" src="img/diagramas/modelagem-erros.svg" width="860" height="510" loading="lazy"
+                                alt="Diagrama errado: classes com id, livroId e leitorId, atributo multa, operações salvar e excluir, e linhas sem seta, rótulo nem multiplicidade.">
+                        </div>
+                        <figcaption class="diagrama__legenda">Como não fazer: um diagrama com cara de tabelas de banco de dados.</figcaption>
+                    </figure>
+                    <ol class="lista-numerada">
+                        <li><strong><code>id</code>, <code>livroId</code> e <code>leitorId</code></strong> são colunas do banco. No modelo de classes, o empréstimo se liga ao livro e ao leitor pela associação, não por números.</li>
+                        <li><strong><code>multa</code> como atributo</strong> duplica o que pode ser calculado a partir das datas. Com as duas coisas, elas podem discordar.</li>
+                        <li><strong><code>salvar()</code> e <code>excluir()</code></strong> tratam de armazenamento, responsabilidade dos repositórios, e não de regras do negócio.</li>
+                        <li><strong>Linhas sem seta, rótulo e multiplicidade</strong> não dizem quem conhece quem, como se lê a relação nem quantos objetos participam.</li>
+                        <li><strong><code>dataDevolucao</code> sem <code>[0..1]</code></strong> esconde que um empréstimo pode estar em aberto.</li>
+                    </ol>
+                    <div class="aviso aviso--atencao">
+                        <p class="aviso__titulo">Sinal de alerta</p>
+                        <p>Se o diagrama de classes parece um diagrama de tabelas (entidade-relacionamento), provavelmente está descrevendo o banco de dados, e não os objetos e seus comportamentos. Recomece pelo passo 1.</p>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">2.4</span> Da modelagem para a arquitetura</h3>
+                    <p>
+                        O modelo essencial descreve o negócio. Para programar, as responsabilidades são divididas em partes, e cada parte vira uma classe ou arquivo.
+                        Os diagramas de arquitetura são <strong>parciais</strong>: mostram só as classes de uma funcionalidade — aqui, a de empréstimos.
+                    </p>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Parte</th>
+                                    <th scope="col">Responsabilidade</th>
+                                    <th scope="col">No projeto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Visão</td><td>Mostra os dados e captura as ações do usuário. É a única parte que mexe no HTML.</td><td><code>VisaoEmprestimosEmHtml</code></td></tr>
+                                <tr><td>Controladora</td><td>Recebe as ações da visão, chama o serviço e manda a visão exibir o resultado.</td><td><code>ControladoraEmprestimos</code></td></tr>
+                                <tr><td>Serviço do front-end</td><td>Faz as requisições <code>fetch</code> para a API.</td><td><code>ServicoEmprestimos</code></td></tr>
+                                <tr><td>Rotas</td><td>Recebem a requisição HTTP, chamam o gestor e devolvem JSON.</td><td><code>rotas</code> / <code>RotasEmprestimos</code></td></tr>
+                                <tr><td>Gestor</td><td>Serviço de aplicação: coordena o caso de uso usando repositórios e entidades.</td><td><code>GestorEmprestimos</code></td></tr>
+                                <tr><td>Repositório</td><td>Interface que define como os dados são lidos e gravados.</td><td><code>RepositorioEmprestimos</code></td></tr>
+                                <tr><td>Repositório em BDR</td><td>Implementa a interface com o banco de dados relacional.</td><td><code>RepositorioEmprestimosEmBDR</code></td></tr>
+                                <tr><td>Entidade</td><td>Guarda os dados e as regras do negócio.</td><td><code>Emprestimo</code>, <code>Livro</code>, <code>Leitor</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Back-end</h4>
+                    <figure class="diagrama">
+                        <div class="diagrama__area">
+                            <img class="diagrama__imagem" src="img/diagramas/arquitetura-backend.svg" width="980" height="870" loading="lazy"
+                                alt="As rotas usam o GestorEmprestimos, que cria e usa Emprestimo e depende das interfaces RepositorioEmprestimos, RepositorioLivros e RepositorioLeitores. RepositorioEmprestimosEmBDR implementa RepositorioEmprestimos.">
+                        </div>
+                        <figcaption class="diagrama__legenda">Arquitetura parcial do back-end. O gestor depende das interfaces, não do banco: por isso os testes usam dublês.</figcaption>
+                    </figure>
+
+                    <h4>Front-end</h4>
+                    <figure class="diagrama">
+                        <div class="diagrama__area">
+                            <img class="diagrama__imagem" src="img/diagramas/arquitetura-frontend.svg" width="860" height="840" loading="lazy"
+                                alt="O index cria a ControladoraEmprestimos, que usa a interface VisaoEmprestimos e o ServicoEmprestimos. VisaoEmprestimosEmHtml implementa a visão, e o serviço faz fetch para a API do back-end.">
+                        </div>
+                        <figcaption class="diagrama__legenda">Arquitetura parcial do front-end. A controladora conversa com a visão pela interface: por isso é testada com uma visão falsa.</figcaption>
+                    </figure>
+
+                    <div class="aviso aviso--dica">
+                        <p class="aviso__titulo">Como ler as ligações</p>
+                        <ul class="lista-marcada">
+                            <li><strong>Linha contínua com seta aberta:</strong> associação — a classe guarda uma referência à outra e a usa.</li>
+                            <li><strong>Linha tracejada com seta aberta:</strong> dependência — a classe usa ou cria a outra só durante uma operação.</li>
+                            <li><strong>Linha tracejada com triângulo vazado:</strong> realização — a classe implementa a interface.</li>
+                            <li><strong>Texto entre «»:</strong> estereótipo, que diz o papel da caixa, como <code>«interface»</code> ou <code>«entidade»</code>.</li>
+                            <li>Em JavaScript não existem interfaces na linguagem, mas o diagrama continua valendo como contrato: a classe precisa ter os mesmos métodos.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">2.5</span> Onde guardar os diagramas</h3>
+                    <p>
+                        Guarde o minimundo e os diagramas na pasta <code>docs/</code>, na raiz do projeto. Assim eles entram no Git junto com o código
+                        e são atualizados quando o projeto muda. No explorador à esquerda, abra a pasta <code>docs</code> para ver cada arquivo.
+                    </p>
+<pre class="arvore-texto">biblioteca-comunitaria/
+├── backend/
+├── frontend/
+└── docs/
+    ├── minimundo.md              <span class="arvore-texto__nota">minimundo, escopo e regras</span>
+    └── diagramas/
+        ├── modelo-essencial.svg      <span class="arvore-texto__nota">modelo de domínio</span>
+        ├── arquitetura-backend.svg   <span class="arvore-texto__nota">arquitetura parcial do back-end</span>
+        └── arquitetura-frontend.svg  <span class="arvore-texto__nota">arquitetura parcial do front-end</span></pre>
+                    <p>
+                        Os diagramas podem ser feitos em ferramentas como Astah, draw.io ou PlantUML. Exporte a imagem (PNG ou SVG) para <code>docs/diagramas</code>
+                        e guarde, na mesma pasta, o arquivo editável da ferramenta (como <code>.asta</code> ou <code>.drawio</code>), para poder alterar depois.
+                    </p>
+                </div>
             </section>
 
-            <section class="etapa etapa--planejada" id="pastas" aria-labelledby="titulo-pastas">
+            <section class="etapa" id="pastas" aria-labelledby="titulo-pastas">
                 <header class="etapa__cabecalho">
-                    <p class="etapa__numero">Etapa 3 <span class="selo">em breve</span></p>
+                    <p class="etapa__numero">Etapa 3</p>
                     <h2 class="etapa__titulo" id="titulo-pastas">Pastas do projeto</h2>
-                    <p class="etapa__resumo">A estrutura completa, arquivo por arquivo, e o que cada um faz.</p>
+                    <p class="etapa__resumo">Como organizar as pastas, criá-las pelo terminal e decidir o que entra no repositório.</p>
                 </header>
-                <ul class="lista-planejada">
-                    <li>Imagem de como a organização das pastas fica no editor, para cada combinação de linguagens.</li>
-                    <li>Passo a passo de criação das pastas e dos arquivos iniciais.</li>
-                    <li>O <code>README.md</code> completo: integrantes, comandos para rodar e referências.</li>
-                    <li>O que entra e o que não entra no repositório.</li>
-                </ul>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">3.1</span> A organização completa</h3>
+                    <p>
+                        É assim que o projeto aparece no explorador do editor quando está pronto. Todos os arquivos desta imagem estão
+                        na coluna da esquerda, em <strong>Estrutura do projeto</strong>, com o código completo.
+                    </p>
+                    <figure class="diagrama" data-imagem-estrutura>
+                        <div class="diagrama__area diagrama__area--escura">
+                            <img class="diagrama__imagem diagrama__imagem--estrutura" src="img/estrutura/backend-php--frontend-typescript.svg" width="1000" height="900" loading="lazy" alt="">
+                        </div>
+                        <figcaption class="diagrama__legenda"></figcaption>
+                    </figure>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">3.2</span> Por que separar assim</h3>
+                    <ul class="lista-marcada">
+                        <li><strong><code>backend</code> e <code>frontend</code> são projetos independentes</strong>: cada um tem suas dependências, seus comandos e seus testes, e é executado em um terminal próprio.</li>
+                        <li><strong>Uma pasta por funcionalidade</strong> (<code>emprestimo</code>, <code>livro</code>, <code>leitor</code>): tudo o que muda junto fica junto. Para mexer em empréstimos, basta abrir uma pasta.</li>
+                        <li><strong><code>infra</code> guarda o que é compartilhado</strong> por várias funcionalidades, como a conexão com o banco e as exceções.</li>
+                        <li><strong>Os testes ficam separados do código</strong>, em uma pasta própria, para não irem junto com a aplicação.</li>
+                        <li><strong><code>docs</code> guarda o minimundo e os diagramas</strong>, que evoluem junto com o código.</li>
+                    </ul>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Pasta</th>
+                                    <th scope="col">O que guarda</th>
+                                    <th scope="col">Exemplos</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>backend/src/emprestimo</code></td><td>Entidade, gestor, repositórios e rotas de uma funcionalidade</td><td><code>Emprestimo</code>, <code>GestorEmprestimos</code></td></tr>
+                                <tr><td><code>backend/src/infra</code></td><td>Código usado por várias funcionalidades</td><td>conexão, exceções, resposta</td></tr>
+                                <tr><td><code>backend/spec</code> ou <code>backend/test</code></td><td>Testes do back-end</td><td>testes da entidade, do gestor e do repositório</td></tr>
+                                <tr><td><code>backend/db</code></td><td>Scripts SQL do banco</td><td><code>estrutura.sql</code>, <code>dados.sql</code></td></tr>
+                                <tr><td><code>frontend/src/emprestimo</code></td><td>Visão, controladora e serviço da tela</td><td><code>ControladoraEmprestimos</code></td></tr>
+                                <tr><td><code>frontend/pages</code> e <code>frontend/style</code></td><td>HTML das telas e CSS</td><td><code>emprestimos.html</code></td></tr>
+                                <tr><td><code>frontend/test</code></td><td>Testes unitários do front-end</td><td>testes da controladora e do serviço</td></tr>
+                                <tr><td><code>frontend/e2e</code> e <code>frontend/feature</code></td><td>Testes de ponta a ponta e seus cenários</td><td><code>emprestimos.spec</code>, <code>emprestimo.feature</code></td></tr>
+                                <tr><td><code>docs</code></td><td>Minimundo e diagramas</td><td><code>minimundo.md</code>, <code>modelo-essencial.svg</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="texto-suave">
+                        O nome da pasta de testes depende da ferramenta: o Kahlan procura <code>spec</code>; o Vitest encontra os arquivos <code>.spec</code> em qualquer pasta, e o
+                        projeto usa <code>test</code>. No Java, o Maven exige <code>src/main/java</code> para o código, <code>src/test/java</code> para os testes e
+                        <code>src/main/resources</code> para os arquivos que não são código, como os scripts SQL.
+                    </p>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">3.3</span> Criar as pastas pelo terminal</h3>
+                    <p>
+                        Dentro da pasta do projeto clonado na <a href="#git">Etapa 1</a>, crie primeiro as pastas comuns a qualquer linguagem.
+                        Também é possível criá-las pelo editor; o terminal é mais rápido quando são muitas.
+                    </p>
+                    <div data-passo-a-passo="pastas.raiz"></div>
+                    <p>Em seguida, as pastas do back-end. Elas mudam conforme a linguagem escolhida no topo da página.</p>
+                    <div data-passo-a-passo="pastas.backend"></div>
+                    <div class="aviso aviso--atencao">
+                        <p class="aviso__titulo">O Git não guarda pastas vazias</p>
+                        <p>
+                            Depois de criar as pastas, <code>git status</code> não mostra nada de novo: o Git só acompanha arquivos. As pastas passam a aparecer
+                            no GitHub quando tiverem pelo menos um arquivo, o que acontece nas próximas etapas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">3.4</span> O que vai e o que não vai para o repositório</h3>
+                    <div class="grade-comparacao">
+                        <div class="grade-comparacao__coluna grade-comparacao__coluna--sim">
+                            <p class="grade-comparacao__titulo">Vai para o repositório</p>
+                            <ul class="lista-marcada">
+                                <li>Todo o código-fonte e os testes</li>
+                                <li>Os scripts SQL e a pasta <code>docs</code></li>
+                                <li><code>composer.json</code>, <code>package.json</code> ou <code>pom.xml</code>: a lista de dependências</li>
+                                <li><code>composer.lock</code> e <code>pnpm-lock.yaml</code>: as versões exatas instaladas, para todos usarem as mesmas</li>
+                                <li>Arquivos de configuração, como <code>tsconfig.json</code> e <code>phpstan.neon</code></li>
+                                <li><code>README.md</code> e <code>.gitignore</code></li>
+                            </ul>
+                        </div>
+                        <div class="grade-comparacao__coluna grade-comparacao__coluna--nao">
+                            <p class="grade-comparacao__titulo">Não vai para o repositório</p>
+                            <ul class="lista-marcada">
+                                <li><code>node_modules</code> e <code>vendor</code>: recriados com <code>pnpm install</code> e <code>composer install</code></li>
+                                <li><code>target</code> e <code>dist</code>: gerados pela compilação e pelo build</li>
+                                <li><code>test-results</code>, <code>playwright-report</code> e <code>coverage</code>: gerados pelos testes</li>
+                                <li>Senhas, chaves de acesso e arquivos <code>.env</code> com dados sensíveis</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p>O <code>.gitignore</code> na raiz do projeto impede que esses arquivos sejam adicionados por engano:</p>
+                    <div data-arquivo-projeto=".gitignore"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">3.5</span> O README.md</h3>
+                    <p>
+                        O <code>README.md</code> é a primeira coisa que aparece na página do repositório no GitHub. Ele deve permitir que qualquer pessoa
+                        coloque o projeto para funcionar sem perguntar nada a ninguém:
+                    </p>
+                    <ol class="lista-numerada">
+                        <li><strong>Integrantes</strong> do grupo.</li>
+                        <li><strong>Requisitos</strong>: o que precisa estar instalado.</li>
+                        <li><strong>Como executar</strong>: os comandos, na ordem, e em qual pasta cada um é digitado.</li>
+                        <li><strong>Testes</strong>: como rodar cada tipo de teste.</li>
+                        <li><strong>Referências</strong>: de onde vieram bibliotecas, estilos e imagens.</li>
+                    </ol>
+                    <p>O README abaixo muda com o back-end escolhido, porque os comandos são diferentes:</p>
+                    <div data-arquivo-projeto="README.md"></div>
+                </div>
             </section>
 
-            <section class="etapa etapa--planejada" id="backend" aria-labelledby="titulo-backend">
+            <section class="etapa" id="backend" aria-labelledby="titulo-backend">
                 <header class="etapa__cabecalho">
-                    <p class="etapa__numero">Etapa 4 <span class="selo">em breve</span></p>
+                    <p class="etapa__numero">Etapa 4</p>
                     <h2 class="etapa__titulo" id="titulo-backend">Back-end e testes</h2>
-                    <p class="etapa__resumo">Das classes de domínio às rotas, com teste em cada passo.</p>
+                    <p class="etapa__resumo">
+                        Da configuração do projeto às rotas da API, com um teste para cada regra. Os arquivos e os comandos desta etapa
+                        mudam conforme o back-end escolhido no topo da página.
+                    </p>
                 </header>
-                <ul class="lista-planejada">
-                    <li>Criar o projeto, configurar dependências e scripts, com terminais mostrando cada comando e a resposta.</li>
-                    <li><code>GestorEmprestimos</code> com as regras R3 e R4 e testes usando um dublê do repositório.</li>
-                    <li>Rotas <code>GET</code>, <code>POST</code> e <code>PATCH</code> de <code>/emprestimos</code> com CORS.</li>
-                    <li>Imagens dos testes rodando, da saída com falha e com sucesso, e da análise estática.</li>
-                </ul>
+
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">A ordem de construção</p>
+                    <p>
+                        O back-end é construído de dentro para fora, seguindo a <a href="#modelagem">arquitetura</a>: primeiro as entidades e seus testes
+                        (<a href="#exemplo">Etapa 0</a>), depois as interfaces dos repositórios, o gestor com seus testes e, por fim, as rotas.
+                        O acesso ao banco de dados fica para a <a href="#banco">Etapa 5</a>: graças às interfaces, tudo o que vem antes é testado sem banco.
+                    </p>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.1</span> Configurar o projeto e instalar as dependências</h3>
+                    <p>
+                        O arquivo de configuração lista as bibliotecas usadas e os <strong>scripts</strong>: apelidos para os comandos do dia a dia,
+                        como iniciar a API, rodar os testes e recriar o banco.
+                    </p>
+                    <div data-arquivo-projeto="backend/composer.json|backend/package.json|backend/pom.xml"></div>
+                    <div data-passo-a-passo="backend.instalar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.2</span> Escrever os contratos: as interfaces dos repositórios</h3>
+                    <p>
+                        Antes de pensar em banco de dados, defina <strong>o que</strong> o gestor precisa ler e gravar. A interface lista os métodos,
+                        sem implementação. O gestor vai depender dela, e não de uma classe concreta.
+                    </p>
+                    <div data-arquivo-projeto="backend/src/emprestimo/RepositorioEmprestimos.php|backend/src/emprestimo/repositorio-emprestimos.ts|backend/src/main/java/biblioteca/emprestimo/RepositorioEmprestimos.java"
+                        data-ausente="JavaScript não tem interfaces. O contrato continua existindo, mas só na documentação: o gestor chama os métodos obterEmAberto, obterEmAbertoPorId, contarEmAbertoDoLeitor, livroEstaEmprestado, adicionar e registrarDevolucao, e qualquer objeto que tenha esses métodos pode ser usado no lugar do repositório."></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.3</span> Escrever o gestor com as regras R3 e R4</h3>
+                    <p>
+                        O gestor coordena o caso de uso: valida os dados recebidos, busca o livro e o leitor, confere as regras e grava o empréstimo.
+                        Repare que a regra R3 continua sendo decidida pela entidade <code>Leitor</code>: o gestor só conta os empréstimos e pergunta.
+                    </p>
+                    <div data-arquivo-projeto="backend/src/emprestimo/GestorEmprestimos.php|backend/src/emprestimo/gestor-emprestimos.ts|backend/src/emprestimo/gestor-emprestimos.js|backend/src/main/java/biblioteca/emprestimo/GestorEmprestimos.java"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.4</span> Testar o gestor com dublês</h3>
+                    <p>
+                        Um <strong>dublê</strong> é um objeto que se passa pelo verdadeiro durante o teste. Aqui, repositórios falsos implementam as mesmas
+                        interfaces, mas guardam tudo em memória. Cada teste monta a situação que precisa — por exemplo, “o leitor já tem 3 empréstimos” —
+                        sem precisar do banco de dados. Assim os testes são rápidos e testam só a lógica do gestor.
+                    </p>
+                    <div data-arquivo-projeto="backend/spec/GestorEmprestimos.spec.php|backend/test/gestor-emprestimos.spec.ts|backend/test/gestor-emprestimos.spec.js|backend/src/test/java/biblioteca/emprestimo/GestorEmprestimosTest.java"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.5</span> Rodar os testes</h3>
+                    <p>Rode os testes a cada mudança. Veja também como fica a saída quando um teste falha: saber ler essa mensagem economiza tempo.</p>
+                    <div data-passo-a-passo="backend.testes"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.6</span> Análise estática</h3>
+                    <p>A análise estática encontra erros lendo o código, sem executá-lo. Rode antes de cada commit.</p>
+                    <div data-passo-a-passo="backend.analise"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.7</span> Criar as rotas da API</h3>
+                    <p>
+                        As rotas ligam cada endereço HTTP a uma ação do gestor. Elas não têm regra de negócio: recebem a requisição, chamam o gestor e
+                        enviam a resposta em JSON, com o código de status adequado.
+                    </p>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Rota</th>
+                                    <th scope="col">O que faz</th>
+                                    <th scope="col">Sucesso</th>
+                                    <th scope="col">Erro</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>GET /emprestimos</code></td><td>Lista os empréstimos em aberto, com prazo e multa</td><td><code>200</code></td><td><code>500</code> se o banco falhar</td></tr>
+                                <tr><td><code>POST /emprestimos</code></td><td>Registra um empréstimo. Corpo: <code>{ "livroId": 1, "leitorId": 2 }</code></td><td><code>201</code> criado</td><td><code>400</code> se uma regra impedir</td></tr>
+                                <tr><td><code>PATCH /emprestimos/{id}/devolucao</code></td><td>Registra a devolução e informa a multa</td><td><code>200</code></td><td><code>400</code> se já devolvido</td></tr>
+                                <tr><td><code>GET /livros</code> e <code>GET /leitores</code></td><td>Listam as opções do formulário</td><td><code>200</code></td><td><code>500</code> se o banco falhar</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div data-arquivo-projeto="backend/src/emprestimo/rotas.php|backend/src/emprestimo/rotas.ts|backend/src/emprestimo/rotas.js|backend/src/main/java/biblioteca/emprestimo/RotasEmprestimos.java"></div>
+                    <p>Os erros viram respostas JSON em um só lugar, para todas as rotas:</p>
+                    <div data-arquivo-projeto="backend/src/infra/Resposta.php|backend/src/infra/resposta.ts|backend/src/infra/resposta.js"
+                        data-ausente="No Java, os erros são tratados no App.java, mostrado logo abaixo: app.exception() transforma DominioException em status 400 e RepositorioException em status 500, para todas as rotas."></div>
+                    <p>O ponto de entrada cria o servidor, liga o CORS e registra as rotas:</p>
+                    <div data-arquivo-projeto="backend/index.php|backend/src/index.ts|backend/src/index.js|backend/src/main/java/biblioteca/App.java"></div>
+                    <div class="aviso aviso--dica">
+                        <p class="aviso__titulo">Por que CORS</p>
+                        <p>
+                            O front-end roda em <code>localhost:5173</code> e a API em <code>localhost:8080</code>. Por segurança, o navegador bloqueia requisições
+                            entre endereços diferentes, a menos que a API autorize. É isso que o CORS faz.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">4.8</span> Iniciar a API</h3>
+                    <div data-passo-a-passo="backend.iniciar"></div>
+                </div>
             </section>
 
-            <section class="etapa etapa--planejada" id="banco" aria-labelledby="titulo-banco">
+            <section class="etapa" id="banco" aria-labelledby="titulo-banco">
                 <header class="etapa__cabecalho">
-                    <p class="etapa__numero">Etapa 5 <span class="selo">em breve</span></p>
+                    <p class="etapa__numero">Etapa 5</p>
                     <h2 class="etapa__titulo" id="titulo-banco">Banco de dados e fetch</h2>
-                    <p class="etapa__resumo">Guardar os empréstimos no banco e buscá-los pelo navegador.</p>
+                    <p class="etapa__resumo">
+                        Instalar o MariaDB ou o MySQL, criar o banco com scripts, ligar os repositórios a ele, testar as rotas pelo terminal
+                        e, por fim, buscar os dados no front-end com <code>fetch</code>.
+                    </p>
                 </header>
-                <ul class="lista-planejada">
-                    <li>Criação do banco em <strong>MariaDB</strong> ou <strong>MySQL</strong>, lado a lado: instalação, usuário, conexão e diferenças entre os dois.</li>
-                    <li><code>estrutura.sql</code>, <code>dados.sql</code> e <code>dados-teste.sql</code>, com scripts para recriar o banco.</li>
-                    <li>Repositório com consultas preparadas e o teste de integração.</li>
-                    <li>Formato JSON de cada rota e como testá-las antes de ter a tela.</li>
-                    <li><code>fetch</code> no front-end: GET, POST e PATCH, tratamento de erros e a mensagem para o usuário.</li>
-                </ul>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.1</span> MariaDB ou MySQL</h3>
+                    <p>
+                        O MariaDB nasceu de uma cópia do código do MySQL e continua compatível com ele: o mesmo SQL, a mesma porta (3306) e os mesmos
+                        drivers. <strong>O projeto funciona igual com os dois</strong> — todos os testes e rotas desta etapa foram executados nos dois bancos.
+                        Escolha um e siga os passos; a escolha abaixo troca as instruções e as respostas dos terminais.
+                    </p>
+                    <div class="seletor-na-etapa" data-seletor-linguagem data-camada="banco" data-rotulo="Banco de dados"></div>
+                    <div class="tabela-rolavel">
+                        <table class="tabela">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">MariaDB</th>
+                                    <th scope="col">MySQL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Versão usada no exemplo</td><td>11.4 (suporte de longo prazo)</td><td>8.4 (suporte de longo prazo)</td></tr>
+                                <tr><td>Onde baixar</td><td><code>mariadb.org/download</code></td><td><code>dev.mysql.com/downloads/mysql</code></td></tr>
+                                <tr><td>Cliente de terminal</td><td><code>mariadb</code> (e também <code>mysql</code>)</td><td><code>mysql</code></td></tr>
+                                <tr><td>Pasta <code>bin</code> padrão</td><td><code>C:\Program Files\MariaDB 11.4\bin</code></td><td><code>C:\Program Files\MySQL\MySQL Server 8.4\bin</code></td></tr>
+                                <tr><td>Ferramenta gráfica</td><td>HeidiSQL, instalado junto</td><td>MySQL Workbench, instalado à parte</td></tr>
+                                <tr><td>Senha na linha de comando</td><td>Aceita sem aviso</td><td>Aceita, com um aviso de segurança</td></tr>
+                                <tr><td>Drivers do projeto</td><td colspan="2"><code>pdo_mysql</code> (PHP), <code>mysql2</code> (Node.js) e <code>mysql-connector-j</code> (Java) funcionam com os dois</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.2</span> Instalar no Windows</h3>
+                    <ol class="passos" data-mostrar-quando="banco:mariadb">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Baixe o instalador</p>
+                            <p class="passo__explicacao">Em <code>mariadb.org/download</code>, escolha a versão <strong>11.4</strong>, o sistema <strong>Windows</strong>, a arquitetura <strong>x86_64</strong> e o pacote <strong>MSI</strong>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Defina a senha do root</p>
+                            <p class="passo__explicacao">No instalador, na tela de configurações do usuário, defina a senha do usuário <code>root</code> — no exemplo, <code>root</code> — e marque a opção de usar UTF-8 como conjunto de caracteres padrão.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Instale como serviço</p>
+                            <p class="passo__explicacao">Mantenha a instalação como serviço do Windows, com o nome <code>MariaDB</code> e a porta <code>3306</code>. Assim o banco inicia junto com o computador. O HeidiSQL, uma ferramenta gráfica para ver as tabelas, vem junto.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Coloque a pasta bin no PATH</p>
+                            <p class="passo__explicacao">Para usar o <code>mariadb</code> e o <code>mysql</code> em qualquer pasta, adicione <code>C:\Program Files\MariaDB 11.4\bin</code> à variável <code>Path</code>: pesquise “variáveis de ambiente” no menu Iniciar, abra <strong>Variáveis de Ambiente</strong>, selecione <code>Path</code>, clique em <strong>Editar</strong> e em <strong>Novo</strong>. Depois, feche e abra o Prompt de Comando.</p>
+                        </div></li>
+                    </ol>
+                    <ol class="passos" data-mostrar-quando="banco:mysql">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Baixe o instalador</p>
+                            <p class="passo__explicacao">Em <code>dev.mysql.com/downloads/mysql</code>, escolha <strong>MySQL Community Server 8.4</strong>, sistema <strong>Microsoft Windows</strong>, e baixe o <strong>MSI Installer</strong>. Não é preciso criar conta: use o link para apenas iniciar o download.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Instale e abra o configurador</p>
+                            <p class="passo__explicacao">Siga a instalação típica. Ao final, o MySQL Configurator é aberto para configurar o servidor.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Defina a senha do root e o serviço</p>
+                            <p class="passo__explicacao">Em <strong>Accounts and Roles</strong>, defina a senha do usuário <code>root</code> — no exemplo, <code>root</code>. Em <strong>Windows Service</strong>, mantenha o serviço iniciando com o Windows e a porta <code>3306</code>.</p>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Coloque a pasta bin no PATH</p>
+                            <p class="passo__explicacao">Para usar o <code>mysql</code> em qualquer pasta, adicione <code>C:\Program Files\MySQL\MySQL Server 8.4\bin</code> à variável <code>Path</code>: pesquise “variáveis de ambiente” no menu Iniciar, abra <strong>Variáveis de Ambiente</strong>, selecione <code>Path</code>, clique em <strong>Editar</strong> e em <strong>Novo</strong>. Depois, feche e abra o Prompt de Comando.</p>
+                        </div></li>
+                    </ol>
+                    <div class="aviso aviso--atencao">
+                        <p class="aviso__titulo">Senha só para estudo</p>
+                        <p>A senha <code>root</code> facilita o exemplo, porque é a mesma usada nos scripts e nas conexões do projeto. Em um servidor de verdade, use uma senha forte e um usuário próprio para a aplicação.</p>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.3</span> Conferir a instalação</h3>
+                    <div data-passo-a-passo="banco.conferir"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.4</span> Criar o banco com scripts</h3>
+                    <p>
+                        O banco é criado por arquivos <code>.sql</code> guardados no projeto. Assim qualquer pessoa do grupo recria o mesmo banco com um comando,
+                        e as mudanças na estrutura ficam registradas no Git.
+                    </p>
+                    <ul class="lista-marcada">
+                        <li><code>estrutura.sql</code> apaga e cria o banco e as tabelas.</li>
+                        <li><code>dados.sql</code> carrega os dados para usar a aplicação. As datas usam <code>CURDATE()</code>, então sempre há um empréstimo atrasado e outro no prazo.</li>
+                        <li><code>dados-teste.sql</code> carrega dados fixos, que os testes conhecem de antemão.</li>
+                        <li>Os dois arquivos de dados começam com <code>SET NAMES utf8mb4;</code>. Sem essa linha, o cliente do MySQL no Windows lê os acentos com a codificação do terminal e grava “O CortiÃ§o” no lugar de “O Cortiço”.</li>
+                    </ul>
+                    <div data-arquivo-projeto="backend/db/estrutura.sql|backend/src/main/resources/db/estrutura.sql"></div>
+                    <details class="expansivel">
+                        <summary class="expansivel__resumo">Ver <code>dados.sql</code> e <code>dados-teste.sql</code></summary>
+                        <div class="expansivel__conteudo">
+                            <div data-arquivo-projeto="backend/db/dados.sql|backend/src/main/resources/db/dados.sql"></div>
+                            <div data-arquivo-projeto="backend/db/dados-teste.sql|backend/src/main/resources/db/dados-teste.sql"></div>
+                        </div>
+                    </details>
+                    <div data-passo-a-passo="banco.criar"></div>
+                    <div data-passo-a-passo="banco.consultar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.5</span> Ligar o repositório ao banco</h3>
+                    <p>
+                        Agora a interface escrita na <a href="#backend">Etapa 4</a> ganha uma implementação com banco de dados. A conexão fica em um arquivo só:
+                    </p>
+                    <div data-arquivo-projeto="backend/src/infra/Conexao.php|backend/src/infra/conexao.ts|backend/src/infra/conexao.js|backend/src/main/java/biblioteca/infra/Conexao.java"></div>
+                    <p>
+                        O repositório transforma objetos em comandos SQL e linhas em objetos. Os valores nunca são colados no texto do SQL: vão pelos
+                        <code>?</code>, em consultas preparadas, o que impede <strong>SQL Injection</strong> — um ataque em que o usuário digita SQL em um campo.
+                    </p>
+                    <div data-arquivo-projeto="backend/src/emprestimo/RepositorioEmprestimosEmBDR.php|backend/src/emprestimo/repositorio-emprestimos-em-bdr.ts|backend/src/emprestimo/repositorio-emprestimos-em-bdr.js|backend/src/main/java/biblioteca/emprestimo/RepositorioEmprestimosEmBDR.java"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.6</span> Testes de integração</h3>
+                    <p>
+                        Os testes de unidade da Etapa 4 usam dublês. Os de <strong>integração</strong> usam o banco de verdade, para confirmar que o SQL funciona.
+                        Antes de cada teste, o banco é recriado com <code>dados-teste.sql</code>, então cada teste sabe exatamente o que encontra.
+                    </p>
+                    <div data-arquivo-projeto="backend/spec/RepositorioEmprestimosEmBDR.spec.php|backend/test/repositorio-emprestimos-em-bdr.spec.ts|backend/test/repositorio-emprestimos-em-bdr.spec.js|backend/src/test/java/biblioteca/emprestimo/RepositorioEmprestimosEmBDRTest.java"></div>
+                    <div data-passo-a-passo="banco.integracao"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.7</span> Testar as rotas antes da tela</h3>
+                    <p>
+                        Com o banco pronto, os dados iniciais carregados e a API rodando, cada rota pode ser testada pelo terminal. Assim, quando a tela
+                        não funcionar, já se sabe que o problema não está na API.
+                    </p>
+                    <div data-passo-a-passo="banco.rotas"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">5.8</span> Buscar os dados no front-end com fetch</h3>
+                    <p>
+                        No navegador, <code>fetch</code> faz a mesma requisição que o <code>curl</code>. Toda a comunicação com a API fica no <strong>serviço</strong>;
+                        a controladora e a visão não sabem que existe HTTP.
+                    </p>
+                    <ol class="fluxo-git">
+                        <li class="fluxo-git__area">
+                            <span class="fluxo-git__nome">Serviço</span>
+                            <span class="fluxo-git__descricao">Monta a requisição e converte o JSON.</span>
+                            <span class="fluxo-git__comando">fetch</span>
+                        </li>
+                        <li class="fluxo-git__area">
+                            <span class="fluxo-git__nome">Rotas</span>
+                            <span class="fluxo-git__descricao">Recebem a requisição e chamam o gestor.</span>
+                            <span class="fluxo-git__comando">POST /emprestimos</span>
+                        </li>
+                        <li class="fluxo-git__area">
+                            <span class="fluxo-git__nome">Gestor e entidades</span>
+                            <span class="fluxo-git__descricao">Aplicam as regras de negócio.</span>
+                            <span class="fluxo-git__comando">registrar()</span>
+                        </li>
+                        <li class="fluxo-git__area">
+                            <span class="fluxo-git__nome">Repositório e banco</span>
+                            <span class="fluxo-git__descricao">Leem e gravam os dados.</span>
+                            <span class="fluxo-git__comando">INSERT</span>
+                        </li>
+                    </ol>
+                    <ul class="lista-marcada">
+                        <li><code>fetch</code> devolve uma <em>Promise</em>: com <code>await</code>, o código espera a resposta sem travar a página.</li>
+                        <li><code>response.ok</code> é <code>true</code> para os códigos 200 a 299. Para 400 e 500 é <code>false</code>, e o serviço lança um erro com as mensagens da API.</li>
+                        <li><code>response.json()</code> converte o corpo da resposta em objeto; <code>JSON.stringify()</code> faz o caminho contrário ao enviar dados.</li>
+                        <li>Se a API estiver desligada, o próprio <code>fetch</code> falha; o serviço troca esse erro por uma mensagem que o usuário entende.</li>
+                    </ul>
+                    <div data-arquivo-projeto="frontend/src/infra/conf.ts|frontend/src/infra/conf.js"></div>
+                    <div data-arquivo-projeto="frontend/src/emprestimo/servico-emprestimos.ts|frontend/src/emprestimo/servico-emprestimos.js"></div>
+                    <p>O serviço é testado sem API: o teste troca o <code>fetch</code> por uma função falsa com a resposta pronta.</p>
+                    <div data-arquivo-projeto="frontend/test/servico-emprestimos.spec.ts|frontend/test/servico-emprestimos.spec.js"></div>
+                    <div data-passo-a-passo="fetch.testes"></div>
+                </div>
             </section>
 
-            <section class="etapa etapa--planejada" id="frontend" aria-labelledby="titulo-frontend">
+            <section class="etapa" id="frontend" aria-labelledby="titulo-frontend">
                 <header class="etapa__cabecalho">
-                    <p class="etapa__numero">Etapa 6 <span class="selo">em breve</span></p>
+                    <p class="etapa__numero">Etapa 6</p>
                     <h2 class="etapa__titulo" id="titulo-frontend">Front-end e testes</h2>
-                    <p class="etapa__resumo">A tela de empréstimos com visão, controladora e serviço separados, testes unitários e testes de ponta a ponta.</p>
+                    <p class="etapa__resumo">
+                        A tela de empréstimos com visão, controladora e serviço separados, rodando no navegador, com testes de unidade
+                        e testes de ponta a ponta que usam a aplicação como um usuário.
+                    </p>
                 </header>
-                <ul class="lista-planejada">
-                    <li>Criar o projeto com PNPM e Vite; <code>index.html</code>, páginas e roteamento.</li>
-                    <li>Visão, controladora e serviço separados, e testes com Vitest usando uma visão falsa.</li>
-                    <li>Cenários em <code>.feature</code>, testes com Playwright e o Page Object <code>TelaEmprestimos</code>.</li>
-                    <li>Imagens da aplicação rodando no navegador em cada passo.</li>
-                </ul>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.1</span> Configurar o front-end</h3>
+                    <p>
+                        O front-end é uma aplicação de página única (SPA): o navegador carrega um <code>index.html</code> e o JavaScript troca o conteúdo
+                        da tela, sem recarregar a página. As ferramentas são:
+                    </p>
+                    <ul class="lista-marcada">
+                        <li><strong>Vite</strong>: servidor de desenvolvimento e gerador da versão final.</li>
+                        <li><strong>Bootstrap</strong>: classes CSS prontas para formulários, tabelas e mensagens.</li>
+                        <li><strong>Vitest</strong>: testes de unidade, os mesmos da <a href="#banco">Etapa 5</a>.</li>
+                        <li><strong>Playwright</strong>: testes de ponta a ponta, que abrem um navegador de verdade.</li>
+                    </ul>
+                    <div data-arquivo-projeto="frontend/package.json"></div>
+                    <div data-arquivo-projeto="frontend/tsconfig.json"
+                        data-ausente="Em JavaScript não há compilador para configurar: o Vite entrega os arquivos .js ao navegador como estão. O &quot;type&quot;: &quot;module&quot; do package.json permite usar import e export."></div>
+                    <div data-passo-a-passo="frontend.instalar"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.2</span> Página inicial e troca de telas</h3>
+                    <p>
+                        O <code>index.html</code> tem só a casca da aplicação: o cabeçalho e um <code>&lt;main&gt;</code> vazio. O conteúdo de cada tela fica em
+                        <code>pages/</code>, com as classes do Bootstrap.
+                    </p>
+                    <div data-arquivo-projeto="frontend/index.html"></div>
+                    <div data-arquivo-projeto="frontend/pages/emprestimos.html"></div>
+                    <p>
+                        O ponto de entrada lê o endereço (<code>location.pathname</code>), coloca a página certa dentro do <code>&lt;main&gt;</code> e monta
+                        as três peças da tela: visão, serviço e controladora.
+                    </p>
+                    <div data-arquivo-projeto="frontend/src/index.ts|frontend/src/index.js"></div>
+                    <div data-arquivo-projeto="frontend/src/infra/spa.ts|frontend/src/infra/spa.js"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.3</span> A visão</h3>
+                    <p>
+                        A visão é a única parte que mexe no HTML: lê os campos, exibe listas e mensagens e avisa quando o usuário clica em algo.
+                        A controladora não conhece a classe da visão, só a lista de métodos que ela oferece:
+                    </p>
+                    <div data-arquivo-projeto="frontend/src/emprestimo/visao-emprestimos.ts|frontend/src/emprestimo/visao-emprestimos.js"
+                        data-ausente="JavaScript não tem interfaces. A controladora só espera receber um objeto com os métodos aoRegistrar, aoDevolver, exibirOpcoes, exibirEmprestimos, exibirEmprestimoRegistrado, exibirDevolucao e exibirErro. A visão em HTML, abaixo, e a visão falsa dos testes têm esses mesmos métodos."></div>
+                    <div data-arquivo-projeto="frontend/src/emprestimo/visao-emprestimos-em-html.ts|frontend/src/emprestimo/visao-emprestimos-em-html.js"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.4</span> A controladora</h3>
+                    <p>
+                        A controladora liga a visão ao serviço da <a href="#banco">Etapa 5</a>. Ela não usa <code>document</code> nem <code>fetch</code>:
+                        recebe os dois prontos no construtor. Por isso, nos testes, dá para entregar a ela uma visão falsa e um serviço falso.
+                    </p>
+                    <div data-arquivo-projeto="frontend/src/emprestimo/controladora-emprestimos.ts|frontend/src/emprestimo/controladora-emprestimos.js"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.5</span> Rodar e ver a aplicação funcionando</h3>
+                    <p>
+                        São dois terminais abertos ao mesmo tempo: um com a API, iniciada na <a href="#backend">Etapa 4</a>, e outro com o front-end.
+                        O banco precisa estar criado, com os dados iniciais da <a href="#banco">Etapa 5</a>.
+                    </p>
+                    <div data-passo-a-passo="frontend.iniciar"></div>
+                    <p>As imagens abaixo são da aplicação rodando com a API e o banco de dados, usando os dados iniciais:</p>
+                    <ol class="passos">
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Abra a tela de empréstimos</p>
+                            <p class="passo__explicacao">A controladora busca livros, leitores e empréstimos em aberto. “Dom Casmurro” aparece em vermelho, com 3 dias de atraso e a multa calculada pela API.</p>
+                            <figure class="captura-app">
+                                <div class="navegador-simulado">
+                                    <div class="navegador-simulado__barra">
+                                        <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                    </div>
+                                    <img src="img/aplicacao/1-lista.png" width="1280" height="660" loading="lazy"
+                                        alt="Tela Empréstimos com o formulário Novo empréstimo e a tabela Em aberto: Dom Casmurro, com Ana Souza, 3 dias de atraso e multa de R$ 3,00; Capitães da Areia, com Bruno Lima, no prazo.">
+                                </div>
+                            </figure>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Registre um empréstimo</p>
+                            <p class="passo__explicacao">Com “Vidas Secas” e “Carla Mendes” escolhidos, <strong>Registrar</strong> envia o <code>POST</code>. A mensagem verde confirma, e a lista é carregada de novo.</p>
+                            <figure class="captura-app">
+                                <div class="navegador-simulado">
+                                    <div class="navegador-simulado__barra">
+                                        <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                    </div>
+                                    <img src="img/aplicacao/2-registrado.png" width="1280" height="660" loading="lazy"
+                                        alt="Mensagem verde de empréstimo registrado e a tabela com Vidas Secas, emprestado para Carla Mendes, no prazo.">
+                                </div>
+                            </figure>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Tente quebrar uma regra</p>
+                            <p class="passo__explicacao">“Dom Casmurro” já está emprestado. A API responde <code>400</code>, e a tela mostra a mesma mensagem da regra R4, em vermelho.</p>
+                            <figure class="captura-app">
+                                <div class="navegador-simulado">
+                                    <div class="navegador-simulado__barra">
+                                        <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                    </div>
+                                    <img src="img/aplicacao/3-erro.png" width="1280" height="660" loading="lazy"
+                                        alt="Mensagem vermelha: O livro já está emprestado. A tabela continua com os três empréstimos em aberto.">
+                                </div>
+                            </figure>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Devolva o livro atrasado</p>
+                            <p class="passo__explicacao"><strong>Devolver</strong> na linha de “Dom Casmurro” envia o <code>PATCH</code>. A mensagem mostra os dias de atraso e a multa, e o livro sai da lista.</p>
+                            <figure class="captura-app">
+                                <div class="navegador-simulado">
+                                    <div class="navegador-simulado__barra">
+                                        <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                    </div>
+                                    <img src="img/aplicacao/4-devolucao.png" width="1280" height="660" loading="lazy"
+                                        alt="Mensagem verde: Livro devolvido com 3 dia(s) de atraso. Multa: R$ 3,00. A tabela agora tem só Capitães da Areia e Vidas Secas.">
+                                </div>
+                            </figure>
+                        </div></li>
+                        <li class="passo"><div class="passo__corpo">
+                            <p class="passo__titulo">Acesse um endereço que não existe</p>
+                            <p class="passo__explicacao">O ponto de entrada não reconhece o endereço e exibe a página <code>pages/404.html</code>.</p>
+                            <figure class="captura-app">
+                                <div class="navegador-simulado">
+                                    <div class="navegador-simulado__barra">
+                                        <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                        <span class="navegador-simulado__endereco">localhost:5173/nao-existe</span>
+                                    </div>
+                                    <img src="img/aplicacao/5-404.png" width="1280" height="660" loading="lazy"
+                                        alt="Página não encontrada, com o botão Ir para os empréstimos.">
+                                </div>
+                            </figure>
+                        </div></li>
+                    </ol>
+                    <p>
+                        Para experimentar sem instalar nada, use a simulação: ela reproduz a mesma tela e as mesmas regras, com os dados guardados só na memória da página.
+                    </p>
+                    <p>
+                        <button type="button" class="botao botao--principal" data-abrir-simulador>▶ Ver a aplicação funcionando</button>
+                    </p>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.6</span> Testes de unidade da controladora</h3>
+                    <p>
+                        O teste troca a visão por uma <strong>visão falsa</strong>, sem HTML, e os métodos do serviço por versões falsas, com respostas prontas.
+                        Assim ele confere só a controladora: se ela pediu os dados certos e mandou a visão exibir o resultado certo.
+                    </p>
+                    <ul class="lista-marcada">
+                        <li><code>vi.fn()</code> cria uma função que registra como foi chamada; <code>toHaveBeenCalledWith</code> confere os argumentos.</li>
+                        <li><code>vi.spyOn( servico, 'registrar' ).mockResolvedValue( ... )</code> faz o método do serviço devolver uma resposta pronta, sem <code>fetch</code>.</li>
+                    </ul>
+                    <div data-arquivo-projeto="frontend/test/controladora-emprestimos.spec.ts|frontend/test/controladora-emprestimos.spec.js"></div>
+                    <div data-passo-a-passo="frontend.testes"></div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.7</span> Testes de ponta a ponta</h3>
+                    <p>
+                        Os testes de ponta a ponta usam tudo junto: navegador, front-end, API e banco. Primeiro, os cenários são escritos em <strong>Gherkin</strong>,
+                        em português, no formato <em>Dado</em> (situação), <em>Quando</em> (ação) e <em>Então</em> (resultado esperado):
+                    </p>
+                    <div data-arquivo-projeto="frontend/feature/emprestimo.feature"></div>
+                    <p>
+                        O <strong>Page Object</strong> reúne em métodos com nomes do negócio o que o teste faz na tela: escolher, registrar, devolver, conferir.
+                        Os seletores do HTML, como <code>#livro</code>, ficam só nele.
+                    </p>
+                    <div data-arquivo-projeto="frontend/e2e/pom/TelaEmprestimos.ts|frontend/e2e/pom/TelaEmprestimos.js"></div>
+                    <p>Cada cenário vira um teste, e cada linha do cenário vira uma chamada ao Page Object:</p>
+                    <div data-arquivo-projeto="frontend/e2e/emprestimos.spec.ts|frontend/e2e/emprestimos.spec.js"></div>
+                    <details class="expansivel">
+                        <summary class="expansivel__resumo">Ver a configuração do Playwright</summary>
+                        <div class="expansivel__conteudo">
+                            <div data-arquivo-projeto="frontend/playwright.config.ts|frontend/playwright.config.js"></div>
+                        </div>
+                    </details>
+                    <p>Os testes esperam dados conhecidos. Antes de rodá-los, com a API rodando, recrie o banco com os dados de teste:</p>
+                    <div data-passo-a-passo="frontend.preparar-e2e"></div>
+                    <div data-passo-a-passo="frontend.e2e"></div>
+                    <div class="aviso aviso--dica">
+                        <p class="aviso__titulo">Quando um teste de ponta a ponta falha</p>
+                        <p>
+                            O Playwright mostra a linha do teste que falhou e guarda um rastro em <code>test-results</code>. O comando
+                            <code>pnpm exec playwright show-trace</code>, indicado na própria mensagem de erro, abre esse rastro com cada passo e a tela em cada momento.
+                            Depois dos testes, carregue de novo <code>dados.sql</code> para voltar aos dados iniciais.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="subetapa">
+                    <h3><span class="subetapa__numero">6.8</span> Gerar a versão final</h3>
+                    <p>
+                        O <code>pnpm dev</code> é só para desenvolver. Para publicar, o Vite gera uma versão reduzida, que qualquer servidor de arquivos consegue entregar.
+                    </p>
+                    <div data-passo-a-passo="frontend.build"></div>
+                    <div class="aviso aviso--dica">
+                        <p class="aviso__titulo">Antes de cada commit</p>
+                        <p>
+                            Rode os testes do back-end e do front-end. Se todos passarem, faça o commit e o push como na <a href="#git">Etapa 1</a>.
+                        </p>
+                    </div>
+                </div>
             </section>
 
         </main>

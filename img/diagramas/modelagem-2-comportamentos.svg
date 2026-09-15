@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 510" width="860" height="510" role="img">
+<title>Passo 2 da modelagem: as operações de negócio. Emprestimo tem dataLimite, estaEmAberto, devolver, diasDeAtraso e calcularMulta; Leitor tem podePegarEmprestado</title>
+<style>
+    .fundo { fill: #ffffff; }
+    .caixa { fill: #ffffff; stroke: #1d232a; stroke-width: 1.4; }
+    .cabecalho { fill: #dcefed; stroke: #1d232a; stroke-width: 1.4; }
+    .cabecalho-interface { fill: #eef1f6; stroke: #1d232a; stroke-width: 1.4; }
+    .divisoria { stroke: #1d232a; stroke-width: 1.2; }
+    .nome { font: 700 15px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .nome-interface { font: italic 700 15px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .estereotipo { font: 12px Consolas, "Courier New", monospace; fill: #4a5563; }
+    .membro { font: 13px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .membro-erro { font: 700 13px Consolas, "Courier New", monospace; fill: #c0262d; }
+    .linha { fill: none; stroke: #1d232a; stroke-width: 1.4; }
+    .linha-erro { fill: none; stroke: #c0262d; stroke-width: 1.4; }
+    .tracejada { stroke-dasharray: 7 5; }
+    .triangulo { fill: #ffffff; stroke: #1d232a; stroke-width: 1.4; }
+    .rotulo { font: italic 13px "Segoe UI", Arial, sans-serif; fill: #0a5252; }
+    .multiplicidade { font: 13px Consolas, "Courier New", monospace; fill: #1d232a; }
+</style>
+<rect class="fundo" width="100%" height="100%"/>
+<rect class="caixa" x="278" y="30" width="305" height="177"/>
+<rect class="cabecalho" x="278" y="30" width="305" height="38"/>
+<line class="divisoria" x1="278" y1="84" x2="583" y2="84"/>
+
+<text class="nome" x="430.5" y="54" text-anchor="middle">Emprestimo</text>
+<text class="membro" x="292" y="108">+ dataLimite(): Date</text>
+<text class="membro" x="292" y="129">+ estaEmAberto(): boolean</text>
+<text class="membro" x="292" y="150">+ devolver(data: Date): void</text>
+<text class="membro" x="292" y="171">+ diasDeAtraso(data: Date): int</text>
+<text class="membro" x="292" y="192">+ calcularMulta(data: Date): double</text>
+<rect class="caixa" x="32.5" y="345" width="150" height="70"/>
+<rect class="cabecalho" x="32.5" y="345" width="150" height="38"/>
+<line class="divisoria" x1="32.5" y1="399" x2="182.5" y2="399"/>
+
+<text class="nome" x="107.5" y="369" text-anchor="middle">Livro</text>
+<rect class="caixa" x="446" y="345" width="384" height="93"/>
+<rect class="cabecalho" x="446" y="345" width="384" height="38"/>
+<line class="divisoria" x1="446" y1="399" x2="830" y2="399"/>
+
+<text class="nome" x="638" y="369" text-anchor="middle">Leitor</text>
+<text class="membro" x="460" y="423">+ podePegarEmprestado(emAberto: int): boolean</text>
+</svg>

@@ -4,7 +4,8 @@
     class Aplicacao {
 
         constructor() {
-            this.preferencias = new Guia.nucleo.Preferencias( { backend: 'php', frontend: 'typescript' } );
+            this.preferencias = new Guia.nucleo.Preferencias( { backend: 'php', frontend: 'typescript', banco: 'mariadb' } );
+            this.projeto = new Guia.nucleo.ProjetoAtual( this.preferencias );
         }
 
         iniciar() {
@@ -19,8 +20,17 @@
             document.querySelectorAll( '[data-arquivo]' ).forEach( elemento => {
                 new componentes.ArquivoFixo( elemento ).iniciar();
             } );
+            document.querySelectorAll( '[data-arquivo-projeto]' ).forEach( elemento => {
+                new componentes.ArquivoDoProjeto( elemento, this.projeto ).iniciar();
+            } );
             document.querySelectorAll( '[data-passo-a-passo]' ).forEach( elemento => {
-                new componentes.PassoAPasso( elemento ).iniciar();
+                new componentes.PassoAPasso( elemento, this.preferencias ).iniciar();
+            } );
+            document.querySelectorAll( '[data-mostrar-quando]' ).forEach( elemento => {
+                new componentes.ConteudoPorVariante( elemento, this.preferencias ).iniciar();
+            } );
+            document.querySelectorAll( '[data-imagem-estrutura]' ).forEach( elemento => {
+                new componentes.ImagemEstrutura( elemento, this.preferencias ).iniciar();
             } );
 
             const simulador = new componentes.SimuladorAplicacao();
@@ -28,7 +38,7 @@
 
             new componentes.ExploradorProjeto(
                 document.querySelector( '[data-explorador]' ),
-                this.preferencias,
+                this.projeto,
                 new componentes.VisualizadorArquivo( simulador )
             ).iniciar();
 

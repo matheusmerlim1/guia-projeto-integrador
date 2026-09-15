@@ -1,35 +1,18 @@
 (function ( Guia ) {
     'use strict';
 
-    const NOME_RAIZ = 'biblioteca-comunitaria/';
-
     class ExploradorProjeto {
 
-        constructor( elemento, preferencias, visualizador ) {
+        constructor( elemento, projeto, visualizador ) {
             this.elemento = elemento;
-            this.preferencias = preferencias;
+            this.projeto = projeto;
             this.visualizador = visualizador;
-            this.pastasAbertas = new Set( [ NOME_RAIZ ] );
+            this.pastasAbertas = new Set( [ projeto.nomeRaiz ] );
         }
 
         iniciar() {
             this.desenhar();
-            this.preferencias.aoAlterarLinguagem( 'backend', () => this.desenhar() );
-            this.preferencias.aoAlterarLinguagem( 'frontend', () => this.desenhar() );
-        }
-
-        montarRaiz() {
-            const { projetos } = Guia.dados;
-            const backend = this.preferencias.linguagem( 'backend' );
-            const frontend = this.preferencias.linguagem( 'frontend' );
-            return {
-                nome: NOME_RAIZ,
-                filhos: [
-                    projetos[ 'backend-' + backend ],
-                    projetos[ 'frontend-' + frontend ],
-                    ...projetos[ 'raiz-' + backend ].filhos,
-                ],
-            };
+            this.projeto.aoAlterar( () => this.desenhar() );
         }
 
         desenhar() {
@@ -37,7 +20,7 @@
             lista.className = 'explorador__lista';
             lista.setAttribute( 'role', 'tree' );
             lista.setAttribute( 'aria-label', 'Estrutura do projeto' );
-            lista.append( this.criarItem( this.montarRaiz(), '' ) );
+            lista.append( this.criarItem( this.projeto.raiz(), '' ) );
             this.elemento.replaceChildren( lista );
         }
 
@@ -48,7 +31,7 @@
             item.setAttribute( 'role', 'none' );
 
             if ( ! no.filhos ) {
-                item.append( this.criarArquivo( no, caminho.slice( NOME_RAIZ.length ) ) );
+                item.append( this.criarArquivo( no, caminho.slice( this.projeto.nomeRaiz.length ) ) );
                 return item;
             }
 

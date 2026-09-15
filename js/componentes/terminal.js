@@ -130,7 +130,10 @@
         criarLinhasSaida( entrada ) {
             const linhas = this.normalizar( entrada.saida ).split( '\n' );
             const saida = entrada.saida ? linhas : [];
-            const classes = this.coloracao.classificar( saida );
+            // As cores imitam as do Git; saídas de outros programas ficam sem cor.
+            const classes = entrada.comando.startsWith( 'git' )
+                ? this.coloracao.classificar( saida )
+                : saida.map( () => '' );
             const elementos = saida.map( ( texto, indice ) => {
                 const linha = document.createElement( 'span' );
                 linha.className = 'terminal__linha terminal__saida ' + classes[ indice ];

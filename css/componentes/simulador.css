@@ -272,3 +272,13 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+.captura-app {
+    margin: var(--espaco-3) 0 0;
+}
+
+.captura-app img {
+    display: block;
+    width: 100%;
+    height: auto;
+}

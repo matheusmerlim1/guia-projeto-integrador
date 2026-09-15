@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 510" width="860" height="510" role="img">
-<title>Diagrama de classes do modelo essencial da Biblioteca Comunitária</title>
+<title>Passo 3 da modelagem: os atributos. Livro tem titulo, autor e ano; Leitor tem nome e telefone; Emprestimo tem dataEmprestimo e dataDevolucao opcional</title>
 <style>
     .fundo { fill: #ffffff; }
     .caixa { fill: #ffffff; stroke: #1d232a; stroke-width: 1.4; }
@@ -19,16 +19,6 @@
     .multiplicidade { font: 13px Consolas, "Courier New", monospace; fill: #1d232a; }
 </style>
 <rect class="fundo" width="100%" height="100%"/>
-<polyline class="linha" points="278,140.5 107.5,140.5 107.5,345"/>
-<polyline class="linha" points="100.9,334 107.5,345 114.1,334"/>
-<text class="multiplicidade" x="270" y="132.5" text-anchor="end">*</text>
-<text class="multiplicidade" x="97.5" y="337" text-anchor="end">1</text>
-<text class="rotulo" x="117.5" y="268.75" text-anchor="start">refere-se a ▼</text>
-<polyline class="linha" points="583,140.5 638,140.5 638,345"/>
-<polyline class="linha" points="631.4,334 638,345 644.6,334"/>
-<text class="multiplicidade" x="591" y="132.5" text-anchor="start">*</text>
-<text class="multiplicidade" x="628" y="337" text-anchor="end">1</text>
-<text class="rotulo" x="648" y="268.75" text-anchor="start">é feito por ▼</text>
 <rect class="caixa" x="278" y="30" width="305" height="221"/>
 <rect class="cabecalho" x="278" y="30" width="305" height="38"/>
 <line class="divisoria" x1="278" y1="128" x2="583" y2="128"/>

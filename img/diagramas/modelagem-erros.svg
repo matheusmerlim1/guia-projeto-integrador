@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 510" width="860" height="510" role="img">
+<title>Diagrama com erros comuns, marcados em vermelho: ids e chaves estrangeiras como atributos, atributo multa calculável, operações salvar e excluir e linhas sem direção, rótulo nem multiplicidade</title>
+<style>
+    .fundo { fill: #ffffff; }
+    .caixa { fill: #ffffff; stroke: #1d232a; stroke-width: 1.4; }
+    .cabecalho { fill: #dcefed; stroke: #1d232a; stroke-width: 1.4; }
+    .cabecalho-interface { fill: #eef1f6; stroke: #1d232a; stroke-width: 1.4; }
+    .divisoria { stroke: #1d232a; stroke-width: 1.2; }
+    .nome { font: 700 15px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .nome-interface { font: italic 700 15px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .estereotipo { font: 12px Consolas, "Courier New", monospace; fill: #4a5563; }
+    .membro { font: 13px Consolas, "Courier New", monospace; fill: #1d232a; }
+    .membro-erro { font: 700 13px Consolas, "Courier New", monospace; fill: #c0262d; }
+    .linha { fill: none; stroke: #1d232a; stroke-width: 1.4; }
+    .linha-erro { fill: none; stroke: #c0262d; stroke-width: 1.4; }
+    .tracejada { stroke-dasharray: 7 5; }
+    .triangulo { fill: #ffffff; stroke: #1d232a; stroke-width: 1.4; }
+    .rotulo { font: italic 13px "Segoe UI", Arial, sans-serif; fill: #0a5252; }
+    .multiplicidade { font: 13px Consolas, "Courier New", monospace; fill: #1d232a; }
+</style>
+<rect class="fundo" width="100%" height="100%"/>
+<polyline class="linha-erro" points="329.5,151 107.5,151 107.5,345"/>
+
+<polyline class="linha-erro" points="531.5,151 638,151 638,345"/>
+
+<rect class="caixa" x="329.5" y="30" width="202" height="242"/>
+<rect class="cabecalho" x="329.5" y="30" width="202" height="38"/>
+<line class="divisoria" x1="329.5" y1="212" x2="531.5" y2="212"/>
+
+<text class="nome" x="430.5" y="54" text-anchor="middle">Emprestimo</text>
+<text class="membro-erro" x="343.5" y="92">- id: int</text>
+<text class="membro-erro" x="343.5" y="113">- livroId: int</text>
+<text class="membro-erro" x="343.5" y="134">- leitorId: int</text>
+<text class="membro" x="343.5" y="155">- dataEmprestimo: Date</text>
+<text class="membro" x="343.5" y="176">- dataDevolucao: Date</text>
+<text class="membro-erro" x="343.5" y="197">- multa: double</text>
+<text class="membro-erro" x="343.5" y="236">+ salvar(): void</text>
+<text class="membro-erro" x="343.5" y="257">+ excluir(): void</text>
+<rect class="caixa" x="30" y="345" width="155" height="156"/>
+<rect class="cabecalho" x="30" y="345" width="155" height="38"/>
+<line class="divisoria" x1="30" y1="485" x2="185" y2="485"/>
+
+<text class="nome" x="107.5" y="369" text-anchor="middle">Livro</text>
+<text class="membro-erro" x="44" y="407">- id: int</text>
+<text class="membro" x="44" y="428">- titulo: String</text>
+<text class="membro" x="44" y="449">- autor: String</text>
+<text class="membro" x="44" y="470">- ano: int</text>
+<rect class="caixa" x="552.5" y="345" width="171" height="158"/>
+<rect class="cabecalho" x="552.5" y="345" width="171" height="38"/>
+<line class="divisoria" x1="552.5" y1="464" x2="723.5" y2="464"/>
+
+<text class="nome" x="638" y="369" text-anchor="middle">Leitor</text>
+<text class="membro-erro" x="566.5" y="407">- id: int</text>
+<text class="membro" x="566.5" y="428">- nome: String</text>
+<text class="membro" x="566.5" y="449">- telefone: String</text>
+<text class="membro-erro" x="566.5" y="488">+ salvar(): void</text>
+</svg>

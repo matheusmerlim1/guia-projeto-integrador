@@ -17,7 +17,7 @@
             {
                 titulo: 'Informe seu nome',
                 explicacao: '<code>git config</code> grava uma configuração. A opção <code>--global</code> faz ela valer para todos os projetos deste computador. O nome aparece como autor de cada commit que você fizer.',
-                observe: 'Não aparece nenhuma resposta: no Git, isso significa que o comando deu certo.',
+                observe: 'Não aparece nada: no Git, isso significa que o comando deu certo.',
                 pasta: USUARIO_ANA,
                 comando: 'git config --global user.name "Ana Souza"',
             },
@@ -123,7 +123,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
             {
                 titulo: 'Adicione os arquivos à área de preparação',
                 explicacao: '<code>git add</code> escolhe o que vai entrar no próximo commit. Aceita um ou vários arquivos separados por espaço, uma pasta inteira (<code>git add backend</code>) ou um ponto para tudo o que mudou na pasta atual (<code>git add .</code>).',
-                observe: 'Sem resposta: os dois arquivos foram adicionados.',
+                observe: 'Não aparece nada: os dois arquivos foram adicionados.',
                 pasta: PROJETO,
                 comando: 'git add .gitignore README.md',
             },

@@ -127,3 +127,21 @@
 .abas__painel > .bloco-codigo + .bloco-codigo {
     margin-top: var(--espaco-4);
 }
+
+.seletor-na-etapa {
+    display: flex;
+    margin: var(--espaco-4) 0;
+}
+
+.seletor-na-etapa .seletor-linguagem__opcoes {
+    display: flex;
+}
+
+.seletor-na-etapa .seletor-linguagem__lista {
+    display: none;
+}
+
+.seletor-na-etapa .seletor-linguagem__rotulo {
+    display: inline;
+    font-size: 0.9rem;
+}

@@ -13,6 +13,11 @@
         { id: 'javascript', rotulo: 'JavaScript', realce: 'javascript', testes: 'Vitest' },
     ];
 
+    Guia.dados.linguagens.banco = [
+        { id: 'mariadb', rotulo: 'MariaDB' },
+        { id: 'mysql', rotulo: 'MySQL' },
+    ];
+
     Guia.dados.realcePorExtensao = {
         php: 'php',
         ts: 'typescript',

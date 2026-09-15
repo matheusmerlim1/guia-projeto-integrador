@@ -73,9 +73,35 @@
                 linguagem: BlocoCodigo.linguagemDoCaminho( caminho ),
             } ).criarElemento();
 
-            this.corpo.replaceChildren( informacoes, bloco );
+            const conteudo = caminho.endsWith( '.svg' ) ? this.criarImagem( caminho, no, bloco ) : [ bloco ];
+            this.corpo.replaceChildren( informacoes, ...conteudo );
             this.dialogo.showModal();
             this.corpo.scrollTop = 0;
+        }
+
+        /**
+         * Arquivos de imagem SVG são exibidos como imagem; o código fica recolhido logo abaixo.
+         */
+        criarImagem( caminho, no, bloco ) {
+            const area = document.createElement( 'div' );
+            area.className = 'diagrama__area';
+            const imagem = document.createElement( 'img' );
+            imagem.className = 'diagrama__imagem';
+            imagem.alt = no.nota;
+            imagem.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent( no.codigo );
+            area.append( imagem );
+
+            const detalhes = document.createElement( 'details' );
+            detalhes.className = 'expansivel';
+            const resumo = document.createElement( 'summary' );
+            resumo.className = 'expansivel__resumo';
+            resumo.textContent = 'Ver o código SVG de ' + caminho.split( '/' ).pop();
+            const conteudo = document.createElement( 'div' );
+            conteudo.className = 'expansivel__conteudo';
+            conteudo.append( bloco );
+            detalhes.append( resumo, conteudo );
+
+            return [ area, detalhes ];
         }
 
         criarBotaoSimulacao() {

@@ -3,13 +3,39 @@
 
     class PassoAPasso {
 
-        constructor( elemento ) {
+        constructor( elemento, preferencias ) {
             this.elemento = elemento;
-            this.dados = Guia.dados.terminais[ elemento.dataset.passoAPasso ];
+            this.preferencias = preferencias;
+            this.origem = Guia.dados.terminais[ elemento.dataset.passoAPasso ];
         }
 
         iniciar() {
-            if ( ! this.dados ) {
+            if ( ! this.origem ) {
+                return;
+            }
+            this.desenhar();
+            // Passos com variantes por linguagem são redesenhados quando a linguagem muda.
+            if ( this.origem.variantes ) {
+                this.preferencias.aoAlterarLinguagem( this.origem.camada, () => this.desenhar() );
+            }
+        }
+
+        dadosAtuais() {
+            if ( ! this.origem.variantes ) {
+                return this.origem;
+            }
+            const linguagem = this.preferencias.linguagem( this.origem.camada );
+            return this.origem.variantes[ linguagem ];
+        }
+
+        desenhar() {
+            this.dados = this.dadosAtuais();
+            // Uma variante pode não ter comandos, apenas um aviso explicando por quê.
+            if ( this.dados.aviso ) {
+                const aviso = document.createElement( 'div' );
+                aviso.className = 'aviso aviso--dica';
+                aviso.append( this.criarTexto( '', this.dados.aviso ) );
+                this.elemento.replaceChildren( aviso );
                 return;
             }
             const lista = document.createElement( 'ol' );

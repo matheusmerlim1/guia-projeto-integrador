@@ -24,3 +24,13 @@
     font-size: 0.85rem;
     color: var(--cor-texto-suave);
 }
+
+.diagrama__area--escura {
+    background: #1e1e1e;
+    border-color: #333333;
+}
+
+.diagrama__imagem--estrutura {
+    min-width: 44rem;
+    max-width: 1000px;
+}
