@@ -126,3 +126,10 @@
 .grade-comparacao__coluna .lista-marcada {
     margin-bottom: 0;
 }
+
+/* Cada etapa agora ocupa uma página inteira: a primeira dispensa a linha de separação. */
+.conteudo > .etapa:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}

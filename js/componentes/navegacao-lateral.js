@@ -5,16 +5,17 @@
 
     class NavegacaoLateral {
 
-        constructor( painel, lista, botaoMenu ) {
+        constructor( painel, lista, botaoMenu, pagina, percurso ) {
             this.painel = painel;
             this.lista = lista;
             this.botaoMenu = botaoMenu;
-            this.links = [];
+            this.pagina = pagina;
+            this.percurso = percurso;
+            this.etapaAberta = percurso.etapaDe( pagina );
         }
 
         iniciar() {
             this.desenharEtapas();
-            this.observarSecoes();
             this.botaoMenu.addEventListener( 'click', () => this.alternar() );
             document.addEventListener( 'keydown', evento => {
                 if ( evento.key === 'Escape' ) {
@@ -26,53 +27,76 @@
         desenharEtapas() {
             const itens = Guia.dados.etapas.map( etapa => {
                 const item = document.createElement( 'li' );
-                const link = document.createElement( 'a' );
-                link.href = '#' + etapa.id;
-
-                const numero = document.createElement( 'span' );
-                numero.className = 'etapas__numero';
-                numero.textContent = etapa.numero;
-
-                const titulo = document.createElement( 'span' );
-                titulo.className = 'etapas__titulo';
-                titulo.textContent = etapa.titulo;
-
-                link.append( numero, titulo );
-                if ( etapa.situacao === 'planejada' ) {
-                    const selo = document.createElement( 'span' );
-                    selo.className = 'selo';
-                    selo.textContent = 'em breve';
-                    link.append( selo );
+                item.append( this.linkDaEtapa( etapa ) );
+                if ( etapa.partes ) {
+                    item.append( this.listaDePartes( etapa ) );
                 }
-                link.addEventListener( 'click', () => this.fecharNoCelular() );
-                this.links.push( link );
-                item.append( link );
                 return item;
             } );
             this.lista.replaceChildren( ...itens );
         }
 
-        observarSecoes() {
-            const secoes = Guia.dados.etapas
-                .map( etapa => document.getElementById( etapa.id ) )
-                .filter( Boolean );
-            const observador = new IntersectionObserver( entradas => {
-                const visivel = entradas.find( entrada => entrada.isIntersecting );
-                if ( visivel ) {
-                    this.marcarAtual( visivel.target.id );
-                }
-            }, { rootMargin: '-15% 0px -80% 0px' } );
-            secoes.forEach( secao => observador.observe( secao ) );
-        }
+        linkDaEtapa( etapa ) {
+            const link = document.createElement( 'a' );
+            link.href = this.percurso.entradaDe( etapa );
 
-        marcarAtual( id ) {
-            for ( const link of this.links ) {
-                if ( link.getAttribute( 'href' ) === '#' + id ) {
-                    link.setAttribute( 'aria-current', 'true' );
+            const numero = document.createElement( 'span' );
+            numero.className = 'etapas__numero';
+            numero.textContent = etapa.numero;
+
+            const titulo = document.createElement( 'span' );
+            titulo.className = 'etapas__titulo';
+            titulo.textContent = etapa.titulo;
+
+            link.append( numero, titulo );
+            if ( etapa.situacao === 'planejada' ) {
+                const selo = document.createElement( 'span' );
+                selo.className = 'selo';
+                selo.textContent = 'em breve';
+                link.append( selo );
+            }
+            /* A etapa dividida fica destacada enquanto qualquer uma das suas partes está aberta,
+               mas quem recebe aria-current="page" é a parte, não ela. */
+            if ( this.etapaAberta === etapa ) {
+                if ( etapa.partes ) {
+                    link.dataset.aberta = 'true';
                 } else {
-                    link.removeAttribute( 'aria-current' );
+                    link.setAttribute( 'aria-current', 'page' );
                 }
             }
+            this.aoClicar( link );
+            return link;
+        }
+
+        listaDePartes( etapa ) {
+            const lista = document.createElement( 'ol' );
+            lista.className = 'etapas__partes';
+            if ( this.etapaAberta !== etapa ) {
+                lista.hidden = true;
+            }
+
+            for ( const parte of etapa.partes ) {
+                const item = document.createElement( 'li' );
+                const link = document.createElement( 'a' );
+                link.href = parte.pagina;
+
+                const titulo = document.createElement( 'span' );
+                titulo.className = 'etapas__titulo';
+                titulo.textContent = parte.titulo;
+
+                link.append( titulo );
+                if ( parte.id === this.pagina ) {
+                    link.setAttribute( 'aria-current', 'page' );
+                }
+                this.aoClicar( link );
+                item.append( link );
+                lista.append( item );
+            }
+            return lista;
+        }
+
+        aoClicar( link ) {
+            link.addEventListener( 'click', () => this.fecharNoCelular() );
         }
 
         alternar() {

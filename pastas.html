@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="pastas">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 3 &middot; Pastas do projeto &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="pastas" aria-labelledby="titulo-pastas">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 3</p>
+                <h2 class="etapa__titulo" id="titulo-pastas">Pastas do projeto</h2>
+                <p class="etapa__resumo">Como organizar as pastas, criá-las pelo terminal e decidir o que entra no repositório.</p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">3.1</span> A organização completa</h3>
+                <p>
+                    É assim que o projeto aparece no explorador do editor quando está pronto. Todos os arquivos desta imagem estão
+                    na coluna da esquerda, em <strong>Estrutura do projeto</strong>, com o código completo.
+                </p>
+                <figure class="diagrama" data-imagem-estrutura>
+                    <div class="diagrama__area diagrama__area--escura">
+                        <img class="diagrama__imagem diagrama__imagem--estrutura" src="img/estrutura/backend-php--frontend-typescript.svg" width="1000" height="900" loading="lazy" alt="">
+                    </div>
+                    <figcaption class="diagrama__legenda"></figcaption>
+                </figure>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">3.2</span> Por que separar assim</h3>
+                <ul class="lista-marcada">
+                    <li><strong><code>backend</code> e <code>frontend</code> são projetos independentes</strong>: cada um tem suas dependências, seus comandos e seus testes, e é executado em um terminal próprio.</li>
+                    <li><strong>Uma pasta por funcionalidade</strong> (<code>emprestimo</code>, <code>livro</code>, <code>leitor</code>): tudo o que muda junto fica junto. Para mexer em empréstimos, basta abrir uma pasta.</li>
+                    <li><strong><code>infra</code> guarda o que é compartilhado</strong> por várias funcionalidades, como a conexão com o banco e as exceções.</li>
+                    <li><strong>Os testes ficam separados do código</strong>, em uma pasta própria, para não irem junto com a aplicação.</li>
+                    <li><strong><code>docs</code> guarda o minimundo e os diagramas</strong>, que evoluem junto com o código.</li>
+                </ul>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Pasta</th>
+                                <th scope="col">O que guarda</th>
+                                <th scope="col">Exemplos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>backend/src/emprestimo</code></td><td>Entidade, gestor, repositórios e rotas de uma funcionalidade</td><td><code>Emprestimo</code>, <code>GestorEmprestimos</code></td></tr>
+                            <tr><td><code>backend/src/infra</code></td><td>Código usado por várias funcionalidades</td><td>conexão, exceções, resposta</td></tr>
+                            <tr><td><code>backend/spec</code> ou <code>backend/test</code></td><td>Testes do back-end</td><td>testes da entidade, do gestor e do repositório</td></tr>
+                            <tr><td><code>backend/db</code></td><td>Scripts SQL do banco</td><td><code>estrutura.sql</code>, <code>dados.sql</code></td></tr>
+                            <tr><td><code>frontend/src/emprestimo</code></td><td>Visão, controladora e serviço da tela</td><td><code>ControladoraEmprestimos</code></td></tr>
+                            <tr><td><code>frontend/pages</code> e <code>frontend/style</code></td><td>HTML das telas e CSS</td><td><code>emprestimos.html</code></td></tr>
+                            <tr><td><code>frontend/test</code></td><td>Testes unitários do front-end</td><td>testes da controladora e do serviço</td></tr>
+                            <tr><td><code>frontend/e2e</code> e <code>frontend/feature</code></td><td>Testes de ponta a ponta e seus cenários</td><td><code>emprestimos.spec</code>, <code>emprestimo.feature</code></td></tr>
+                            <tr><td><code>docs</code></td><td>Minimundo e diagramas</td><td><code>minimundo.md</code>, <code>modelo-essencial.svg</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="texto-suave">
+                    O nome da pasta de testes depende da ferramenta: o Kahlan procura <code>spec</code>; o Vitest encontra os arquivos <code>.spec</code> em qualquer pasta, e o
+                    projeto usa <code>test</code>. No Java, o Maven exige <code>src/main/java</code> para o código, <code>src/test/java</code> para os testes e
+                    <code>src/main/resources</code> para os arquivos que não são código, como os scripts SQL.
+                </p>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">3.3</span> Criar as pastas pelo terminal</h3>
+                <p>
+                    Dentro da pasta do projeto clonado na <a href="git-comecar.html">Etapa 1</a>, crie primeiro as pastas comuns a qualquer linguagem.
+                    Também é possível criá-las pelo editor; o terminal é mais rápido quando são muitas.
+                </p>
+                <div data-passo-a-passo="pastas.raiz"></div>
+                <p>Em seguida, as pastas do back-end. Elas mudam conforme a linguagem escolhida no topo da página.</p>
+                <div data-passo-a-passo="pastas.backend"></div>
+                <div class="aviso aviso--atencao">
+                    <p class="aviso__titulo">O Git não guarda pastas vazias</p>
+                    <p>
+                        Depois de criar as pastas, <code>git status</code> não mostra nada de novo: o Git só acompanha arquivos. As pastas passam a aparecer
+                        no GitHub quando tiverem pelo menos um arquivo, o que acontece nas próximas etapas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">3.4</span> O que vai e o que não vai para o repositório</h3>
+                <div class="grade-comparacao">
+                    <div class="grade-comparacao__coluna grade-comparacao__coluna--sim">
+                        <p class="grade-comparacao__titulo">Vai para o repositório</p>
+                        <ul class="lista-marcada">
+                            <li>Todo o código-fonte e os testes</li>
+                            <li>Os scripts SQL e a pasta <code>docs</code></li>
+                            <li><code>composer.json</code>, <code>package.json</code> ou <code>pom.xml</code>: a lista de dependências</li>
+                            <li><code>composer.lock</code> e <code>pnpm-lock.yaml</code>: as versões exatas instaladas, para todos usarem as mesmas</li>
+                            <li>Arquivos de configuração, como <code>tsconfig.json</code> e <code>phpstan.neon</code></li>
+                            <li><code>README.md</code> e <code>.gitignore</code></li>
+                        </ul>
+                    </div>
+                    <div class="grade-comparacao__coluna grade-comparacao__coluna--nao">
+                        <p class="grade-comparacao__titulo">Não vai para o repositório</p>
+                        <ul class="lista-marcada">
+                            <li><code>node_modules</code> e <code>vendor</code>: recriados com <code>pnpm install</code> e <code>composer install</code></li>
+                            <li><code>target</code> e <code>dist</code>: gerados pela compilação e pelo build</li>
+                            <li><code>test-results</code>, <code>playwright-report</code> e <code>coverage</code>: gerados pelos testes</li>
+                            <li>Senhas, chaves de acesso e arquivos <code>.env</code> com dados sensíveis</li>
+                        </ul>
+                    </div>
+                </div>
+                <p>O <code>.gitignore</code> na raiz do projeto impede que esses arquivos sejam adicionados por engano:</p>
+                <div data-arquivo-projeto=".gitignore"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">3.5</span> O README.md</h3>
+                <p>
+                    O <code>README.md</code> é a primeira coisa que aparece na página do repositório no GitHub. Ele deve permitir que qualquer pessoa
+                    coloque o projeto para funcionar sem perguntar nada a ninguém:
+                </p>
+                <ol class="lista-numerada">
+                    <li><strong>Integrantes</strong> do grupo.</li>
+                    <li><strong>Requisitos</strong>: o que precisa estar instalado.</li>
+                    <li><strong>Como executar</strong>: os comandos, na ordem, e em qual pasta cada um é digitado.</li>
+                    <li><strong>Testes</strong>: como rodar cada tipo de teste.</li>
+                    <li><strong>Referências</strong>: de onde vieram bibliotecas, estilos e imagens.</li>
+                </ol>
+                <p>O README abaixo muda com o back-end escolhido, porque os comandos são diferentes:</p>
+                <div data-arquivo-projeto="README.md"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

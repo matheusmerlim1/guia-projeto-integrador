@@ -4,15 +4,22 @@
     class Aplicacao {
 
         constructor() {
+            this.pagina = document.documentElement.dataset.pagina || 'inicio';
             this.preferencias = new Guia.nucleo.Preferencias( { backend: 'php', frontend: 'typescript', banco: 'mariadb' } );
             this.projeto = new Guia.nucleo.ProjetoAtual( this.preferencias );
+            this.percurso = new Guia.nucleo.Percurso( Guia.dados.etapas );
         }
 
         iniciar() {
             const { componentes } = Guia;
 
+            new componentes.Casca( this.pagina, this.percurso ).iniciar();
+
             document.querySelectorAll( '[data-seletor-linguagem]' ).forEach( elemento => {
                 new componentes.SeletorLinguagem( elemento, this.preferencias ).iniciar();
+            } );
+            document.querySelectorAll( '[data-cartoes-etapas]' ).forEach( elemento => {
+                new componentes.CartoesEtapas( elemento, this.percurso ).iniciar();
             } );
             document.querySelectorAll( '[data-exemplo]' ).forEach( elemento => {
                 new componentes.VisualizadorLinguagens( elemento, this.preferencias ).iniciar();
@@ -45,16 +52,24 @@
             new componentes.NavegacaoLateral(
                 document.getElementById( 'painel-lateral' ),
                 document.querySelector( '[data-lista-etapas]' ),
-                document.querySelector( '.barra-topo__menu' )
+                document.querySelector( '.barra-topo__menu' ),
+                this.pagina,
+                this.percurso
             ).iniciar();
 
             new componentes.BuscaNaPagina(
                 document.querySelector( '[data-busca]' ),
-                document.getElementById( 'inicio' )
+                document.querySelector( '.conteudo' )
             ).iniciar();
         }
     }
 
-    new Aplicacao().iniciar();
+    /* Os arquivos entram pelo carregador de recursos, que pode terminar antes do
+       HTML ser lido por inteiro; por isso a montagem espera o documento ficar pronto. */
+    if ( document.readyState === 'loading' ) {
+        document.addEventListener( 'DOMContentLoaded', () => new Aplicacao().iniciar() );
+    } else {
+        new Aplicacao().iniciar();
+    }
 
 })( window.Guia );

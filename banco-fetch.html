@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="banco-fetch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 5.4 &middot; Buscar os dados com fetch &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="banco-fetch" aria-labelledby="titulo-banco-fetch">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 5 &middot; Banco de dados e fetch &middot; Parte 4 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-banco-fetch">Buscar os dados com fetch</h2>
+                <p class="etapa__resumo">
+                    O serviço do front-end que chama a API com <code>fetch</code> e transforma a resposta em dados da tela.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.8</span> Buscar os dados no front-end com fetch</h3>
+                <p>
+                    No navegador, <code>fetch</code> faz a mesma requisição que o <code>curl</code>. Toda a comunicação com a API fica no <strong>serviço</strong>;
+                    a controladora e a visão não sabem que existe HTTP.
+                </p>
+                <ol class="fluxo-git">
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Serviço</span>
+                        <span class="fluxo-git__descricao">Monta a requisição e converte o JSON.</span>
+                        <span class="fluxo-git__comando">fetch</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Rotas</span>
+                        <span class="fluxo-git__descricao">Recebem a requisição e chamam o gestor.</span>
+                        <span class="fluxo-git__comando">POST /emprestimos</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Gestor e entidades</span>
+                        <span class="fluxo-git__descricao">Aplicam as regras de negócio.</span>
+                        <span class="fluxo-git__comando">registrar()</span>
+                    </li>
+                    <li class="fluxo-git__area">
+                        <span class="fluxo-git__nome">Repositório e banco</span>
+                        <span class="fluxo-git__descricao">Leem e gravam os dados.</span>
+                        <span class="fluxo-git__comando">INSERT</span>
+                    </li>
+                </ol>
+                <ul class="lista-marcada">
+                    <li><code>fetch</code> devolve uma <em>Promise</em>: com <code>await</code>, o código espera a resposta sem travar a página.</li>
+                    <li><code>response.ok</code> é <code>true</code> para os códigos 200 a 299. Para 400 e 500 é <code>false</code>, e o serviço lança um erro com as mensagens da API.</li>
+                    <li><code>response.json()</code> converte o corpo da resposta em objeto; <code>JSON.stringify()</code> faz o caminho contrário ao enviar dados.</li>
+                    <li>Se a API estiver desligada, o próprio <code>fetch</code> falha; o serviço troca esse erro por uma mensagem que o usuário entende.</li>
+                </ul>
+                <div data-arquivo-projeto="frontend/src/infra/conf.ts|frontend/src/infra/conf.js"></div>
+                <div data-arquivo-projeto="frontend/src/emprestimo/servico-emprestimos.ts|frontend/src/emprestimo/servico-emprestimos.js"></div>
+                <p>O serviço é testado sem API: o teste troca o <code>fetch</code> por uma função falsa com a resposta pronta.</p>
+                <div data-arquivo-projeto="frontend/test/servico-emprestimos.spec.ts|frontend/test/servico-emprestimos.spec.js"></div>
+                <div data-passo-a-passo="fetch.testes"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

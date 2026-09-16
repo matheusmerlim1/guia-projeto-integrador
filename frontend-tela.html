@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="frontend-tela">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 6.2 &middot; Visão e controladora &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="frontend-tela" aria-labelledby="titulo-frontend-tela">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 6 &middot; Front-end e testes &middot; Parte 2 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-frontend-tela">Visão e controladora</h2>
+                <p class="etapa__resumo">
+                    A visão, que só cuida da tela, e a controladora, que liga a visão ao serviço sem conhecer o navegador.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.3</span> A visão</h3>
+                <p>
+                    A visão é a única parte que mexe no HTML: lê os campos, exibe listas e mensagens e avisa quando o usuário clica em algo.
+                    A controladora não conhece a classe da visão, só a lista de métodos que ela oferece:
+                </p>
+                <div data-arquivo-projeto="frontend/src/emprestimo/visao-emprestimos.ts|frontend/src/emprestimo/visao-emprestimos.js"
+                    data-ausente="JavaScript não tem interfaces. A controladora só espera receber um objeto com os métodos aoRegistrar, aoDevolver, exibirOpcoes, exibirEmprestimos, exibirEmprestimoRegistrado, exibirDevolucao e exibirErro. A visão em HTML, abaixo, e a visão falsa dos testes têm esses mesmos métodos."></div>
+                <div data-arquivo-projeto="frontend/src/emprestimo/visao-emprestimos-em-html.ts|frontend/src/emprestimo/visao-emprestimos-em-html.js"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.4</span> A controladora</h3>
+                <p>
+                    A controladora liga a visão ao serviço da <a href="banco-fetch.html">Etapa 5</a>. Ela não usa <code>document</code> nem <code>fetch</code>:
+                    recebe os dois prontos no construtor. Por isso, nos testes, dá para entregar a ela uma visão falsa e um serviço falso.
+                </p>
+                <div data-arquivo-projeto="frontend/src/emprestimo/controladora-emprestimos.ts|frontend/src/emprestimo/controladora-emprestimos.js"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

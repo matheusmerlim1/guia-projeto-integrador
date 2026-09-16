@@ -1,0 +1,45 @@
+.navegacao-etapas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--espaco-4);
+    margin-top: var(--espaco-8);
+    padding-top: var(--espaco-5);
+    border-top: 1px solid var(--cor-borda);
+}
+
+.navegacao-etapas__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--espaco-1);
+    padding: var(--espaco-4) var(--espaco-5);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    color: var(--cor-texto);
+    text-decoration: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.navegacao-etapas__link:hover,
+.navegacao-etapas__link:focus-visible {
+    border-color: var(--cor-destaque);
+    box-shadow: var(--sombra);
+    text-decoration: none;
+}
+
+.navegacao-etapas__link--proxima {
+    grid-column: -2;
+    text-align: right;
+}
+
+.navegacao-etapas__sentido {
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-destaque);
+}
+
+.navegacao-etapas__titulo {
+    font-weight: 600;
+}

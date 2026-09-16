@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="backend-projeto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 4.1 &middot; Projeto e contratos &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="backend-projeto" aria-labelledby="titulo-backend-projeto">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 4 &middot; Back-end e testes &middot; Parte 1 de 3</p>
+                <h2 class="etapa__titulo" id="titulo-backend-projeto">Projeto e contratos</h2>
+                <p class="etapa__resumo">
+                    A ordem de construção do back-end, a configuração do projeto, as dependências e as interfaces dos repositórios.
+                </p>
+            </header>
+
+            <div class="aviso aviso--dica">
+                <p class="aviso__titulo">A ordem de construção</p>
+                <p>
+                    O back-end é construído de dentro para fora, seguindo a <a href="modelagem.html">arquitetura</a>: primeiro as entidades e seus testes
+                    (<a href="exemplo.html">Etapa 0</a>), depois as interfaces dos repositórios, o gestor com seus testes e, por fim, as rotas.
+                    O acesso ao banco de dados fica para a <a href="banco-instalar.html">Etapa 5</a>: graças às interfaces, tudo o que vem antes é testado sem banco.
+                </p>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.1</span> Configurar o projeto e instalar as dependências</h3>
+                <p>
+                    O arquivo de configuração lista as bibliotecas usadas e os <strong>scripts</strong>: apelidos para os comandos do dia a dia,
+                    como iniciar a API, rodar os testes e recriar o banco.
+                </p>
+                <div data-arquivo-projeto="backend/composer.json|backend/package.json|backend/pom.xml"></div>
+                <div data-passo-a-passo="backend.instalar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.2</span> Escrever os contratos: as interfaces dos repositórios</h3>
+                <p>
+                    Antes de pensar em banco de dados, defina <strong>o que</strong> o gestor precisa ler e gravar. A interface lista os métodos,
+                    sem implementação. O gestor vai depender dela, e não de uma classe concreta.
+                </p>
+                <div data-arquivo-projeto="backend/src/emprestimo/RepositorioEmprestimos.php|backend/src/emprestimo/repositorio-emprestimos.ts|backend/src/main/java/biblioteca/emprestimo/RepositorioEmprestimos.java"
+                    data-ausente="JavaScript não tem interfaces. O contrato continua existindo, mas só na documentação: o gestor chama os métodos obterEmAberto, obterEmAbertoPorId, contarEmAbertoDoLeitor, livroEstaEmprestado, adicionar e registrarDevolucao, e qualquer objeto que tenha esses métodos pode ser usado no lugar do repositório."></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

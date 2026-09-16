@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="git-dupla">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 1.3 &middot; Trabalho em dupla &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="git-dupla" aria-labelledby="titulo-git-dupla">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 1 &middot; Git e GitHub &middot; Parte 3 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-git-dupla">Trabalho em dupla</h2>
+                <p class="etapa__resumo">
+                    Ana e Bruno alteram a mesma linha do mesmo arquivo ao mesmo tempo. O passo a passo do conflito,
+                    de como ele aparece no editor e de como resolvê-lo.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.8</span> Trabalhar em dupla e resolver um conflito</h3>
+                <p>
+                    Um <strong>conflito</strong> acontece quando duas pessoas alteram a mesma linha do mesmo arquivo. Nesta simulação,
+                    Bruno e Ana trocam a linha <em>Em construção.</em> do <code>README.md</code> ao mesmo tempo, cada um com um texto.
+                </p>
+                <div data-passo-a-passo="git.bruno-branch"></div>
+                <div data-passo-a-passo="git.ana-readme"></div>
+                <p>Antes de juntar a branch dele, Bruno atualiza a <code>main</code> com o que está no GitHub.</p>
+                <div data-passo-a-passo="git.bruno-atualizar"></div>
+                <div data-passo-a-passo="git.bruno-conflito"></div>
+
+                <h4>Resolvendo o conflito no editor</h4>
+                <p>Ao abrir o <code>README.md</code>, Bruno encontra as duas versões separadas por marcações:</p>
+                <div data-arquivo="git.readme-conflito"></div>
+                <ul class="lista-marcada">
+                    <li>Entre <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> e <code>=======</code> está a versão da branch atual, a <code>main</code> — o texto da Ana.</li>
+                    <li>Entre <code>=======</code> e <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; readme-execucao</code> está a versão que está chegando — o texto do Bruno.</li>
+                    <li>Resolver é deixar o arquivo como deve ficar e <strong>apagar as três linhas de marcação</strong>. Aqui, os dois textos são úteis, então viram dois passos.</li>
+                </ul>
+                <div data-arquivo="git.readme-resolvido"></div>
+                <div data-passo-a-passo="git.bruno-resolver"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

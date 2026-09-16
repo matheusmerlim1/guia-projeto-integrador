@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="frontend-configurar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 6.1 &middot; Configurar e montar a página &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="frontend-configurar" aria-labelledby="titulo-frontend-configurar">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 6 &middot; Front-end e testes &middot; Parte 1 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-frontend-configurar">Configurar e montar a página</h2>
+                <p class="etapa__resumo">
+                    A aplicação de página única, as dependências do front-end e a troca de telas a partir do <code>index.html</code>.
+                </p>
+            </header>
+
+
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.1</span> Configurar o front-end</h3>
+                <p>
+                    O front-end é uma aplicação de página única (SPA): o navegador carrega um <code>index.html</code> e o JavaScript troca o conteúdo
+                    da tela, sem recarregar a página. As ferramentas são:
+                </p>
+                <ul class="lista-marcada">
+                    <li><strong>Vite</strong>: servidor de desenvolvimento e gerador da versão final.</li>
+                    <li><strong>Bootstrap</strong>: classes CSS prontas para formulários, tabelas e mensagens.</li>
+                    <li><strong>Vitest</strong>: testes de unidade, os mesmos da <a href="banco-testes.html">Etapa 5</a>.</li>
+                    <li><strong>Playwright</strong>: testes de ponta a ponta, que abrem um navegador de verdade.</li>
+                </ul>
+                <div data-arquivo-projeto="frontend/package.json"></div>
+                <div data-arquivo-projeto="frontend/tsconfig.json"
+                    data-ausente="Em JavaScript não há compilador para configurar: o Vite entrega os arquivos .js ao navegador como estão. O &quot;type&quot;: &quot;module&quot; do package.json permite usar import e export."></div>
+                <div data-passo-a-passo="frontend.instalar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.2</span> Página inicial e troca de telas</h3>
+                <p>
+                    O <code>index.html</code> tem só a casca da aplicação: o cabeçalho e um <code>&lt;main&gt;</code> vazio. O conteúdo de cada tela fica em
+                    <code>pages/</code>, com as classes do Bootstrap.
+                </p>
+                <div data-arquivo-projeto="frontend/index.html"></div>
+                <div data-arquivo-projeto="frontend/pages/emprestimos.html"></div>
+                <p>
+                    O ponto de entrada lê o endereço (<code>location.pathname</code>), coloca a página certa dentro do <code>&lt;main&gt;</code> e monta
+                    as três peças da tela: visão, serviço e controladora.
+                </p>
+                <div data-arquivo-projeto="frontend/src/index.ts|frontend/src/index.js"></div>
+                <div data-arquivo-projeto="frontend/src/infra/spa.ts|frontend/src/infra/spa.js"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

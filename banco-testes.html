@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="banco-testes">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 5.3 &middot; Testes de integração e rotas &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="banco-testes" aria-labelledby="titulo-banco-testes">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 5 &middot; Banco de dados e fetch &middot; Parte 3 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-banco-testes">Testes de integração e rotas</h2>
+                <p class="etapa__resumo">
+                    Testes que usam o banco de verdade e como conferir as rotas da API pelo terminal, antes de existir qualquer tela.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.6</span> Testes de integração</h3>
+                <p>
+                    Os testes de unidade da Etapa 4 usam dublês. Os de <strong>integração</strong> usam o banco de verdade, para confirmar que o SQL funciona.
+                    Antes de cada teste, o banco é recriado com <code>dados-teste.sql</code>, então cada teste sabe exatamente o que encontra.
+                </p>
+                <div data-arquivo-projeto="backend/spec/RepositorioEmprestimosEmBDR.spec.php|backend/test/repositorio-emprestimos-em-bdr.spec.ts|backend/test/repositorio-emprestimos-em-bdr.spec.js|backend/src/test/java/biblioteca/emprestimo/RepositorioEmprestimosEmBDRTest.java"></div>
+                <div data-passo-a-passo="banco.integracao"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.7</span> Testar as rotas antes da tela</h3>
+                <p>
+                    Com o banco pronto, os dados iniciais carregados e a API rodando, cada rota pode ser testada pelo terminal. Assim, quando a tela
+                    não funcionar, já se sabe que o problema não está na API.
+                </p>
+                <div data-passo-a-passo="banco.rotas"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

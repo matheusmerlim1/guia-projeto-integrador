@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="frontend-testes">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 6.4 &middot; Testes e versão final &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="frontend-testes" aria-labelledby="titulo-frontend-testes">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 6 &middot; Front-end e testes &middot; Parte 4 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-frontend-testes">Testes e versão final</h2>
+                <p class="etapa__resumo">
+                    Testes de unidade da controladora, testes de ponta a ponta que usam a aplicação como um usuário e a geração da versão final.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.6</span> Testes de unidade da controladora</h3>
+                <p>
+                    O teste troca a visão por uma <strong>visão falsa</strong>, sem HTML, e os métodos do serviço por versões falsas, com respostas prontas.
+                    Assim ele confere só a controladora: se ela pediu os dados certos e mandou a visão exibir o resultado certo.
+                </p>
+                <ul class="lista-marcada">
+                    <li><code>vi.fn()</code> cria uma função que registra como foi chamada; <code>toHaveBeenCalledWith</code> confere os argumentos.</li>
+                    <li><code>vi.spyOn( servico, 'registrar' ).mockResolvedValue( ... )</code> faz o método do serviço devolver uma resposta pronta, sem <code>fetch</code>.</li>
+                </ul>
+                <div data-arquivo-projeto="frontend/test/controladora-emprestimos.spec.ts|frontend/test/controladora-emprestimos.spec.js"></div>
+                <div data-passo-a-passo="frontend.testes"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.7</span> Testes de ponta a ponta</h3>
+                <p>
+                    Os testes de ponta a ponta usam tudo junto: navegador, front-end, API e banco. Primeiro, os cenários são escritos em <strong>Gherkin</strong>,
+                    em português, no formato <em>Dado</em> (situação), <em>Quando</em> (ação) e <em>Então</em> (resultado esperado):
+                </p>
+                <div data-arquivo-projeto="frontend/feature/emprestimo.feature"></div>
+                <p>
+                    O <strong>Page Object</strong> reúne em métodos com nomes do negócio o que o teste faz na tela: escolher, registrar, devolver, conferir.
+                    Os seletores do HTML, como <code>#livro</code>, ficam só nele.
+                </p>
+                <div data-arquivo-projeto="frontend/e2e/pom/TelaEmprestimos.ts|frontend/e2e/pom/TelaEmprestimos.js"></div>
+                <p>Cada cenário vira um teste, e cada linha do cenário vira uma chamada ao Page Object:</p>
+                <div data-arquivo-projeto="frontend/e2e/emprestimos.spec.ts|frontend/e2e/emprestimos.spec.js"></div>
+                <details class="expansivel">
+                    <summary class="expansivel__resumo">Ver a configuração do Playwright</summary>
+                    <div class="expansivel__conteudo">
+                        <div data-arquivo-projeto="frontend/playwright.config.ts|frontend/playwright.config.js"></div>
+                    </div>
+                </details>
+                <p>Os testes esperam dados conhecidos. Antes de rodá-los, com a API rodando, recrie o banco com os dados de teste:</p>
+                <div data-passo-a-passo="frontend.preparar-e2e"></div>
+                <div data-passo-a-passo="frontend.e2e"></div>
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Quando um teste de ponta a ponta falha</p>
+                    <p>
+                        O Playwright mostra a linha do teste que falhou e guarda um rastro em <code>test-results</code>. O comando
+                        <code>pnpm exec playwright show-trace</code>, indicado na própria mensagem de erro, abre esse rastro com cada passo e a tela em cada momento.
+                        Depois dos testes, carregue de novo <code>dados.sql</code> para voltar aos dados iniciais.
+                    </p>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.8</span> Gerar a versão final</h3>
+                <p>
+                    O <code>pnpm dev</code> é só para desenvolver. Para publicar, o Vite gera uma versão reduzida, que qualquer servidor de arquivos consegue entregar.
+                </p>
+                <div data-passo-a-passo="frontend.build"></div>
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Antes de cada commit</p>
+                    <p>
+                        Rode os testes do back-end e do front-end. Se todos passarem, faça o commit e o push como na <a href="git-comecar.html">Etapa 1</a>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

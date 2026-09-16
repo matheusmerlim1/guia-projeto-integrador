@@ -1,0 +1,37 @@
+.portfolio {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espaco-1);
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--cor-texto-suave);
+    background: var(--cor-superficie);
+    text-decoration: none;
+}
+
+.portfolio:hover,
+.portfolio:focus-visible {
+    border-color: var(--cor-destaque);
+    color: var(--cor-destaque-forte);
+    text-decoration: none;
+}
+
+@media (max-width: 720px) {
+    .portfolio span {
+        display: none;
+    }
+
+    .portfolio {
+        padding: 0.35rem;
+    }
+}
+
+@media print {
+    .portfolio {
+        display: none;
+    }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="backend-gestor">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 4.2 &middot; Gestor e testes &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="backend-gestor" aria-labelledby="titulo-backend-gestor">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 4 &middot; Back-end e testes &middot; Parte 2 de 3</p>
+                <h2 class="etapa__titulo" id="titulo-backend-gestor">Gestor e testes</h2>
+                <p class="etapa__resumo">
+                    As regras de negócio no gestor, os testes com dublês, a execução da bateria de testes e a análise estática.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.3</span> Escrever o gestor com as regras R3 e R4</h3>
+                <p>
+                    O gestor coordena o caso de uso: valida os dados recebidos, busca o livro e o leitor, confere as regras e grava o empréstimo.
+                    Repare que a regra R3 continua sendo decidida pela entidade <code>Leitor</code>: o gestor só conta os empréstimos e pergunta.
+                </p>
+                <div data-arquivo-projeto="backend/src/emprestimo/GestorEmprestimos.php|backend/src/emprestimo/gestor-emprestimos.ts|backend/src/emprestimo/gestor-emprestimos.js|backend/src/main/java/biblioteca/emprestimo/GestorEmprestimos.java"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.4</span> Testar o gestor com dublês</h3>
+                <p>
+                    Um <strong>dublê</strong> é um objeto que se passa pelo verdadeiro durante o teste. Aqui, repositórios falsos implementam as mesmas
+                    interfaces, mas guardam tudo em memória. Cada teste monta a situação que precisa — por exemplo, “o leitor já tem 3 empréstimos” —
+                    sem precisar do banco de dados. Assim os testes são rápidos e testam só a lógica do gestor.
+                </p>
+                <div data-arquivo-projeto="backend/spec/GestorEmprestimos.spec.php|backend/test/gestor-emprestimos.spec.ts|backend/test/gestor-emprestimos.spec.js|backend/src/test/java/biblioteca/emprestimo/GestorEmprestimosTest.java"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.5</span> Rodar os testes</h3>
+                <p>Rode os testes a cada mudança. Veja também como fica a saída quando um teste falha: saber ler essa mensagem economiza tempo.</p>
+                <div data-passo-a-passo="backend.testes"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.6</span> Análise estática</h3>
+                <p>A análise estática encontra erros lendo o código, sem executá-lo. Rode antes de cada commit.</p>
+                <div data-passo-a-passo="backend.analise"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="git-comecar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 1.1 &middot; Primeiros passos &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="git-comecar" aria-labelledby="titulo-git-comecar">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 1 &middot; Git e GitHub &middot; Parte 1 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-git-comecar">Primeiros passos</h2>
+                <p class="etapa__resumo">
+                    Como o Git guarda as mudanças, a instalação, a criação do repositório no GitHub e o primeiro commit.
+                    Ao final desta parte, o projeto da Ana já está no GitHub.
+                </p>
+            </header>
+
+            <h3>Como o Git guarda as mudanças</h3>
+            <p>
+                Toda alteração passa por quatro lugares. Entender esse caminho explica quase todos os comandos desta etapa.
+            </p>
+            <ol class="fluxo-git">
+                <li class="fluxo-git__area">
+                    <span class="fluxo-git__nome">Pasta do projeto</span>
+                    <span class="fluxo-git__descricao">Onde você edita os arquivos.</span>
+                    <span class="fluxo-git__comando">git add</span>
+                </li>
+                <li class="fluxo-git__area">
+                    <span class="fluxo-git__nome">Área de preparação</span>
+                    <span class="fluxo-git__descricao">O que vai entrar no próximo commit.</span>
+                    <span class="fluxo-git__comando">git commit</span>
+                </li>
+                <li class="fluxo-git__area">
+                    <span class="fluxo-git__nome">Repositório local</span>
+                    <span class="fluxo-git__descricao">O histórico de commits no seu computador.</span>
+                    <span class="fluxo-git__comando">git push</span>
+                </li>
+                <li class="fluxo-git__area">
+                    <span class="fluxo-git__nome">GitHub</span>
+                    <span class="fluxo-git__descricao">A cópia compartilhada com o grupo, chamada <code>origin</code>.</span>
+                    <span class="fluxo-git__comando">git pull · git clone</span>
+                </li>
+            </ol>
+
+            <div class="aviso aviso--dica">
+                <p class="aviso__titulo">Como ler os terminais</p>
+                <p>
+                    O texto antes do sinal <code>&gt;</code> é a pasta em que o comando foi digitado, como no Prompt de Comando do Windows.
+                    O texto em branco depois dele é o que você digita; as linhas abaixo são a resposta do Git.
+                    Use <strong>▶ Reproduzir</strong> para ver o comando sendo digitado e <strong>Copiar comandos</strong> para levar os comandos ao seu terminal.
+                    Os comandos do Git são os mesmos em qualquer linguagem.
+                </p>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.1</span> Instalar e configurar o Git</h3>
+                <p>
+                    Baixe o Git em <code>git-scm.com</code> e instale com as opções padrão. Depois, abra o <strong>Prompt de Comando</strong>
+                    (tecla <kbd>Windows</kbd>, digite <em>cmd</em> e aperte <kbd>Enter</kbd>). A configuração é feita uma única vez por computador.
+                </p>
+                <div data-passo-a-passo="git.configurar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.2</span> Criar o repositório no GitHub</h3>
+                <p>Feito uma vez, por uma pessoa do grupo — no exemplo, a Ana.</p>
+                <ol class="passos">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Crie o repositório</p>
+                        <p class="passo__explicacao">Entre em <code>github.com</code>, clique no botão <strong>New</strong> e preencha <strong>Repository name</strong> com <code>biblioteca-comunitaria</code>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Escolha a visibilidade e inclua um README</p>
+                        <p class="passo__explicacao">Escolha <strong>Public</strong> ou <strong>Private</strong> e ative <strong>Add README</strong>. Assim o repositório já nasce com um primeiro commit e pode ser clonado. Clique em <strong>Create repository</strong>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Dê acesso ao colega</p>
+                        <p class="passo__explicacao">Em <strong>Settings → Collaborators → Add people</strong>, informe o usuário do Bruno. Ele recebe um convite por e-mail e precisa aceitar antes de enviar alterações.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Copie o endereço</p>
+                        <p class="passo__explicacao">Na página do repositório, clique em <strong>Code</strong>, aba <strong>HTTPS</strong>, e copie o endereço:</p>
+                        <p><code>https://github.com/ana-souza/biblioteca-comunitaria.git</code></p>
+                    </div></li>
+                </ol>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.3</span> Baixar o projeto para o computador</h3>
+                <div data-passo-a-passo="git.clonar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.4</span> Adicionar arquivos e fazer o primeiro commit</h3>
+                <p>
+                    Com o projeto aberto no editor, crie o arquivo <code>.gitignore</code> na raiz do projeto. Ele lista o que o Git deve ignorar:
+                    pastas de dependências e arquivos gerados, que cada pessoa recria no próprio computador.
+                </p>
+                <div data-arquivo="git.gitignore"></div>
+                <p>Em seguida, substitua o conteúdo do <code>README.md</code>:</p>
+                <div data-arquivo="git.readme-inicial"></div>
+                <p>Salve os dois arquivos e volte ao terminal.</p>
+                <div data-passo-a-passo="git.primeiro-commit"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="backend-api">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 4.3 &middot; Rotas da API &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="backend-api" aria-labelledby="titulo-backend-api">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 4 &middot; Back-end e testes &middot; Parte 3 de 3</p>
+                <h2 class="etapa__titulo" id="titulo-backend-api">Rotas da API</h2>
+                <p class="etapa__resumo">
+                    As rotas HTTP que expõem o gestor, o CORS e como iniciar a API para usá-la do navegador.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.7</span> Criar as rotas da API</h3>
+                <p>
+                    As rotas ligam cada endereço HTTP a uma ação do gestor. Elas não têm regra de negócio: recebem a requisição, chamam o gestor e
+                    enviam a resposta em JSON, com o código de status adequado.
+                </p>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Rota</th>
+                                <th scope="col">O que faz</th>
+                                <th scope="col">Sucesso</th>
+                                <th scope="col">Erro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>GET /emprestimos</code></td><td>Lista os empréstimos em aberto, com prazo e multa</td><td><code>200</code></td><td><code>500</code> se o banco falhar</td></tr>
+                            <tr><td><code>POST /emprestimos</code></td><td>Registra um empréstimo. Corpo: <code>{ "livroId": 1, "leitorId": 2 }</code></td><td><code>201</code> criado</td><td><code>400</code> se uma regra impedir</td></tr>
+                            <tr><td><code>PATCH /emprestimos/{id}/devolucao</code></td><td>Registra a devolução e informa a multa</td><td><code>200</code></td><td><code>400</code> se já devolvido</td></tr>
+                            <tr><td><code>GET /livros</code> e <code>GET /leitores</code></td><td>Listam as opções do formulário</td><td><code>200</code></td><td><code>500</code> se o banco falhar</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div data-arquivo-projeto="backend/src/emprestimo/rotas.php|backend/src/emprestimo/rotas.ts|backend/src/emprestimo/rotas.js|backend/src/main/java/biblioteca/emprestimo/RotasEmprestimos.java"></div>
+                <p>Os erros viram respostas JSON em um só lugar, para todas as rotas:</p>
+                <div data-arquivo-projeto="backend/src/infra/Resposta.php|backend/src/infra/resposta.ts|backend/src/infra/resposta.js"
+                    data-ausente="No Java, os erros são tratados no App.java, mostrado logo abaixo: app.exception() transforma DominioException em status 400 e RepositorioException em status 500, para todas as rotas."></div>
+                <p>O ponto de entrada cria o servidor, liga o CORS e registra as rotas:</p>
+                <div data-arquivo-projeto="backend/index.php|backend/src/index.ts|backend/src/index.js|backend/src/main/java/biblioteca/App.java"></div>
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Por que CORS</p>
+                    <p>
+                        O front-end roda em <code>localhost:5173</code> e a API em <code>localhost:8080</code>. Por segurança, o navegador bloqueia requisições
+                        entre endereços diferentes, a menos que a API autorize. É isso que o CORS faz.
+                    </p>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">4.8</span> Iniciar a API</h3>
+                <div data-passo-a-passo="backend.iniciar"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

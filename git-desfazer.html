@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="git-desfazer">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 1.4 &middot; Desfazer e resumo &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="git-desfazer" aria-labelledby="titulo-git-desfazer">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 1 &middot; Git e GitHub &middot; Parte 4 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-git-desfazer">Desfazer e resumo</h2>
+                <p class="etapa__resumo">
+                    Descartar, tirar da área de preparação, corrigir a mensagem do commit, reverter, guardar para depois
+                    e a tabela com todos os comandos da etapa.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.9</span> Desfazer e guardar alterações</h3>
+
+                <h4>Descartar uma alteração que ainda não foi adicionada</h4>
+                <div data-passo-a-passo="git.descartar"></div>
+
+                <h4>Tirar um arquivo da área de preparação</h4>
+                <div data-passo-a-passo="git.tirar-do-stage"></div>
+
+                <h4>Corrigir a mensagem do último commit</h4>
+                <div data-passo-a-passo="git.amend"></div>
+
+                <h4>Desfazer um commit que já foi enviado</h4>
+                <div data-passo-a-passo="git.revert"></div>
+
+                <h4>Guardar alterações para depois</h4>
+                <div data-passo-a-passo="git.stash"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.10</span> Resumo dos comandos</h3>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Comando</th>
+                                <th scope="col">O que faz</th>
+                                <th scope="col">Exemplo no projeto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>git clone</code></td><td>Baixa um repositório</td><td><code>git clone https://github.com/ana-souza/biblioteca-comunitaria.git</code></td></tr>
+                            <tr><td><code>git status</code></td><td>Mostra a branch atual e o que mudou</td><td><code>git status</code></td></tr>
+                            <tr><td><code>git add</code></td><td>Coloca alterações na área de preparação</td><td><code>git add backend/src/emprestimo/Emprestimo.php</code></td></tr>
+                            <tr><td><code>git commit -m</code></td><td>Grava um ponto no histórico</td><td><code>git commit -m "Adiciona cálculo de dias de atraso e multa"</code></td></tr>
+                            <tr><td><code>git push</code></td><td>Envia commits para o GitHub</td><td><code>git push --set-upstream origin emprestimo-dominio</code></td></tr>
+                            <tr><td><code>git pull</code></td><td>Baixa e junta commits do GitHub</td><td><code>git pull</code></td></tr>
+                            <tr><td><code>git fetch</code></td><td>Baixa commits sem juntar</td><td><code>git fetch</code></td></tr>
+                            <tr><td><code>git checkout -b</code></td><td>Cria uma branch e entra nela</td><td><code>git checkout -b emprestimo-dominio</code></td></tr>
+                            <tr><td><code>git merge</code></td><td>Junta outra branch na atual</td><td><code>git merge emprestimo-dominio</code></td></tr>
+                            <tr><td><code>git diff</code></td><td>Mostra as linhas alteradas</td><td><code>git diff</code></td></tr>
+                            <tr><td><code>git log --oneline --graph</code></td><td>Mostra o histórico</td><td><code>git log --oneline --graph -6</code></td></tr>
+                            <tr><td><code>git restore</code></td><td>Descarta alterações de um arquivo</td><td><code>git restore README.md</code></td></tr>
+                            <tr><td><code>git revert</code></td><td>Desfaz um commit criando outro</td><td><code>git revert --no-edit HEAD</code></td></tr>
+                            <tr><td><code>git stash</code></td><td>Guarda alterações sem commit</td><td><code>git stash push -m "Rascunho"</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

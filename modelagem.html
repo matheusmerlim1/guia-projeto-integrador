@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="modelagem">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 2 &middot; Modelagem e diagramas &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="modelagem" aria-labelledby="titulo-modelagem">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 2</p>
+                <h2 class="etapa__titulo" id="titulo-modelagem">Modelagem e diagramas</h2>
+                <p class="etapa__resumo">
+                    Como sair do minimundo e chegar ao diagrama de classes do domínio e, depois, aos diagramas da arquitetura
+                    que orientam o código.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">2.1</span> Encontrar as entidades no minimundo</h3>
+                <p>
+                    Leia o <a href="exemplo.html">minimundo</a> procurando os substantivos: as coisas de que o negócio fala.
+                    Cada candidato vira uma classe, um atributo, um comportamento ou é descartado. Decida olhando para o
+                    <strong>escopo</strong>: o que não participa de nenhuma funcionalidade fica de fora.
+                </p>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Candidato</th>
+                                <th scope="col">Decisão</th>
+                                <th scope="col">Por quê</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>empréstimo</td><td><strong>Classe</strong> <code>Emprestimo</code></td><td>Liga um livro a um leitor e concentra as regras de prazo, multa e devolução.</td></tr>
+                            <tr><td>livro</td><td><strong>Classe</strong> <code>Livro</code></td><td>Tem dados próprios e é o que se empresta.</td></tr>
+                            <tr><td>leitor</td><td><strong>Classe</strong> <code>Leitor</code></td><td>Tem dados próprios e uma regra: o limite de empréstimos em aberto.</td></tr>
+                            <tr><td>título, autor, ano</td><td>Atributos de <code>Livro</code></td><td>Descrevem o livro; não têm dados nem regras próprias.</td></tr>
+                            <tr><td>nome, telefone</td><td>Atributos de <code>Leitor</code></td><td>Descrevem o leitor.</td></tr>
+                            <tr><td>data do empréstimo</td><td>Atributo de <code>Emprestimo</code></td><td>É a base para calcular o prazo e a multa.</td></tr>
+                            <tr><td>prazo, multa, atraso</td><td>Comportamentos de <code>Emprestimo</code></td><td>São calculados a partir das datas; não precisam ser guardados.</td></tr>
+                            <tr><td>biblioteca</td><td>Descartado</td><td>É o próprio negócio que o sistema atende; não há várias bibliotecas.</td></tr>
+                            <tr><td>caderno</td><td>Descartado</td><td>É o jeito atual de trabalhar, que o sistema vai substituir.</td></tr>
+                            <tr><td>bairro, moradores</td><td>Descartado</td><td>Não aparecem em nenhuma funcionalidade do escopo.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">2.2</span> Montar o diagrama em quatro passos</h3>
+                <p>O diagrama cresce aos poucos. Em cada passo, a imagem mostra o que foi acrescentado.</p>
+                <ol class="passos">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Desenhe só as entidades</p>
+                        <p class="passo__explicacao">
+                            Uma caixa para cada classe encontrada, com o nome no singular e em <em>PascalCase</em>
+                            (<code>Emprestimo</code>, não <code>emprestimos</code>). Ainda não pense em atributos.
+                        </p>
+                        <figure class="diagrama">
+                            <div class="diagrama__area">
+                                <img class="diagrama__imagem" src="img/diagramas/modelagem-1-entidades.svg" width="860" height="510" loading="lazy"
+                                    alt="Três caixas vazias com os nomes Emprestimo, Livro e Leitor.">
+                            </div>
+                        </figure>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Acrescente os comportamentos do negócio</p>
+                        <p class="passo__explicacao">
+                            Pergunte o que cada entidade faz ou sabe responder <strong>no negócio</strong>: o empréstimo sabe a data limite,
+                            pode ser devolvido e calcula a multa; o leitor sabe se pode pegar mais um livro. Operações como
+                            <code>salvar()</code> ou <code>buscarTodos()</code> são do sistema, não do negócio, e não entram aqui.
+                        </p>
+                        <figure class="diagrama">
+                            <div class="diagrama__area">
+                                <img class="diagrama__imagem" src="img/diagramas/modelagem-2-comportamentos.svg" width="860" height="510" loading="lazy"
+                                    alt="Emprestimo com as operações dataLimite, estaEmAberto, devolver, diasDeAtraso e calcularMulta; Leitor com podePegarEmprestado; Livro ainda vazio.">
+                            </div>
+                        </figure>
+                        <p class="passo__observe"><strong class="passo__rotulo">Sintaxe: </strong><code>+ devolver(data: Date): void</code> — o <code>+</code> indica visibilidade pública, depois vêm o nome, os parâmetros com tipo e o tipo de retorno.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Acrescente os atributos que sustentam os comportamentos</p>
+                        <p class="passo__explicacao">
+                            Para calcular a multa, o empréstimo precisa da data em que foi feito; para saber se está em aberto, da data de devolução,
+                            que pode não existir — por isso <code>[0..1]</code>. Depois, acrescente os dados que o negócio registra: título, autor e ano do livro;
+                            nome e telefone do leitor. Não crie o atributo <code>multa</code>: ele repetiria o que <code>calcularMulta()</code> já responde.
+                        </p>
+                        <figure class="diagrama">
+                            <div class="diagrama__area">
+                                <img class="diagrama__imagem" src="img/diagramas/modelagem-3-atributos.svg" width="860" height="510" loading="lazy"
+                                    alt="As três classes com atributos e operações, ainda sem ligações entre elas.">
+                            </div>
+                        </figure>
+                        <p class="passo__observe"><strong class="passo__rotulo">Sintaxe: </strong><code>- dataEmprestimo: Date</code> — o <code>-</code> indica visibilidade privada, seguida do nome e do tipo.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Ligue as entidades com associações</p>
+                        <p class="passo__explicacao">
+                            O empréstimo precisa conhecer o livro e o leitor, então as setas saem de <code>Emprestimo</code>. O livro não precisa conhecer seus empréstimos
+                            para cumprir nenhuma regra, por isso não há seta no sentido contrário. Cada ligação recebe um <strong>rótulo de leitura</strong> com a direção
+                            (“Emprestimo refere-se a Livro”) e a <strong>multiplicidade</strong>: um empréstimo refere-se a exatamente <code>1</code> livro, e um livro
+                            aparece em vários (<code>*</code>) empréstimos ao longo do tempo.
+                        </p>
+                        <figure class="diagrama">
+                            <div class="diagrama__area">
+                                <img class="diagrama__imagem" src="img/diagramas/modelo-essencial.svg" width="860" height="510" loading="lazy"
+                                    alt="Diagrama final: Emprestimo refere-se a um Livro e é feito por um Leitor; cada livro e cada leitor podem ter vários empréstimos.">
+                            </div>
+                        </figure>
+                    </div></li>
+                </ol>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">2.3</span> Erros comuns</h3>
+                <p>O diagrama abaixo tem os erros que mais aparecem. Tudo o que está em vermelho deveria sair ou ser feito de outro jeito.</p>
+                <figure class="diagrama">
+                    <div class="diagrama__area">
+                        <img class="diagrama__imagem" src="img/diagramas/modelagem-erros.svg" width="860" height="510" loading="lazy"
+                            alt="Diagrama errado: classes com id, livroId e leitorId, atributo multa, operações salvar e excluir, e linhas sem seta, rótulo nem multiplicidade.">
+                    </div>
+                    <figcaption class="diagrama__legenda">Como não fazer: um diagrama com cara de tabelas de banco de dados.</figcaption>
+                </figure>
+                <ol class="lista-numerada">
+                    <li><strong><code>id</code>, <code>livroId</code> e <code>leitorId</code></strong> são colunas do banco. No modelo de classes, o empréstimo se liga ao livro e ao leitor pela associação, não por números.</li>
+                    <li><strong><code>multa</code> como atributo</strong> duplica o que pode ser calculado a partir das datas. Com as duas coisas, elas podem discordar.</li>
+                    <li><strong><code>salvar()</code> e <code>excluir()</code></strong> tratam de armazenamento, responsabilidade dos repositórios, e não de regras do negócio.</li>
+                    <li><strong>Linhas sem seta, rótulo e multiplicidade</strong> não dizem quem conhece quem, como se lê a relação nem quantos objetos participam.</li>
+                    <li><strong><code>dataDevolucao</code> sem <code>[0..1]</code></strong> esconde que um empréstimo pode estar em aberto.</li>
+                </ol>
+                <div class="aviso aviso--atencao">
+                    <p class="aviso__titulo">Sinal de alerta</p>
+                    <p>Se o diagrama de classes parece um diagrama de tabelas (entidade-relacionamento), provavelmente está descrevendo o banco de dados, e não os objetos e seus comportamentos. Recomece pelo passo 1.</p>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">2.4</span> Da modelagem para a arquitetura</h3>
+                <p>
+                    O modelo essencial descreve o negócio. Para programar, as responsabilidades são divididas em partes, e cada parte vira uma classe ou arquivo.
+                    Os diagramas de arquitetura são <strong>parciais</strong>: mostram só as classes de uma funcionalidade — aqui, a de empréstimos.
+                </p>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Parte</th>
+                                <th scope="col">Responsabilidade</th>
+                                <th scope="col">No projeto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Visão</td><td>Mostra os dados e captura as ações do usuário. É a única parte que mexe no HTML.</td><td><code>VisaoEmprestimosEmHtml</code></td></tr>
+                            <tr><td>Controladora</td><td>Recebe as ações da visão, chama o serviço e manda a visão exibir o resultado.</td><td><code>ControladoraEmprestimos</code></td></tr>
+                            <tr><td>Serviço do front-end</td><td>Faz as requisições <code>fetch</code> para a API.</td><td><code>ServicoEmprestimos</code></td></tr>
+                            <tr><td>Rotas</td><td>Recebem a requisição HTTP, chamam o gestor e devolvem JSON.</td><td><code>rotas</code> / <code>RotasEmprestimos</code></td></tr>
+                            <tr><td>Gestor</td><td>Serviço de aplicação: coordena o caso de uso usando repositórios e entidades.</td><td><code>GestorEmprestimos</code></td></tr>
+                            <tr><td>Repositório</td><td>Interface que define como os dados são lidos e gravados.</td><td><code>RepositorioEmprestimos</code></td></tr>
+                            <tr><td>Repositório em BDR</td><td>Implementa a interface com o banco de dados relacional.</td><td><code>RepositorioEmprestimosEmBDR</code></td></tr>
+                            <tr><td>Entidade</td><td>Guarda os dados e as regras do negócio.</td><td><code>Emprestimo</code>, <code>Livro</code>, <code>Leitor</code></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4>Back-end</h4>
+                <figure class="diagrama">
+                    <div class="diagrama__area">
+                        <img class="diagrama__imagem" src="img/diagramas/arquitetura-backend.svg" width="980" height="870" loading="lazy"
+                            alt="As rotas usam o GestorEmprestimos, que cria e usa Emprestimo e depende das interfaces RepositorioEmprestimos, RepositorioLivros e RepositorioLeitores. RepositorioEmprestimosEmBDR implementa RepositorioEmprestimos.">
+                    </div>
+                    <figcaption class="diagrama__legenda">Arquitetura parcial do back-end. O gestor depende das interfaces, não do banco: por isso os testes usam dublês.</figcaption>
+                </figure>
+
+                <h4>Front-end</h4>
+                <figure class="diagrama">
+                    <div class="diagrama__area">
+                        <img class="diagrama__imagem" src="img/diagramas/arquitetura-frontend.svg" width="860" height="840" loading="lazy"
+                            alt="O index cria a ControladoraEmprestimos, que usa a interface VisaoEmprestimos e o ServicoEmprestimos. VisaoEmprestimosEmHtml implementa a visão, e o serviço faz fetch para a API do back-end.">
+                    </div>
+                    <figcaption class="diagrama__legenda">Arquitetura parcial do front-end. A controladora conversa com a visão pela interface: por isso é testada com uma visão falsa.</figcaption>
+                </figure>
+
+                <div class="aviso aviso--dica">
+                    <p class="aviso__titulo">Como ler as ligações</p>
+                    <ul class="lista-marcada">
+                        <li><strong>Linha contínua com seta aberta:</strong> associação — a classe guarda uma referência à outra e a usa.</li>
+                        <li><strong>Linha tracejada com seta aberta:</strong> dependência — a classe usa ou cria a outra só durante uma operação.</li>
+                        <li><strong>Linha tracejada com triângulo vazado:</strong> realização — a classe implementa a interface.</li>
+                        <li><strong>Texto entre «»:</strong> estereótipo, que diz o papel da caixa, como <code>«interface»</code> ou <code>«entidade»</code>.</li>
+                        <li>Em JavaScript não existem interfaces na linguagem, mas o diagrama continua valendo como contrato: a classe precisa ter os mesmos métodos.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">2.5</span> Onde guardar os diagramas</h3>
+                <p>
+                    Guarde o minimundo e os diagramas na pasta <code>docs/</code>, na raiz do projeto. Assim eles entram no Git junto com o código
+                    e são atualizados quando o projeto muda. No explorador à esquerda, abra a pasta <code>docs</code> para ver cada arquivo.
+                </p>
+<pre class="arvore-texto">biblioteca-comunitaria/
+├── backend/
+├── frontend/
+└── docs/
+├── minimundo.md              <span class="arvore-texto__nota">minimundo, escopo e regras</span>
+└── diagramas/
+    ├── modelo-essencial.svg      <span class="arvore-texto__nota">modelo de domínio</span>
+    ├── arquitetura-backend.svg   <span class="arvore-texto__nota">arquitetura parcial do back-end</span>
+    └── arquitetura-frontend.svg  <span class="arvore-texto__nota">arquitetura parcial do front-end</span></pre>
+                <p>
+                    Os diagramas podem ser feitos em ferramentas como Astah, draw.io ou PlantUML. Exporte a imagem (PNG ou SVG) para <code>docs/diagramas</code>
+                    e guarde, na mesma pasta, o arquivo editável da ferramenta (como <code>.asta</code> ou <code>.drawio</code>), para poder alterar depois.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

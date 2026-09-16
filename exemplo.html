@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="exemplo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 0 &middot; O exemplo: Biblioteca Comunitaria &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="exemplo" aria-labelledby="titulo-exemplo">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 0</p>
+                <h2 class="etapa__titulo" id="titulo-exemplo">O exemplo: Biblioteca Comunitária</h2>
+                <p class="etapa__resumo">Um minimundo pequeno, com regras de negócio suficientes para exercitar todas as camadas e todos os tipos de teste.</p>
+            </header>
+
+            <h3>Minimundo</h3>
+            <blockquote class="minimundo">
+                <p>
+                    A Biblioteca Comunitária <em>Cantinho da Leitura</em> empresta livros aos moradores do bairro.
+                    Hoje os empréstimos são anotados em um caderno, o que dificulta saber quais livros estão emprestados,
+                    com quem estão e quem está atrasado.
+                </p>
+                <p>
+                    Cada livro possui título, autor e ano de publicação. Os leitores são cadastrados com nome e telefone.
+                    Cada empréstimo registra o livro, o leitor e a data em que foi realizado.
+                </p>
+                <p>
+                    O prazo de devolução é de 7 (sete) dias, contados a partir da data do empréstimo. Se o livro for devolvido
+                    após o prazo, o leitor paga uma multa de R$ 1,00 (um real) por dia de atraso. Um leitor pode ter, no máximo,
+                    3 (três) empréstimos em aberto ao mesmo tempo, e um livro emprestado não pode ser emprestado novamente
+                    até que seja devolvido.
+                </p>
+            </blockquote>
+
+            <h3>Escopo do exemplo</h3>
+            <ol class="lista-numerada">
+                <li>Registrar um empréstimo.</li>
+                <li>Registrar a devolução, informando a multa, se houver.</li>
+                <li>Listar os empréstimos em aberto, destacando os atrasados.</li>
+            </ol>
+            <p class="texto-suave">Não há cadastros nem login: livros e leitores já vêm preenchidos no banco de dados.</p>
+
+            <h3>Regras de negócio e onde cada uma é testada</h3>
+            <div class="tabela-rolavel">
+                <table class="tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Regra</th>
+                            <th scope="col">Descrição</th>
+                            <th scope="col">Onde fica</th>
+                            <th scope="col">Teste que comprova</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="codigo-regra">R1</span></td>
+                            <td>Prazo de devolução de 7 dias</td>
+                            <td><code>Emprestimo.dataLimite()</code></td>
+                            <td>“é sete dias após a data do empréstimo”</td>
+                        </tr>
+                        <tr>
+                            <td><span class="codigo-regra">R2</span></td>
+                            <td>Multa de R$ 1,00 por dia de atraso</td>
+                            <td><code>Emprestimo.calcularMulta()</code></td>
+                            <td>“cobra um real por dia de atraso”</td>
+                        </tr>
+                        <tr>
+                            <td><span class="codigo-regra">R3</span></td>
+                            <td>No máximo 3 empréstimos em aberto por leitor</td>
+                            <td><code>Leitor.podePegarEmprestado()</code></td>
+                            <td>“não permite o quarto empréstimo” <span class="texto-suave">(etapa 4)</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="codigo-regra">R4</span></td>
+                            <td>Livro emprestado fica indisponível</td>
+                            <td><code>GestorEmprestimos.registrar()</code></td>
+                            <td>“lança exceção quando o livro já está emprestado” <span class="texto-suave">(etapa 4)</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="codigo-regra">R5</span></td>
+                            <td>Um empréstimo não pode ser devolvido duas vezes</td>
+                            <td><code>Emprestimo.devolver()</code></td>
+                            <td>“lança exceção ao devolver um empréstimo já devolvido”</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Diagrama de Classes do Modelo de Domínio (essencial)</h3>
+            <p>
+                Construído em quatro passos: primeiro as entidades do negócio, depois os
+                comportamentos de negócio, depois os atributos que sustentam esses comportamentos e, por fim, as associações.
+                O passo a passo, com uma imagem para cada passo, está na <a href="modelagem.html">Etapa 2</a>.
+            </p>
+            <figure class="diagrama">
+                <div class="diagrama__area">
+                    <img class="diagrama__imagem" src="img/diagramas/modelo-essencial.svg" width="860" height="510"
+                        alt="Diagrama de classes com três classes. Livro, com os atributos titulo, autor e ano. Emprestimo, com os atributos dataEmprestimo e dataDevolucao e as operações dataLimite, estaEmAberto, devolver, diasDeAtraso e calcularMulta. Leitor, com os atributos nome e telefone e a operação podePegarEmprestado. Emprestimo refere-se a um Livro e é feito por um Leitor; cada Livro e cada Leitor podem ter vários empréstimos.">
+                </div>
+                <figcaption class="diagrama__legenda">Modelo essencial da Biblioteca Comunitária.</figcaption>
+            </figure>
+
+            <div class="aviso aviso--dica">
+                <p class="aviso__titulo">Boas práticas aplicadas neste diagrama</p>
+                <ul class="lista-marcada">
+                    <li><strong>Setas de direção</strong> saindo de <code>Emprestimo</code>, que conhece o livro e o leitor.</li>
+                    <li><strong>Rótulo de leitura</strong> com seta: “Emprestimo refere-se a Livro”, “Emprestimo é feito por Leitor”.</li>
+                    <li><strong>Multiplicidade</strong> nas duas pontas de cada associação.</li>
+                    <li>Livro e leitor são <strong>associações</strong>, não atributos do tipo <code>String</code>.</li>
+                    <li>Sem <code>id</code>, sem <code>salvar()</code> e sem agregação ou composição — são detalhes de implementação.</li>
+                    <li>Não existe atributo <code>multa</code>: ela é calculada por <code>calcularMulta()</code>.</li>
+                </ul>
+            </div>
+
+            <h3>Como o projeto vai ficar ao final</h3>
+            <p>
+                A estrutura completa está na coluna da esquerda, em <strong>Estrutura do projeto</strong>. Ela muda conforme as
+                linguagens escolhidas no topo. Clique em qualquer arquivo para ver o código completo, com comentários, e em qual
+                etapa ele é explicado.
+            </p>
+            <p>
+                <button type="button" class="botao botao--principal" data-abrir-simulador>▶ Ver a aplicação funcionando</button>
+            </p>
+
+            <h3>Amostra: a entidade <code>Emprestimo</code> em cada linguagem</h3>
+            <p>
+                As mesmas regras (R1, R2 e R5), escritas em quatro linguagens, com comentários explicando cada parte. Troque a aba
+                ou use o seletor de back-end no topo: a escolha vale para todos os blocos de código da página.
+            </p>
+            <div class="exemplo-codigo" data-exemplo="emprestimo.entidade" data-camada="backend"></div>
+
+            <details class="expansivel">
+                <summary class="expansivel__resumo">Ver também as classes de apoio: <code>Livro</code>, <code>Leitor</code> e a exceção de domínio</summary>
+                <div class="exemplo-codigo" data-exemplo="emprestimo.apoio" data-camada="backend"></div>
+            </details>
+
+            <h3>Amostra: o teste unitário da entidade</h3>
+            <p>
+                Cada linguagem usa o seu framework de testes — Kahlan no PHP, Vitest em TypeScript e JavaScript, JUnit 5 no Java —,
+                mas os casos de teste são os mesmos. O comando para executá-los aparece no rodapé do bloco.
+            </p>
+            <div class="exemplo-codigo" data-exemplo="emprestimo.teste" data-camada="backend"></div>
+        </section>
+
+    </main>
+
+</body>
+</html>

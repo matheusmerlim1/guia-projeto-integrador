@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="banco-instalar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 5.1 &middot; Instalar o banco &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="banco-instalar" aria-labelledby="titulo-banco-instalar">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 5 &middot; Banco de dados e fetch &middot; Parte 1 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-banco-instalar">Instalar o banco</h2>
+                <p class="etapa__resumo">
+                    A diferença entre MariaDB e MySQL, a instalação no Windows e a conferência de que tudo ficou funcionando.
+                </p>
+            </header>
+
+
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.1</span> MariaDB ou MySQL</h3>
+                <p>
+                    O MariaDB nasceu de uma cópia do código do MySQL e continua compatível com ele: o mesmo SQL, a mesma porta (3306) e os mesmos
+                    drivers. <strong>O projeto funciona igual com os dois</strong> — todos os testes e rotas desta etapa foram executados nos dois bancos.
+                    Escolha um e siga os passos; a escolha abaixo troca as instruções e as respostas dos terminais.
+                </p>
+                <div class="seletor-na-etapa" data-seletor-linguagem data-camada="banco" data-rotulo="Banco de dados"></div>
+                <div class="tabela-rolavel">
+                    <table class="tabela">
+                        <thead>
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">MariaDB</th>
+                                <th scope="col">MySQL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Versão usada no exemplo</td><td>11.4 (suporte de longo prazo)</td><td>8.4 (suporte de longo prazo)</td></tr>
+                            <tr><td>Onde baixar</td><td><code>mariadb.org/download</code></td><td><code>dev.mysql.com/downloads/mysql</code></td></tr>
+                            <tr><td>Cliente de terminal</td><td><code>mariadb</code> (e também <code>mysql</code>)</td><td><code>mysql</code></td></tr>
+                            <tr><td>Pasta <code>bin</code> padrão</td><td><code>C:\Program Files\MariaDB 11.4\bin</code></td><td><code>C:\Program Files\MySQL\MySQL Server 8.4\bin</code></td></tr>
+                            <tr><td>Ferramenta gráfica</td><td>HeidiSQL, instalado junto</td><td>MySQL Workbench, instalado à parte</td></tr>
+                            <tr><td>Senha na linha de comando</td><td>Aceita sem aviso</td><td>Aceita, com um aviso de segurança</td></tr>
+                            <tr><td>Drivers do projeto</td><td colspan="2"><code>pdo_mysql</code> (PHP), <code>mysql2</code> (Node.js) e <code>mysql-connector-j</code> (Java) funcionam com os dois</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.2</span> Instalar no Windows</h3>
+                <ol class="passos" data-mostrar-quando="banco:mariadb">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Baixe o instalador</p>
+                        <p class="passo__explicacao">Em <code>mariadb.org/download</code>, escolha a versão <strong>11.4</strong>, o sistema <strong>Windows</strong>, a arquitetura <strong>x86_64</strong> e o pacote <strong>MSI</strong>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Defina a senha do root</p>
+                        <p class="passo__explicacao">No instalador, na tela de configurações do usuário, defina a senha do usuário <code>root</code> — no exemplo, <code>root</code> — e marque a opção de usar UTF-8 como conjunto de caracteres padrão.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Instale como serviço</p>
+                        <p class="passo__explicacao">Mantenha a instalação como serviço do Windows, com o nome <code>MariaDB</code> e a porta <code>3306</code>. Assim o banco inicia junto com o computador. O HeidiSQL, uma ferramenta gráfica para ver as tabelas, vem junto.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Coloque a pasta bin no PATH</p>
+                        <p class="passo__explicacao">Para usar o <code>mariadb</code> e o <code>mysql</code> em qualquer pasta, adicione <code>C:\Program Files\MariaDB 11.4\bin</code> à variável <code>Path</code>: pesquise “variáveis de ambiente” no menu Iniciar, abra <strong>Variáveis de Ambiente</strong>, selecione <code>Path</code>, clique em <strong>Editar</strong> e em <strong>Novo</strong>. Depois, feche e abra o Prompt de Comando.</p>
+                    </div></li>
+                </ol>
+                <ol class="passos" data-mostrar-quando="banco:mysql">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Baixe o instalador</p>
+                        <p class="passo__explicacao">Em <code>dev.mysql.com/downloads/mysql</code>, escolha <strong>MySQL Community Server 8.4</strong>, sistema <strong>Microsoft Windows</strong>, e baixe o <strong>MSI Installer</strong>. Não é preciso criar conta: use o link para apenas iniciar o download.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Instale e abra o configurador</p>
+                        <p class="passo__explicacao">Siga a instalação típica. Ao final, o MySQL Configurator é aberto para configurar o servidor.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Defina a senha do root e o serviço</p>
+                        <p class="passo__explicacao">Em <strong>Accounts and Roles</strong>, defina a senha do usuário <code>root</code> — no exemplo, <code>root</code>. Em <strong>Windows Service</strong>, mantenha o serviço iniciando com o Windows e a porta <code>3306</code>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Coloque a pasta bin no PATH</p>
+                        <p class="passo__explicacao">Para usar o <code>mysql</code> em qualquer pasta, adicione <code>C:\Program Files\MySQL\MySQL Server 8.4\bin</code> à variável <code>Path</code>: pesquise “variáveis de ambiente” no menu Iniciar, abra <strong>Variáveis de Ambiente</strong>, selecione <code>Path</code>, clique em <strong>Editar</strong> e em <strong>Novo</strong>. Depois, feche e abra o Prompt de Comando.</p>
+                    </div></li>
+                </ol>
+                <div class="aviso aviso--atencao">
+                    <p class="aviso__titulo">Senha só para estudo</p>
+                    <p>A senha <code>root</code> facilita o exemplo, porque é a mesma usada nos scripts e nas conexões do projeto. Em um servidor de verdade, use uma senha forte e um usuário próprio para a aplicação.</p>
+                </div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.3</span> Conferir a instalação</h3>
+                <div data-passo-a-passo="banco.conferir"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

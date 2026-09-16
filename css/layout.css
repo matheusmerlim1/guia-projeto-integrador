@@ -153,7 +153,7 @@
     background: var(--cor-superficie-2);
 }
 
-.etapas a[aria-current="true"] {
+.etapas a[aria-current="page"] {
     background: var(--cor-destaque-suave);
     color: var(--cor-destaque-forte);
     font-weight: 600;
@@ -172,7 +172,7 @@
     background: var(--cor-superficie);
 }
 
-.etapas a[aria-current="true"] .etapas__numero {
+.etapas a[aria-current="page"] .etapas__numero {
     border-color: var(--cor-destaque);
     background: var(--cor-destaque);
     color: var(--cor-superficie);
@@ -181,6 +181,34 @@
 .etapas .selo {
     margin-left: auto;
 }
+
+.etapas a[data-aberta="true"] {
+    font-weight: 600;
+}
+
+.etapas a[data-aberta="true"] .etapas__numero {
+    border-color: var(--cor-destaque);
+    color: var(--cor-destaque-forte);
+}
+
+.etapas__partes {
+    list-style: none;
+    margin: var(--espaco-1) 0 var(--espaco-2);
+    padding: 0 0 0 1.4rem;
+    border-left: 1px solid var(--cor-borda);
+    margin-left: 1.3rem;
+}
+
+.etapas__partes a {
+    padding: 0.32rem var(--espaco-2);
+    font-size: 0.86rem;
+    color: var(--cor-texto-suave);
+}
+
+.etapas__partes a[aria-current="page"] {
+    color: var(--cor-destaque-forte);
+}
+
 
 .conteudo {
     min-width: 0;

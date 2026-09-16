@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="git-branches">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 1.2 &middot; Branches e merge &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="git-branches" aria-labelledby="titulo-git-branches">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 1 &middot; Git e GitHub &middot; Parte 2 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-git-branches">Branches e merge</h2>
+                <p class="etapa__resumo">
+                    Trabalhar em uma linha separada, ver o que mudou e juntar o resultado na <code>main</code>,
+                    pelo pull request do GitHub ou pelo terminal.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.5</span> Criar uma branch para a funcionalidade</h3>
+                <p>
+                    Uma <strong>branch</strong> é uma linha de trabalho separada. Cada funcionalidade é feita na sua própria branch e só
+                    entra na <code>main</code> quando estiver pronta. Assim, a <code>main</code> sempre funciona e cada pessoa trabalha sem
+                    atrapalhar a outra.
+                </p>
+                <div data-passo-a-passo="git.branch-criar"></div>
+                <p>Na nova branch, crie a pasta <code>backend/src/emprestimo/</code> e, dentro dela, o arquivo com a primeira versão da entidade:</p>
+                <div data-arquivo="git.emprestimo-v1"></div>
+                <div data-passo-a-passo="git.branch-commit"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.6</span> Alterar um arquivo e ver o que mudou</h3>
+                <p>
+                    Ainda na branch <code>emprestimo-dominio</code>, Ana adiciona a regra da multa ao <code>Emprestimo.php</code>: a constante
+                    <code>EMPRESTIMO_MULTA_POR_DIA</code> e os métodos <code>diasDeAtraso()</code> e <code>calcularMulta()</code>,
+                    chegando à versão mostrada na <a href="exemplo.html">Etapa 0</a>.
+                </p>
+                <div data-passo-a-passo="git.alterar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">1.7</span> Juntar a branch na main</h3>
+                <p>Há dois caminhos. Em equipe, o mais comum é o <strong>pull request</strong>, porque permite que outra pessoa revise antes de juntar.</p>
+
+                <h4>Pelo GitHub, com pull request</h4>
+                <ol class="passos">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Abra o pull request</p>
+                        <p class="passo__explicacao">Na página do repositório aparece o aviso da branch enviada. Clique em <strong>Compare &amp; pull request</strong> (ou use o link que o <code>git push</code> mostrou).</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Descreva e crie</p>
+                        <p class="passo__explicacao">Confira se está indo de <code>emprestimo-dominio</code> para <code>main</code>, escreva o que foi feito e clique em <strong>Create pull request</strong>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Revise e junte</p>
+                        <p class="passo__explicacao">Na aba <strong>Files changed</strong>, o colega revisa as linhas alteradas. Depois, clique em <strong>Merge pull request</strong>, <strong>Confirm merge</strong> e, por fim, <strong>Delete branch</strong>.</p>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Atualize o seu computador</p>
+                        <p class="passo__explicacao">O merge aconteceu só no GitHub. No terminal, rode <code>git checkout main</code> e depois <code>git pull</code>.</p>
+                    </div></li>
+                </ol>
+
+                <h4>Pelo terminal</h4>
+                <div data-passo-a-passo="git.merge"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

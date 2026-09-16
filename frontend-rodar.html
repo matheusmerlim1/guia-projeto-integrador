@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="frontend-rodar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 6.3 &middot; Rodar a aplicação &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="frontend-rodar" aria-labelledby="titulo-frontend-rodar">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 6 &middot; Front-end e testes &middot; Parte 3 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-frontend-rodar">Rodar a aplicação</h2>
+                <p class="etapa__resumo">
+                    Os dois terminais abertos ao mesmo tempo, a aplicação funcionando no navegador e o passo a passo de cada tela.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.5</span> Rodar e ver a aplicação funcionando</h3>
+                <p>
+                    São dois terminais abertos ao mesmo tempo: um com a API, iniciada na <a href="backend-api.html">Etapa 4</a>, e outro com o front-end.
+                    O banco precisa estar criado, com os dados iniciais da <a href="banco-criar.html">Etapa 5</a>.
+                </p>
+                <div data-passo-a-passo="frontend.iniciar"></div>
+                <p>As imagens abaixo são da aplicação rodando com a API e o banco de dados, usando os dados iniciais:</p>
+                <ol class="passos">
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Abra a tela de empréstimos</p>
+                        <p class="passo__explicacao">A controladora busca livros, leitores e empréstimos em aberto. “Dom Casmurro” aparece em vermelho, com 3 dias de atraso e a multa calculada pela API.</p>
+                        <figure class="captura-app">
+                            <div class="navegador-simulado">
+                                <div class="navegador-simulado__barra">
+                                    <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                </div>
+                                <img src="img/aplicacao/1-lista.png" width="1280" height="660" loading="lazy"
+                                    alt="Tela Empréstimos com o formulário Novo empréstimo e a tabela Em aberto: Dom Casmurro, com Ana Souza, 3 dias de atraso e multa de R$ 3,00; Capitães da Areia, com Bruno Lima, no prazo.">
+                            </div>
+                        </figure>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Registre um empréstimo</p>
+                        <p class="passo__explicacao">Com “Vidas Secas” e “Carla Mendes” escolhidos, <strong>Registrar</strong> envia o <code>POST</code>. A mensagem verde confirma, e a lista é carregada de novo.</p>
+                        <figure class="captura-app">
+                            <div class="navegador-simulado">
+                                <div class="navegador-simulado__barra">
+                                    <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                </div>
+                                <img src="img/aplicacao/2-registrado.png" width="1280" height="660" loading="lazy"
+                                    alt="Mensagem verde de empréstimo registrado e a tabela com Vidas Secas, emprestado para Carla Mendes, no prazo.">
+                            </div>
+                        </figure>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Tente quebrar uma regra</p>
+                        <p class="passo__explicacao">“Dom Casmurro” já está emprestado. A API responde <code>400</code>, e a tela mostra a mesma mensagem da regra R4, em vermelho.</p>
+                        <figure class="captura-app">
+                            <div class="navegador-simulado">
+                                <div class="navegador-simulado__barra">
+                                    <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                </div>
+                                <img src="img/aplicacao/3-erro.png" width="1280" height="660" loading="lazy"
+                                    alt="Mensagem vermelha: O livro já está emprestado. A tabela continua com os três empréstimos em aberto.">
+                            </div>
+                        </figure>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Devolva o livro atrasado</p>
+                        <p class="passo__explicacao"><strong>Devolver</strong> na linha de “Dom Casmurro” envia o <code>PATCH</code>. A mensagem mostra os dias de atraso e a multa, e o livro sai da lista.</p>
+                        <figure class="captura-app">
+                            <div class="navegador-simulado">
+                                <div class="navegador-simulado__barra">
+                                    <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="navegador-simulado__endereco">localhost:5173/emprestimos</span>
+                                </div>
+                                <img src="img/aplicacao/4-devolucao.png" width="1280" height="660" loading="lazy"
+                                    alt="Mensagem verde: Livro devolvido com 3 dia(s) de atraso. Multa: R$ 3,00. A tabela agora tem só Capitães da Areia e Vidas Secas.">
+                            </div>
+                        </figure>
+                    </div></li>
+                    <li class="passo"><div class="passo__corpo">
+                        <p class="passo__titulo">Acesse um endereço que não existe</p>
+                        <p class="passo__explicacao">O ponto de entrada não reconhece o endereço e exibe a página <code>pages/404.html</code>.</p>
+                        <figure class="captura-app">
+                            <div class="navegador-simulado">
+                                <div class="navegador-simulado__barra">
+                                    <span class="navegador-simulado__bolinhas" aria-hidden="true"><i></i><i></i><i></i></span>
+                                    <span class="navegador-simulado__endereco">localhost:5173/nao-existe</span>
+                                </div>
+                                <img src="img/aplicacao/5-404.png" width="1280" height="660" loading="lazy"
+                                    alt="Página não encontrada, com o botão Ir para os empréstimos.">
+                            </div>
+                        </figure>
+                    </div></li>
+                </ol>
+                <p>
+                    Para experimentar sem instalar nada, use a simulação: ela reproduz a mesma tela e as mesmas regras, com os dados guardados só na memória da página.
+                </p>
+                <p>
+                    <button type="button" class="botao botao--principal" data-abrir-simulador>▶ Ver a aplicação funcionando</button>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="banco-criar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 5.2 &middot; Criar o banco e ligar o repositório &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="banco-criar" aria-labelledby="titulo-banco-criar">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 5 &middot; Banco de dados e fetch &middot; Parte 2 de 4</p>
+                <h2 class="etapa__titulo" id="titulo-banco-criar">Criar o banco e ligar o repositório</h2>
+                <p class="etapa__resumo">
+                    Os scripts que criam as tabelas e os dados iniciais, e a implementação do repositório que fala com o banco.
+                </p>
+            </header>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.4</span> Criar o banco com scripts</h3>
+                <p>
+                    O banco é criado por arquivos <code>.sql</code> guardados no projeto. Assim qualquer pessoa do grupo recria o mesmo banco com um comando,
+                    e as mudanças na estrutura ficam registradas no Git.
+                </p>
+                <ul class="lista-marcada">
+                    <li><code>estrutura.sql</code> apaga e cria o banco e as tabelas.</li>
+                    <li><code>dados.sql</code> carrega os dados para usar a aplicação. As datas usam <code>CURDATE()</code>, então sempre há um empréstimo atrasado e outro no prazo.</li>
+                    <li><code>dados-teste.sql</code> carrega dados fixos, que os testes conhecem de antemão.</li>
+                    <li>Os dois arquivos de dados começam com <code>SET NAMES utf8mb4;</code>. Sem essa linha, o cliente do MySQL no Windows lê os acentos com a codificação do terminal e grava “O CortiÃ§o” no lugar de “O Cortiço”.</li>
+                </ul>
+                <div data-arquivo-projeto="backend/db/estrutura.sql|backend/src/main/resources/db/estrutura.sql"></div>
+                <details class="expansivel">
+                    <summary class="expansivel__resumo">Ver <code>dados.sql</code> e <code>dados-teste.sql</code></summary>
+                    <div class="expansivel__conteudo">
+                        <div data-arquivo-projeto="backend/db/dados.sql|backend/src/main/resources/db/dados.sql"></div>
+                        <div data-arquivo-projeto="backend/db/dados-teste.sql|backend/src/main/resources/db/dados-teste.sql"></div>
+                    </div>
+                </details>
+                <div data-passo-a-passo="banco.criar"></div>
+                <div data-passo-a-passo="banco.consultar"></div>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">5.5</span> Ligar o repositório ao banco</h3>
+                <p>
+                    Agora a interface escrita na <a href="backend-projeto.html">Etapa 4</a> ganha uma implementação com banco de dados. A conexão fica em um arquivo só:
+                </p>
+                <div data-arquivo-projeto="backend/src/infra/Conexao.php|backend/src/infra/conexao.ts|backend/src/infra/conexao.js|backend/src/main/java/biblioteca/infra/Conexao.java"></div>
+                <p>
+                    O repositório transforma objetos em comandos SQL e linhas em objetos. Os valores nunca são colados no texto do SQL: vão pelos
+                    <code>?</code>, em consultas preparadas, o que impede <strong>SQL Injection</strong> — um ataque em que o usuário digita SQL em um campo.
+                </p>
+                <div data-arquivo-projeto="backend/src/emprestimo/RepositorioEmprestimosEmBDR.php|backend/src/emprestimo/repositorio-emprestimos-em-bdr.ts|backend/src/emprestimo/repositorio-emprestimos-em-bdr.js|backend/src/main/java/biblioteca/emprestimo/RepositorioEmprestimosEmBDR.java"></div>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>
