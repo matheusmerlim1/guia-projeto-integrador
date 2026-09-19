@@ -2,26 +2,34 @@
     'use strict';
 
     const LARGURA_MOVEL = '(max-width: 960px)';
+    const CHAVE_OCULTA = 'coluna-lateral-oculta';
 
     class NavegacaoLateral {
 
-        constructor( painel, lista, botaoMenu, pagina, percurso ) {
+        constructor( painel, lista, botaoMenu, pagina, percurso, preferencias ) {
             this.painel = painel;
             this.lista = lista;
             this.botaoMenu = botaoMenu;
             this.pagina = pagina;
             this.percurso = percurso;
+            this.preferencias = preferencias;
             this.etapaAberta = percurso.etapaDe( pagina );
+            this.rotuloDoBotao = botaoMenu.querySelector( '.visualmente-oculto' );
+            this.telaMovel = window.matchMedia( LARGURA_MOVEL );
         }
 
         iniciar() {
             this.desenharEtapas();
+            this.restaurarColunaOculta();
             this.botaoMenu.addEventListener( 'click', () => this.alternar() );
             document.addEventListener( 'keydown', evento => {
                 if ( evento.key === 'Escape' ) {
                     this.fechar();
                 }
             } );
+            /* O mesmo botão esconde a coluna no computador e abre a gaveta no celular;
+               ao trocar de largura, o rótulo precisa acompanhar o novo significado. */
+            this.telaMovel.addEventListener( 'change', () => this.atualizarBotao() );
         }
 
         desenharEtapas() {
@@ -99,19 +107,54 @@
             link.addEventListener( 'click', () => this.fecharNoCelular() );
         }
 
+        /* No celular o botão abre e fecha a gaveta; no computador ele esconde a coluna. */
         alternar() {
-            const aberto = this.painel.dataset.aberto === 'true';
-            this.painel.dataset.aberto = String( ! aberto );
-            this.botaoMenu.setAttribute( 'aria-expanded', String( ! aberto ) );
+            if ( this.telaMovel.matches ) {
+                this.painel.dataset.aberto = String( this.painel.dataset.aberto !== 'true' );
+                this.atualizarBotao();
+                return;
+            }
+            this.definirColunaOculta( ! this.colunaOculta() );
+        }
+
+        /* A escolha vale para o guia inteiro, então fica guardada no navegador:
+           quem esconde a coluna numa página continua sem ela na próxima. */
+        restaurarColunaOculta() {
+            this.definirColunaOculta( this.preferencias.ler( CHAVE_OCULTA ) === 'true' );
+        }
+
+        definirColunaOculta( oculta ) {
+            document.documentElement.dataset.colunaLateral = oculta ? 'oculta' : 'visivel';
+            this.preferencias.gravar( CHAVE_OCULTA, String( oculta ) );
+            this.atualizarBotao();
+        }
+
+        colunaOculta() {
+            return document.documentElement.dataset.colunaLateral === 'oculta';
+        }
+
+        atualizarBotao() {
+            const visivel = this.telaMovel.matches
+                ? this.painel.dataset.aberto === 'true'
+                : ! this.colunaOculta();
+            const rotulo = visivel
+                ? 'Esconder as etapas e a estrutura do projeto'
+                : 'Mostrar as etapas e a estrutura do projeto';
+
+            this.botaoMenu.setAttribute( 'aria-expanded', String( visivel ) );
+            this.botaoMenu.title = rotulo;
+            if ( this.rotuloDoBotao ) {
+                this.rotuloDoBotao.textContent = rotulo;
+            }
         }
 
         fechar() {
             this.painel.dataset.aberto = 'false';
-            this.botaoMenu.setAttribute( 'aria-expanded', 'false' );
+            this.atualizarBotao();
         }
 
         fecharNoCelular() {
-            if ( window.matchMedia( LARGURA_MOVEL ).matches ) {
+            if ( this.telaMovel.matches ) {
                 this.fechar();
             }
         }

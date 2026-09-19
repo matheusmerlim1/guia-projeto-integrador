@@ -49,7 +49,8 @@
 }
 
 .barra-topo__menu {
-    display: none;
+    display: grid;
+    place-items: center;
     flex: none;
     width: 2.5rem;
     height: 2.5rem;
@@ -107,6 +108,19 @@
     overflow-y: auto;
     padding: var(--espaco-5) var(--espaco-3) var(--espaco-6);
     border-right: 1px solid var(--cor-borda);
+}
+
+/* O botão do topo esconde a coluna da esquerda e o conteúdo ocupa a largura toda.
+   No celular a coluna já é uma gaveta, por isso a regra vale só na tela ampla. */
+@media (min-width: 961px) {
+    :root[data-coluna-lateral="oculta"] .painel-lateral {
+        display: none;
+    }
+
+    :root[data-coluna-lateral="oculta"] .pagina {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: calc(var(--largura-conteudo) + 6rem);
+    }
 }
 
 .painel-lateral__titulo {
@@ -237,11 +251,6 @@
 }
 
 @media (max-width: 960px) {
-    .barra-topo__menu {
-        display: grid;
-        place-items: center;
-    }
-
     .pagina {
         grid-template-columns: minmax(0, 1fr);
     }

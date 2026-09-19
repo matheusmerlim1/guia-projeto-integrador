@@ -54,7 +54,8 @@
                 document.querySelector( '[data-lista-etapas]' ),
                 document.querySelector( '.barra-topo__menu' ),
                 this.pagina,
-                this.percurso
+                this.percurso,
+                this.preferencias
             ).iniciar();
 
             new componentes.BuscaNaPagina(
