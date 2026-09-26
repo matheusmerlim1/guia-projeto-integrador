@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-pagina="frontend-fluxo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etapa 6.4 &middot; O caminho de uma ação &middot; Guia do Projeto Integrador</title>
+    <script src="js/nucleo/recursos.js"></script>
+</head>
+<body>
+
+    <main class="conteudo">
+
+        <section class="etapa" id="frontend-fluxo" aria-labelledby="titulo-frontend-fluxo">
+            <header class="etapa__cabecalho">
+                <p class="etapa__numero">Etapa 6 &middot; Front-end e testes &middot; Parte 4 de 5</p>
+                <h2 class="etapa__titulo" id="titulo-frontend-fluxo">O caminho de uma ação</h2>
+                <p class="etapa__resumo">
+                    Um diagrama de sequência animado com as classes que você escreveu: do clique na tela até o
+                    <code>INSERT</code> no banco, e de volta. Cada passo diz qual classe é chamada, por quê, e abre o código dela.
+                </p>
+            </header>
+
+            <div class="aviso aviso--dica">
+                <p class="aviso__titulo">O que você está vendo</p>
+                <p>
+                    Cada coluna é uma classe do projeto; cada seta é uma chamada de método. As setas aparecem na ordem
+                    em que acontecem de verdade — nada aqui é ilustrativo: os nomes dos métodos, o SQL e os códigos HTTP
+                    são os do código das etapas anteriores. Os caminhos dos arquivos seguem as linguagens escolhidas no topo da página.
+                </p>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.6</span> A animação</h3>
+                <p>
+                    Comece por <strong>Emprestar um livro</strong>: é o caminho completo, com escrita no banco. Depois compare
+                    com <strong>Abrir a tela</strong>, que só lê, e com <strong>Quando uma regra barra</strong>, em que nada é gravado.
+                    Clique em qualquer seta para ir direto àquele passo; as setas do teclado também andam pelo diagrama.
+                </p>
+
+                <div data-diagrama-sequencia></div>
+
+                <ul class="fluxo-legenda">
+                    <li><span class="fluxo-legenda__traco fluxo-legenda__traco--chamada" aria-hidden="true"></span> chamada de método</li>
+                    <li><span class="fluxo-legenda__traco fluxo-legenda__traco--retorno" aria-hidden="true"></span> retorno</li>
+                    <li><span class="fluxo-legenda__traco fluxo-legenda__traco--rede" aria-hidden="true"></span> vai pela rede (HTTP)</li>
+                    <li><span class="fluxo-legenda__traco fluxo-legenda__traco--sql" aria-hidden="true"></span> comando SQL</li>
+                    <li><span class="fluxo-legenda__traco fluxo-legenda__traco--erro" aria-hidden="true"></span> exceção subindo</li>
+                </ul>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.7</span> O que o desenho mostra</h3>
+                <p>
+                    Reproduza o cenário <strong>Emprestar um livro</strong> inteiro e repare em quatro coisas.
+                </p>
+
+                <h4>Cada classe fala só com a vizinha</h4>
+                <p>
+                    Nenhuma seta pula camadas. A visão nunca chama a API; a controladora nunca toca no HTML; o gestor nunca
+                    escreve SQL; o repositório nunca decide regra de negócio. É isso que permite trocar uma peça sem mexer nas outras
+                    — e é isso que torna cada uma testável sozinha.
+                </p>
+
+                <h4>Duas fronteiras, não uma</h4>
+                <p>
+                    A seta grossa entre o serviço e as rotas é a rede: dali em diante o código roda em outro processo, e pode
+                    estar em outra linguagem. A seta laranja entre o repositório e o banco é a segunda fronteira: dali em diante
+                    não há mais objetos, só linhas e colunas. Todas as camadas existem para atravessar essas duas fronteiras
+                    com segurança.
+                </p>
+
+                <h4>As regras de negócio moram nas entidades</h4>
+                <p>
+                    Nos passos marcados como regra, quem decide não é o gestor: é a entidade. <code>Leitor</code> decide se
+                    pode pegar outro livro (R3); <code>Emprestimo</code> calcula prazo e multa (R1 e R2) e recusa uma devolução
+                    repetida (R5). O gestor só coordena — busca, pergunta, manda gravar. Foi assim que os testes da
+                    <a href="backend-gestor.html">Etapa 4</a> puderam rodar sem banco nenhum.
+                </p>
+
+                <h4>Grava-se uma vez só, e por último</h4>
+                <p>
+                    Em 27 passos, existe <strong>um</strong> <code>INSERT</code>. Todas as verificações vêm antes dele. Por isso, no
+                    cenário <strong>Quando uma regra barra</strong>, o banco termina exatamente como começou: a exceção é lançada
+                    antes de qualquer escrita.
+                </p>
+            </div>
+
+            <div class="subetapa">
+                <h3><span class="subetapa__numero">6.8</span> O mesmo desenho, do lado do front-end</h3>
+                <p>
+                    As três primeiras colunas são o padrão MVP da parte <a href="frontend-tela.html">Visão e controladora</a>, e a animação deixa
+                    visível por que ele é assim:
+                </p>
+                <ul class="lista-marcada">
+                    <li>
+                        <strong>Visão</strong> — só aparece no primeiro e no último passo de cada cenário. Ela recebe o evento e
+                        exibe o resultado; entre uma coisa e outra, não faz nada. É a única classe que conhece os ids do HTML.
+                    </li>
+                    <li>
+                        <strong>Controladora</strong> — aparece no meio de tudo, e nunca conversa com o banco nem com o
+                        <code>document</code>. Toda seta que sai dela vai para a visão ou para o serviço. É por isso que os testes
+                        de unidade dela rodam sem navegador.
+                    </li>
+                    <li>
+                        <strong>Serviço</strong> — é o único que atravessa a rede. Se a API mudar de endereço, de verbo ou de
+                        formato, muda só ele.
+                    </li>
+                </ul>
+                <p>
+                    Repare também no que <em>não</em> aparece: não há seta da visão para o serviço, nem da controladora para o banco.
+                    Um diagrama de sequência é útil justamente por isso — as setas que faltam contam tanto quanto as que existem.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+</body>
+</html>

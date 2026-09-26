@@ -43,11 +43,17 @@
             const simulador = new componentes.SimuladorAplicacao();
             simulador.iniciar();
 
+            const visualizador = new componentes.VisualizadorArquivo( simulador );
+
             new componentes.ExploradorProjeto(
                 document.querySelector( '[data-explorador]' ),
                 this.projeto,
-                new componentes.VisualizadorArquivo( simulador )
+                visualizador
             ).iniciar();
+
+            document.querySelectorAll( '[data-diagrama-sequencia]' ).forEach( elemento => {
+                new componentes.DiagramaSequencia( elemento, this.preferencias, this.projeto, visualizador ).iniciar();
+            } );
 
             new componentes.NavegacaoLateral(
                 document.getElementById( 'painel-lateral' ),

@@ -1,0 +1,442 @@
+.fluxo {
+    --fluxo-frontend: #0f6e6e;
+    --fluxo-backend: #3f51b5;
+    --fluxo-banco: #8a4b00;
+    --fluxo-ator: #5b6470;
+    --fluxo-erro: #c0262d;
+    --fluxo-grava: #1f7a44;
+    --fluxo-fundo: var(--cor-superficie);
+
+    margin: var(--espaco-5) 0 var(--espaco-6);
+}
+
+@media (prefers-color-scheme: dark) {
+    .fluxo {
+        --fluxo-frontend: #5cbcb2;
+        --fluxo-backend: #8d9bf0;
+        --fluxo-banco: #e8b766;
+        --fluxo-ator: #9aa3ad;
+        --fluxo-erro: #f2807f;
+        --fluxo-grava: #62c98c;
+    }
+}
+
+/* ---------- escolha do cenário ---------- */
+
+.fluxo__cenarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-1);
+    padding: var(--espaco-1);
+    background: var(--cor-superficie-2);
+    border: 1px solid var(--cor-borda);
+    border-radius: 999px;
+    width: fit-content;
+    max-width: 100%;
+}
+
+.fluxo__cenario {
+    padding: 0.35rem 0.8rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--cor-texto-suave);
+    cursor: pointer;
+}
+
+.fluxo__cenario:hover {
+    color: var(--cor-texto);
+}
+
+.fluxo__cenario[aria-pressed="true"] {
+    background: var(--cor-superficie);
+    color: var(--cor-destaque-forte);
+    box-shadow: var(--sombra);
+}
+
+.fluxo__resumo {
+    margin: var(--espaco-3) 0;
+    color: var(--cor-texto-suave);
+}
+
+/* ---------- palco do diagrama ---------- */
+
+.fluxo__palco {
+    overflow: auto;
+    max-height: 30rem;
+    padding: var(--espaco-2);
+    background: var(--fluxo-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio);
+    overscroll-behavior: contain;
+}
+
+.fluxo__palco:focus-visible {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
+}
+
+.fluxo__quadro {
+    position: relative;
+}
+
+.fluxo__cabecalho,
+.fluxo__desenho {
+    display: block;
+    /* base.css limita todo svg a 100% da largura; aqui o desenho tem tamanho próprio
+       e quem rola é o palco, senão o diagrama seria reduzido até ficar ilegível. */
+    max-width: none;
+    font-family: var(--fonte-texto);
+}
+
+/* As caixas dos participantes acompanham a rolagem vertical e ficam sempre à vista. */
+.fluxo__cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--fluxo-fundo);
+}
+
+/* ---------- participantes ---------- */
+
+.fluxo__linha-vida {
+    stroke: var(--cor-borda);
+    stroke-width: 1.5;
+    stroke-dasharray: 3 5;
+}
+
+.fluxo__caixa {
+    fill: var(--cor-superficie);
+    stroke: var(--cor-borda);
+    stroke-width: 1.5;
+}
+
+.fluxo__papel {
+    font-size: 12.5px;
+    font-weight: 700;
+    fill: var(--cor-texto);
+}
+
+.fluxo__classe {
+    font-family: var(--fonte-codigo);
+    font-size: 9px;
+    fill: var(--cor-texto-suave);
+}
+
+.fluxo__ator--frontend .fluxo__caixa { stroke: var(--fluxo-frontend); }
+.fluxo__ator--backend .fluxo__caixa { stroke: var(--fluxo-backend); }
+.fluxo__ator--banco .fluxo__caixa { stroke: var(--fluxo-banco); }
+.fluxo__ator--ator .fluxo__caixa { stroke: var(--fluxo-ator); stroke-dasharray: 4 3; }
+
+.fluxo__ator--frontend .fluxo__papel { fill: var(--fluxo-frontend); }
+.fluxo__ator--backend .fluxo__papel { fill: var(--fluxo-backend); }
+.fluxo__ator--banco .fluxo__papel { fill: var(--fluxo-banco); }
+
+.fluxo__ator .fluxo__caixa,
+.fluxo__ator .fluxo__linha-vida {
+    transition: stroke-width 0.2s ease, opacity 0.2s ease;
+}
+
+.fluxo__ator--ativo .fluxo__caixa {
+    stroke-width: 3;
+}
+
+.fluxo__ator--ativo .fluxo__linha-vida {
+    stroke: currentColor;
+    stroke-dasharray: none;
+    opacity: 0.45;
+}
+
+.fluxo__ator--ativo.fluxo__ator--frontend { color: var(--fluxo-frontend); }
+.fluxo__ator--ativo.fluxo__ator--backend { color: var(--fluxo-backend); }
+.fluxo__ator--ativo.fluxo__ator--banco { color: var(--fluxo-banco); }
+.fluxo__ator--ativo.fluxo__ator--ator { color: var(--fluxo-ator); }
+
+/* ---------- mensagens ---------- */
+
+.fluxo__mensagem {
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+/* Em repouso o caminho inteiro aparece de leve, para se ver a viagem antes de começar. */
+.fluxo__palco--repouso .fluxo__mensagem {
+    opacity: 0.22;
+}
+
+.fluxo__mensagem--visivel {
+    opacity: 0.45;
+}
+
+.fluxo__mensagem--atual {
+    opacity: 1;
+}
+
+.fluxo__alvo {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.fluxo__seta {
+    stroke: var(--fluxo-ator);
+    stroke-width: 1.8;
+}
+
+.fluxo__rotulo {
+    font-family: var(--fonte-codigo);
+    font-size: 10px;
+    fill: var(--cor-texto);
+    stroke: var(--fluxo-fundo);
+    stroke-width: 4;
+    stroke-linejoin: round;
+}
+
+.fluxo__selo-fundo {
+    fill: var(--fluxo-fundo);
+    stroke: var(--fluxo-ator);
+    stroke-width: 1.5;
+}
+
+.fluxo__selo-texto {
+    font-family: var(--fonte-codigo);
+    font-size: 9.5px;
+    font-weight: 700;
+    fill: var(--cor-texto-suave);
+}
+
+.fluxo__ponta path {
+    fill: var(--fluxo-ator);
+}
+
+/* Cada tipo de mensagem tem a sua cor e o seu traço. */
+.fluxo__mensagem--chamada .fluxo__seta { stroke: var(--fluxo-frontend); }
+.fluxo__ponta--chamada path { fill: var(--fluxo-frontend); }
+
+.fluxo__mensagem--retorno .fluxo__seta {
+    stroke: var(--fluxo-ator);
+    stroke-dasharray: 5 4;
+}
+.fluxo__ponta--retorno path { fill: var(--fluxo-ator); }
+
+.fluxo__mensagem--rede .fluxo__seta {
+    stroke: var(--fluxo-backend);
+    stroke-width: 2.4;
+}
+.fluxo__ponta--rede path { fill: var(--fluxo-backend); }
+
+.fluxo__mensagem--sql .fluxo__seta { stroke: var(--fluxo-banco); }
+.fluxo__ponta--sql path { fill: var(--fluxo-banco); }
+
+.fluxo__mensagem--erro .fluxo__seta {
+    stroke: var(--fluxo-erro);
+    stroke-width: 2.4;
+}
+.fluxo__ponta--erro path { fill: var(--fluxo-erro); }
+
+/* Destaques: a regra de negócio, a gravação e o erro. */
+.fluxo__mensagem--regra .fluxo__selo-fundo { stroke: var(--fluxo-backend); }
+.fluxo__mensagem--regra .fluxo__selo-texto { fill: var(--fluxo-backend); }
+
+.fluxo__mensagem--grava .fluxo__seta { stroke: var(--fluxo-grava); stroke-width: 2.6; }
+.fluxo__mensagem--grava .fluxo__selo-fundo { stroke: var(--fluxo-grava); }
+.fluxo__mensagem--grava .fluxo__selo-texto { fill: var(--fluxo-grava); }
+.fluxo__mensagem--grava .fluxo__rotulo { font-weight: 700; }
+
+.fluxo__mensagem--erro .fluxo__selo-fundo { stroke: var(--fluxo-erro); }
+.fluxo__mensagem--erro .fluxo__selo-texto { fill: var(--fluxo-erro); }
+
+/* ---------- controles ---------- */
+
+.fluxo__controles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--espaco-2);
+    margin-top: var(--espaco-3);
+}
+
+.fluxo__botao {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pequeno);
+    background: var(--cor-superficie);
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--cor-texto);
+    cursor: pointer;
+}
+
+.fluxo__botao:hover:not(:disabled) {
+    border-color: var(--cor-destaque);
+    color: var(--cor-destaque-forte);
+}
+
+.fluxo__botao:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.fluxo__botao--principal {
+    min-width: 8.5rem;
+    border-color: var(--cor-destaque);
+    background: var(--cor-destaque);
+    color: var(--cor-superficie);
+}
+
+.fluxo__botao--principal:hover:not(:disabled) {
+    background: var(--cor-destaque-forte);
+    border-color: var(--cor-destaque-forte);
+    color: var(--cor-superficie);
+}
+
+.fluxo__contador {
+    margin-left: auto;
+    font-family: var(--fonte-codigo);
+    font-size: 0.82rem;
+    color: var(--cor-texto-suave);
+}
+
+/* ---------- painel de explicação ---------- */
+
+.fluxo__painel {
+    margin-top: var(--espaco-3);
+    padding: var(--espaco-4) var(--espaco-5);
+    background: var(--cor-superficie);
+    border: 1px solid var(--cor-borda);
+    border-left: 4px solid var(--cor-destaque);
+    border-radius: var(--raio);
+}
+
+.fluxo__painel-numero {
+    margin: 0 0 var(--espaco-1);
+    font-family: var(--fonte-codigo);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--cor-destaque);
+}
+
+.fluxo__painel-titulo {
+    margin: 0 0 var(--espaco-2);
+    font-size: 1.1rem;
+}
+
+.fluxo__painel-chamada {
+    margin: 0 0 var(--espaco-3);
+    padding: var(--espaco-2) var(--espaco-3);
+    overflow-x: auto;
+    background: var(--cor-codigo-fundo);
+    border-radius: var(--raio-pequeno);
+    font-family: var(--fonte-codigo);
+    font-size: 0.84rem;
+    color: var(--cor-codigo-texto);
+    white-space: pre;
+}
+
+.fluxo__painel-texto {
+    margin: 0;
+}
+
+.fluxo__painel-arquivo:not(:empty) {
+    margin-top: var(--espaco-3);
+}
+
+.fluxo__arquivo {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--espaco-2);
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-pequeno);
+    background: var(--cor-superficie-2);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.fluxo__arquivo:hover {
+    border-color: var(--cor-destaque);
+}
+
+.fluxo__arquivo-rotulo {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--cor-destaque-forte);
+}
+
+.fluxo__arquivo-caminho {
+    font-family: var(--fonte-codigo);
+    font-size: 0.78rem;
+    color: var(--cor-texto-suave);
+}
+
+/* ---------- legenda ---------- */
+
+.fluxo-legenda {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--espaco-2) var(--espaco-4);
+    margin: var(--espaco-4) 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.85rem;
+    color: var(--cor-texto-suave);
+}
+
+.fluxo-legenda li {
+    display: flex;
+    align-items: center;
+    gap: var(--espaco-2);
+    margin: 0;
+}
+
+.fluxo-legenda__traco {
+    flex: none;
+    width: 1.6rem;
+    height: 0;
+    border-top: 2px solid var(--fluxo-ator, var(--cor-texto-suave));
+}
+
+.fluxo-legenda__traco--chamada { border-color: #0f6e6e; }
+.fluxo-legenda__traco--retorno { border-style: dashed; border-color: #5b6470; }
+.fluxo-legenda__traco--rede { border-width: 3px; border-color: #3f51b5; }
+.fluxo-legenda__traco--sql { border-color: #8a4b00; }
+.fluxo-legenda__traco--erro { border-width: 3px; border-color: #c0262d; }
+
+@media (prefers-color-scheme: dark) {
+    .fluxo-legenda__traco--chamada { border-color: #5cbcb2; }
+    .fluxo-legenda__traco--retorno { border-color: #9aa3ad; }
+    .fluxo-legenda__traco--rede { border-color: #8d9bf0; }
+    .fluxo-legenda__traco--sql { border-color: #e8b766; }
+    .fluxo-legenda__traco--erro { border-color: #f2807f; }
+}
+
+@media (max-width: 720px) {
+    .fluxo__palco {
+        max-height: 24rem;
+    }
+
+    .fluxo__contador {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .fluxo__painel {
+        padding: var(--espaco-3) var(--espaco-4);
+    }
+}
+
+/* Quem pediu menos animação continua podendo andar passo a passo, sem transições. */
+@media (prefers-reduced-motion: reduce) {
+    .fluxo__mensagem,
+    .fluxo__ator .fluxo__caixa,
+    .fluxo__ator .fluxo__linha-vida {
+        transition: none;
+    }
+}

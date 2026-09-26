@@ -74,6 +74,7 @@
                 { id: 'frontend-configurar', pagina: 'frontend-configurar.html', titulo: 'Configurar e montar a página' },
                 { id: 'frontend-tela', pagina: 'frontend-tela.html', titulo: 'Visão e controladora' },
                 { id: 'frontend-rodar', pagina: 'frontend-rodar.html', titulo: 'Rodar a aplicação' },
+                { id: 'frontend-fluxo', pagina: 'frontend-fluxo.html', titulo: 'O caminho de uma ação' },
                 { id: 'frontend-testes', pagina: 'frontend-testes.html', titulo: 'Testes e versão final' },
             ],
         },

@@ -27,6 +27,7 @@
         'css/componentes/tabela.css',
         'css/componentes/cartoes.css',
         'css/componentes/navegacao-etapas.css',
+        'css/componentes/fluxo.css',
         'css/componentes/portfolio.css',
         'css/realce-sintaxe.css',
     ];
@@ -37,6 +38,7 @@
         'js/nucleo/projeto-atual.js',
         'js/nucleo/percurso.js',
         'js/dados/etapas.js',
+        'js/dados/fluxo.js',
         'js/dados/linguagens.js',
         'js/dados/projeto/backend-php.js',
         'js/dados/projeto/backend-typescript.js',
@@ -80,6 +82,7 @@
         'js/componentes/explorador-projeto.js',
         'js/componentes/casca.js',
         'js/componentes/cartoes-etapas.js',
+        'js/componentes/diagrama-sequencia.js',
         'js/componentes/navegacao-lateral.js',
         'js/app.js',
     ];
